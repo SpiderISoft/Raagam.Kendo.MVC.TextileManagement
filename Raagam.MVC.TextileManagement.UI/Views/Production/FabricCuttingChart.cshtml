@@ -21,21 +21,22 @@
                             OrderNumber: $('#OrderNumber').val()
                         },
                  success: function (result) {
-                     debugger;
                      $('#OrderDate').val(result.data.OrderDate);
                      $('#DeliveryDate').val(result.data.DeliveryDate);
                      $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
                      $('#OrderQuantity').val(result.data.OrderQuantity);
-
-
-                     var options = [];
-                     $.each(result.data.BuyerDropDownList, function () {
-                         options.push('<option value="' + this.Value + '">' + this.Text +'</option>');
+                     $("#BuyerSequenceNumber").empty();
+                     $.each(result.data.BuyerDropDownList, function (key, data) {
+                         $("#BuyerSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
                      });
 
-                     $("#BuyerSequenceNumber").html(options.join(''));
+                     $("#StyleSequenceNumber").empty();
+                     $("#StyleSequenceNumber").append($("<option></option>").val(0).html('Select Style'));
+                     $.each(result.data.StyleDropDownList, function (key, data) {
+                         $("#StyleSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
+                     });
 
-                     $('#BuyerSequenceNumber').val(result.data.BuyerSequenceNumber).change();
+                     $('#StyleSequenceNumber').val(0).change();
 
 
                  },
@@ -103,7 +104,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.BuyerSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.BuyerReferenceNumber, Model.BuyerDropDownList, "", new { @class = "form-control", style = "height:35px;width:200px;" })
+                            @Html.DropDownListFor(m => m.BuyerSequenceNumber, Model.BuyerDropDownList, new { @class = "form-control", style = "height:35px;width:200px;" })
 
                         </div>
                     </div>

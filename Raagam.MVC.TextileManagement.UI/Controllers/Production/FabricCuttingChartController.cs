@@ -37,7 +37,16 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             fabricCuttingChartModel = productionServiceClient.GetOrderDetails(OrderNumber);
             TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
 
-            return Json(new { success = true, data = new { OrderDate = fabricCuttingChartModel.OrderDate.ToString("dd/MM/yyyy"), DeliveryDate = fabricCuttingChartModel.DeliveryDate.ToString("dd/MM/yyyy"), BuyerReferenceNumber = fabricCuttingChartModel.BuyerReferenceNumber, OrderQuantity = fabricCuttingChartModel.OrderQuantity,BuyerDropDownList =  fabricCuttingChartModel.BuyerDropDownList , BuyerSequenceNumber = fabricCuttingChartModel.BuyerSequenceNumber } }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = new { 
+                                                                OrderDate = fabricCuttingChartModel.OrderDate.ToString("dd/MM/yyyy"), 
+                                                                DeliveryDate = fabricCuttingChartModel.DeliveryDate.ToString("dd/MM/yyyy"), 
+                                                                BuyerReferenceNumber = fabricCuttingChartModel.BuyerReferenceNumber, 
+                                                                OrderQuantity = fabricCuttingChartModel.OrderQuantity, 
+                                                                BuyerDropDownList = fabricCuttingChartModel.BuyerDropDownList, 
+                                                                BuyerSequenceNumber = fabricCuttingChartModel.BuyerSequenceNumber, 
+                                                                StyleDropDownList = fabricCuttingChartModel.StyleDropDownList 
+                                                          } 
+                            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCascadeFabric(int? style)
