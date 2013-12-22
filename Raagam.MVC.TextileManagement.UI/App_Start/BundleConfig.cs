@@ -27,7 +27,7 @@ namespace Raagam.MVC.TextileManagement.UI
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryplugin").Include(
   "~/js/jquery.mousewheel.js",
-  "~/js/libs/jRespond.min.js" 
+  "~/js/libs/jRespond.min.js"
   ));
             bundles.Add(new ScriptBundle("~/bundles/charts").Include(
   "~/plugins/charts/sparkline/jquery.sparkline.min.js" 
@@ -62,8 +62,9 @@ namespace Raagam.MVC.TextileManagement.UI
     "~/plugins/forms/select/select2.min.js",
     "~/plugins/forms/dualselect/jquery.dualListBox-1.3.min.js",
     "~/plugins/forms/tiny_mce/tinymce.min.js",
-    "~/js/supr-theme/jquery-ui-timepicker-addon.js",
-    "~/js/supr-theme/jquery-ui-sliderAccess.js"
+    "~/js/supr-theme/jquery-ui-sliderAccess.js",
+    "~/Scripts/chosen.jquery.js",
+     "~/Scripts/prism.js"
 
 ));
 
@@ -95,6 +96,8 @@ namespace Raagam.MVC.TextileManagement.UI
                        "~/plugins/forms/color-picker/color-picker.css",
                        "~/plugins/forms/select/select2.css",
                        "~/plugins/forms/validate/validate.css",
+                       "~/Content/chosen.css",
+                       "~/Content/prism.css",
                        "~/plugins/forms/smartWizzard/smart_wizard.css"));
         }
     }

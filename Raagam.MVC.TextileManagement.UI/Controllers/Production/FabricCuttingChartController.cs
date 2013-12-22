@@ -27,6 +27,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
             fabricCuttingChartModel.BuyerDropDownList = new List<SelectListItem>();
             fabricCuttingChartModel.StyleDropDownList = new List<SelectListItem>();
+            fabricCuttingChartModel.FabricLinkDropDownList = new List<LinkDropDownModel>();
+            fabricCuttingChartModel.StyleSizeLinkDropDownList  = new List<LinkDropDownModel>();
 
             return View(url, fabricCuttingChartModel);
         }
@@ -44,7 +46,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                                                                 OrderQuantity = fabricCuttingChartModel.OrderQuantity, 
                                                                 BuyerDropDownList = fabricCuttingChartModel.BuyerDropDownList, 
                                                                 BuyerSequenceNumber = fabricCuttingChartModel.BuyerSequenceNumber, 
-                                                                StyleDropDownList = fabricCuttingChartModel.StyleDropDownList 
+                                                                StyleDropDownList = fabricCuttingChartModel.StyleDropDownList,
+                                                                FabricLinkDropDownList = fabricCuttingChartModel.FabricLinkDropDownList
                                                           } 
                             }, JsonRequestBehavior.AllowGet);
         }
@@ -68,50 +71,28 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
 
   
 
-        public JsonResult GetCascadePanel(int? style)
+        public JsonResult GetCascadePanelSize(int? style)
         {
             FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
             fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
             if (fabricCuttingChartModel != null)
             {
                 var panelList = fabricCuttingChartModel.PanelLinkDropDownList.AsQueryable();
+                var styleSizeList = fabricCuttingChartModel.StyleSizeLinkDropDownList.AsQueryable();
 
                 if (style != null)
                 {
                     panelList = panelList.Where(f => f.ForeignKey == style);
-                }
-
-                TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
-
-                return Json(panelList.Select(f => new { Key = f.Key, Value = f.Value }), JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-
-        }
-
-        public JsonResult GetCascadeStyleSize(int? style)
-        {
-            FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
-            fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
-            if (fabricCuttingChartModel != null)
-            {
-                var styleSizeList = fabricCuttingChartModel.StyleSizeLinkDropDownList.AsQueryable();
-
-
-                if (style != null)
-                {
                     styleSizeList = styleSizeList.Where(f => f.ForeignKey == style);
                 }
 
-
-                
                 TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
 
-                return Json(styleSizeList.Select(f => new { Key = f.Key, Value = f.Value }), JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = new { 
+                                                                PanelLinkDropDownList = panelList,
+                                                                StyleSizeLinkDropDownList = styleSizeList 
+                                                          } 
+                            }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -121,6 +102,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
 
         }
 
+         
         //public ActionResult PopulateFabricCuttingChartGrid([DataSourceRequest]DataSourceRequest request, long styleSequenceNumber, long? fabricSequenceNumber)
         //{
 

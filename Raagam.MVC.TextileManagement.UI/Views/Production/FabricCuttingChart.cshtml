@@ -3,63 +3,100 @@
     ViewBag.Title = "FabricCuttingChart";
     Layout = null; 
 }
+<script language="javascript" type="text/javascript">
 
- <script language="javascript" type="text/javascript">
+    $('#OrderNumber').inputmask('999999', { placeholder: " " });
+    $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+    $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+
+    $('#StyleSequenceNumber').change(function (event) {
+
+        $.ajax({
+            url: '@Url.Content("/FabricCuttingChart/GetCascadePanelSize")',
+            type: 'POST',
+            data:
+                        {
+                            style: $('#StyleSequenceNumber').val()
+                        },
+            success: function (result) {
+                debugger;
+                $("#PanelSelectedList").empty();
+                $.each(result.data.PanelLinkDropDownList, function (key, data) {
+                    debugger;
+                    $("#PanelSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                });
+                $("#PanelSelectedList").chosen();
+
+                $("#StyleSizeSelectedList").empty();
+                $.each(result.data.StyleSizeLinkDropDownList, function (key, data) {
+                    debugger;
+                    $("#StyleSizeSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                });
+                $("#StyleSizeSelectedList").chosen();
+            },
+            error: function (e) {
+                alert(e.responseText);
+            }
+        });
+    });
 
 
-     $('#OrderNumber').inputmask('999999', { placeholder: " " });
-     $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
-     $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
 
-     $('#OrderNumber').keypress(function (event) {
-         if (event.keyCode == 13) {
-             $.ajax({
-                 url: '@Url.Content("/FabricCuttingChart/GetOrderDetails")',
-                 type: 'POST',
-                 data:
+    $('#OrderNumber').keypress(function (event) {
+        if (event.keyCode == 13) {
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/GetOrderDetails")',
+                type: 'POST',
+                data:
                         {
                             OrderNumber: $('#OrderNumber').val()
                         },
-                 success: function (result) {
-                     $('#OrderDate').val(result.data.OrderDate);
-                     $('#DeliveryDate').val(result.data.DeliveryDate);
-                     $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
-                     $('#OrderQuantity').val(result.data.OrderQuantity);
-                     $("#BuyerSequenceNumber").empty();
-                     $.each(result.data.BuyerDropDownList, function (key, data) {
-                         $("#BuyerSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
-                     });
+                success: function (result) {
+                    $('#OrderDate').val(result.data.OrderDate);
+                    $('#DeliveryDate').val(result.data.DeliveryDate);
+                    $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
+                    $('#OrderQuantity').val(result.data.OrderQuantity);
+                    $("#BuyerSequenceNumber").empty();
+                    $.each(result.data.BuyerDropDownList, function (key, data) {
+                        $("#BuyerSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
+                    });
 
-                     $("#StyleSequenceNumber").empty();
-                     $("#StyleSequenceNumber").append($("<option></option>").val(0).html('Select Style'));
-                     $.each(result.data.StyleDropDownList, function (key, data) {
-                         $("#StyleSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
-                     });
+                    $("#StyleSequenceNumber").empty();
+                    $("#StyleSequenceNumber").append($("<option></option>").val(0).html('Select Style'));
+                    $.each(result.data.StyleDropDownList, function (key, data) {
+                        $("#StyleSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
+                    });
 
-                     $('#StyleSequenceNumber').val(0).change();
+                    $('#StyleSequenceNumber').val(0).change();
 
 
-                 },
-                 error: function () {
-                     alert("error");
-                 }
-             });
-         }
-         return false;
-     });
+                    $("#FabricSequenceNumber").empty();
+                    $("#FabricSequenceNumber").append($("<option></option>").val(0).html('Select Fabric'));
+                    $.each(result.data.FabricLinkDropDownList, function (key, data) {
+                        debugger;
+                        $("#FabricSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
+                    });
+                    $('#FabricSequenceNumber').val(0).change();
+
+
+
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+        }
+        return false;
+    });
 
 
 </script>
-  
- 
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmFabricCuttingChart", role = "form", @class = "form-horizontal" }))
 {    
     
     <div class="row">
         <div class="col-lg-12">
-
             <div class="panel panel-default">
-
                 <div class="panel-heading">
                     <h4>
                         <span>Fabric Cutting Chart</span>
@@ -67,20 +104,15 @@
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-
                         @Html.LabelFor(m => m.OrderNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                    
-
                         <div class="col-lg-9">
-                            @Html.TextBoxFor(m => m.OrderNumber, new { @class = "form-control", style = "height:35px;width:200px;", Value= ""  })
+                            @Html.TextBoxFor(m => m.OrderNumber, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.OrderDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
-
                         <div class="col-lg-9">
                             @Html.TextBoxFor(m => m.OrderDate, new { @class = "form-control", style = "height:35px;width:200px;", @readonly = "readonly" })
-                             
                         </div>
                     </div>
                     <div class="form-group">
@@ -105,134 +137,71 @@
                         @Html.LabelFor(m => m.BuyerSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
                             @Html.DropDownListFor(m => m.BuyerSequenceNumber, Model.BuyerDropDownList, new { @class = "form-control", style = "height:35px;width:200px;" })
-
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-
-                            @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList, "", new { @class = "form-control", style = "height:35px;width:200px;" })
-
-               
+                            @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.FabricSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                           @* @(Html.Kendo().DropDownListFor(m => m.FabricSequenceNumber)
-                                  .Name("FabricSequenceNumber")
-                                  .DataTextField("Value")
-                                  .DataValueField("Key")
-                                  .OptionLabel("Select Fabric...")
-                                  .Events(e => e
-                                      .Change("FabricSequenceNumberChange"))
-                                  .DataSource(source =>
-                                  {
-                                      source.Read(read =>
-                                      {
-                                          read.Action("GetCascadeFabric", "FabricCuttingChart")
-                                              .Data("filterFabric");
-                                      })
-                                      .ServerFiltering(true);
-                                  })
-                                  .Enable(false)
-                                  .AutoBind(false)
-                                  .CascadeFrom("StyleSequenceNumber")
-                                  .HtmlAttributes(new { required = "required", validationMessage = "Please Select Fabric", @class = "form-control", style = "height:35px;width:200px;" })
-                                )*@
+                            @Html.DropDownListFor(m => m.FabricSequenceNumber, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Fabric...", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.PanelSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-              @*              @(Html.Kendo().MultiSelectFor(m => m.PanelSelectedList)
-                                             .Name("PanelSelected")
-                                      .DataTextField("Value")
-                                      .DataValueField("Key")
-                                         .DataSource(source =>
-                                         {
-                                             source.Read(read =>
-                                             {
-                                                 read.Action("GetCascadePanel", "FabricCuttingChart")
-                                                     .Data("filterPanel");
-                                             })
-                                                   .ServerFiltering(true);
-                                         })
-                                      .AutoBind(false)
-                                        .HtmlAttributes(new { required = "required", validationMessage = "Please Select Panel", @class = "form-control", style = "height:35px;width:200px;" })
-                                )*@
+                            @Html.DropDownListFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:200px;" })
                         </div>
                     </div>
-
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleSizeSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                  @*          @(Html.Kendo().MultiSelectFor(m => m.StyleSizeSelectedList)
-                                             .Name("StyleSizeSelected")
-                                      .DataTextField("Value")
-                                      .DataValueField("Key")
-                                         .DataSource(source =>
-                                         {
-                                             source.Read(read =>
-                                             {
-                                                 read.Action("GetCascadeStyleSize", "FabricCuttingChart")
-                                                     .Data("filterStyleSize");
-                                             })
-                                                   .ServerFiltering(true);
-                                         })
-                                            .AutoBind(false)
-                                                .HtmlAttributes(new { required = "required", validationMessage = "Please Select Size", @class = "form-control", style = "height:35px;width:200px;" })
-                                )*@
+                            @Html.DropDownListFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.LoopLength, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @(Html.TextBoxFor(m => m.LoopLength, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                            @Html.TextBoxFor(m => m.LoopLength, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.KnitGSM, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @(Html.TextBoxFor(m => m.KnitGSM, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                            @Html.TextBoxFor(m => m.KnitGSM, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.TableDia, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.TextBoxFor(m => m.TableDia, new { required = "required", validationMessage = "Please Enter Table Dia", @class = "form-control", style = "height:35px;width:200px;" })
+                            @Html.TextBoxFor(m => m.TableDia, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Weight, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                        @Html.TextBoxFor(m => m.Weight, new { required = "required", validationMessage = "Please Enter Weight", @class = "form-control", style = "height:35px;width:200px;" })
-                          
+                            @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
-                 
                     <div class="form-group">
                         <div class="col-lg-offset-4">
-                            <input type="button" value="Add"  class = "btn btn-default marginR10" />
-                            <button class="btn btn-danger">Cancel</button>
+                            <input type="button" value="Add" class="btn marginR10" />
+                            <button class="btn btn-danger">
+                                Cancel</button>
                         </div>
-                    </div><!-- End .form-group  -->    
-                    
+                    </div>
+                    <!-- End .form-group  -->
                 </div>
-                 
             </div>
             <!-- End .panel -->
-
         </div>
         <!-- End .span6 -->
-
-    </div><!-- End .row -->
+    </div>
+    <!-- End .row -->
     <!-- End .form-group  -->
 
 }
-
-
- 
-
-

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
+using System.ComponentModel;
 
 namespace Raagam.TextileManagement.Model
 {
@@ -12,21 +13,27 @@ namespace Raagam.TextileManagement.Model
     {
        
         [DataMember]
+        [DisplayName("Order Number")]
         public long OrderNumber { get; set; }
 
         [DataMember]
+        [DisplayName("Order Date")]
         public DateTime OrderDate { get; set; }
 
         [DataMember]
+        [DisplayName("Delivery Date")]
         public DateTime DeliveryDate { get; set; }
 
         [DataMember]
+        [DisplayName("Buyer Reference Number")]
         public string BuyerReferenceNumber { get; set; }
 
         [DataMember]
+        [DisplayName("Order Quantity")]
         public int OrderQuantity { get; set; }
 
         [DataMember]
+        [DisplayName("Buyer")]
         public long BuyerSequenceNumber{ get; set; }
 
         [DataMember]
@@ -34,46 +41,56 @@ namespace Raagam.TextileManagement.Model
 
 
         [DataMember]
+        [DisplayName("Style")]
         public long StyleSequenceNumber { get; set; }
 
         [DataMember]
         public List<SelectListItem> StyleDropDownList { get; set; }
 
         [DataMember]
+        [DisplayName("Fabric")]
         public long FabricSequenceNumber { get; set; }
 
         [DataMember]
         public List<LinkDropDownModel> FabricLinkDropDownList { get; set; }
 
         [DataMember]
+        [DisplayName("Panel")]
         public List<long> PanelSelectedList { get; set; }
 
         [DataMember]
         public List<LinkDropDownModel> PanelLinkDropDownList { get; set; }
 
         [DataMember]
+        [DisplayName("Size")]
         public List<long> StyleSizeSelectedList { get; set; }
 
         [DataMember]
         public List<LinkDropDownModel> StyleSizeLinkDropDownList { get; set; }
 
         [DataMember]
+        [DisplayName("Loop Length")]
         public string LoopLength { get; set; }
 
         [DataMember]
+        [DisplayName("Knit GSM")]
         public string KnitGSM { get; set; }
 
         [DataMember]
+        [DisplayName("Table Dia")]
         public decimal TableDia { get; set; }
 
         [DataMember]
+        [DisplayName("Knit Dia")]
         public decimal KnitDia { get; set; }
 
         [DataMember]
+        [DisplayName("Weight")]
         public decimal Weight { get; set; }
 
 
         [DataMember]
+        [DisplayName("Pieces")]
         public decimal Pieces { get; set; }
 
         [DataMember]

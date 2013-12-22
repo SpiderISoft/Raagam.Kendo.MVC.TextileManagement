@@ -20,7 +20,34 @@
     <link rel="apple-touch-icon-precomposed" href="../../images/apple-touch-icon-57-precomposed.png" />
     <meta name="application-name" content="Supr" />
     <meta name="msapplication-TileColor" content="#3399cc" />
+    <style type="text/css" media="all">
+        /* fix rtl for demo */
+        .chosen-rtl .chosen-drop
+        {
+            left: -9000px;
+        }
+    </style>
     @Scripts.Render("~/bundles/modernizr")
+    <script language="javascript" type="text/javascript">
+
+        function FabricCuttingChart_Click() {
+            debugger;
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/FabricCuttingChart")',
+                type: 'POST',
+                success: function (result) {
+                    debugger;
+                    $('#body').empty();
+                    $('#body').html(result);
+                },
+                error: function (e) {
+                    debugger;
+                    alert(e.responseText);
+                }
+            });
+            return false;
+        }
+    </script>
 </head>
 <body>
     <div id="header">
@@ -173,7 +200,8 @@
                 <!-- End .sidenav-widget -->
                 <div class="mainnav">
                     <ul>
-                        <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChart_Click();"><span class="icon16 icomoon-icon-stats-up"></span>Fabric Cutting Chart</a></li>
+                        <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChart_Click();"><span
+                            class="icon16 icomoon-icon-stats-up"></span>Fabric Cutting Chart</a></li>
                         <li><a href="#"><span class="icon16 icomoon-icon-list"></span>Forms<span class="notification red">sub2</span></a>
                             <ul class="sub">
                                 <li><a href="forms.html"><span class="icon16 icomoon-icon-file"></span>Forms Stuff</a></li>
@@ -373,32 +401,12 @@
     <!-- End #wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/themes")
     @Scripts.Render("~/bundles/jqueryplugin")
     @Scripts.Render("~/bundles/charts")
     @Scripts.Render("~/bundles/misc")
     @Scripts.Render("~/bundles/search")
-    @Scripts.Render("~/bundles/form")
     @RenderSection("scripts", required: false)
-    <script language="javascript" type="text/javascript">
-
-        function FabricCuttingChart_Click() {
-            debugger;
-            $.ajax({
-                url: '@Url.Content("/FabricCuttingChart/FabricCuttingChart")',
-                type: 'POST',
-                success: function (result) {
-                    debugger;
-                    $('#body').empty();
-                    $('#body').html(result);
-                },
-                error: function (e) {
-                    debugger;
-                    alert(e.responseText);
-                }
-            });
-            return false;
-        }
-    </script>
 </body>
 </html>
