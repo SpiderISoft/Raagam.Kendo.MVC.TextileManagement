@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ed8e09a5-fa21-406f-8048-44535809cc44" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:26976/Common/Implementation/Common.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Common.xsd" MetadataType="Schema" ID="027d33e2-cb16-43e5-ba6c-45823eb75a10" SourceId="1" SourceUrl="http://localhost:26976/Common/Implementation/Common.svc?xsd=xsd2" />
+    <MetadataFile FileName="Common1.xsd" MetadataType="Schema" ID="7c78d2cf-792f-48b0-bd20-b0f752a95b15" SourceId="1" SourceUrl="http://localhost:26976/Common/Implementation/Common.svc?xsd=xsd1" />
+    <MetadataFile FileName="Common2.xsd" MetadataType="Schema" ID="63d347fd-1caf-4481-962a-399cd85d15cd" SourceId="1" SourceUrl="http://localhost:26976/Common/Implementation/Common.svc?xsd=xsd0" />
+    <MetadataFile FileName="Common.disco" MetadataType="Disco" ID="b87c5a0f-8209-41e1-bfcc-c8472cbe7fbf" SourceId="1" SourceUrl="http://localhost:26976/Common/Implementation/Common.svc?disco" />
+    <MetadataFile FileName="Common.wsdl" MetadataType="Wsdl" ID="57350b99-bf88-4d4a-8f82-b578bc6c52c8" SourceId="1" SourceUrl="http://localhost:26976/Common/Implementation/Common.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

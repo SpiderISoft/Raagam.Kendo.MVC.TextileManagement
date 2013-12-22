@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>@ViewBag.Title</title>
+    <link href="../../css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="../../css/bootstrap/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="../../css/supr-theme/jquery.ui.supr.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="../../plugins/forms/uniform/uniform.default.css" type="text/css" rel="stylesheet" />
+
+    <link href="@Url.Content("~/Content/main.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.blueopal.min.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/jquery.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.all.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.aspnetmvc.min.js")"></script>
+	<script type="text/javascript" src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+</head>
+	<body>
+		 
+		<div id="body">
+			@RenderSection("featured", required: false)
+			<section class="content-wrapper main-content clear-fix">
+				@RenderBody()
+			</section>
+		</div>
+
+    	
+        @RenderSection("scripts", required: false)
+
+	</body>
+</html>

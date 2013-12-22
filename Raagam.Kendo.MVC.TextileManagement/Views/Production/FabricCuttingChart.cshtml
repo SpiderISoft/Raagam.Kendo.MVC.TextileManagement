@@ -1,0 +1,430 @@
+﻿@model Raagam.TextileManagement.Model.FabricCuttingChartModel
+@{
+    ViewBag.Title = "FabricCuttingChart";
+    Layout = null; 
+}
+ 
+
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/jquery.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.all.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/kendo/2013.3.1119/kendo.aspnetmvc.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+       <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-migrate-1.1.0.min.js")"></script>
+
+}
+
+ 
+ 
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        var validator = $("#frmFabricCuttingChart").kendoValidator().data("kendoValidator");
+
+
+        $('#AddButton').click(function (e) {
+            if (validator.validate()) {
+                debugger;
+                var data = JSON.stringify({
+                    sStyleSizeSelected: $('#StyleSizeSelected').val(),
+                    sPanelSelected: $('#PanelSelected').val(),
+                    styleSequenceNumber: $('#StyleSequenceNumber').val(),
+                    orderSequenceNumber: $('#OrderNumber').val(),
+                    styleFabricSequenceNumber: $('#FabricSequenceNumber').val(),
+                    weight: $('#Weight').val(),
+                    tableDia: $('#TableDia').val(),
+                    loopLength: $('#LoopLength').val(),
+                    knitGSM: $('#KnitGSM').val()
+                }); x
+                $.ajax({
+                    url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    type: 'POST',
+                    data: data,
+                    success: function (result) {
+                        debugger;
+                        if (result.Errors == null) {
+                            var grid = $("#FabricCuttingChartGrid").data("kendoGrid");
+                            grid.dataSource.data(result.Data);
+                            grid.refresh();
+                        }
+                        else {
+                            alert(result.Errors);
+                        }
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            } else {
+                alert('Invalid');
+            }
+
+        });
+
+
+        $('#OrderNumber').keypress(function (event) {
+            if (event.keyCode == 13) {
+                $.ajax({
+                    url: '@Url.Content("/FabricCuttingChart/GetOrderDetails")',
+                    type: 'POST',
+                    data:
+                        {
+                            OrderNumber: $('#OrderNumber').val()
+                        },
+                    success: function (result) {
+                        debugger;
+                        $('#body').empty();
+                        $('#body').html(result);
+                    },
+                    error: function (e) {
+                        debugger;
+                        alert(e.responseText);
+                    }
+                });
+            }
+        });
+
+
+    });
+
+    function filterFabric() {
+        return {
+            style: $("#StyleSequenceNumber").val()
+        };
+    }
+
+    function filterFabric() {
+        return {
+            style: $("#StyleSequenceNumber").val()
+        };
+    }
+
+    function filterPanel() {
+        return {
+            style: $("#StyleSequenceNumber").val()
+        };
+    }
+
+    function filterStyleSize() {
+        return {
+            style: $("#StyleSequenceNumber").val()
+        };
+    }
+
+    function FabricSequenceNumberChange(e) {
+        if (e.sender.selectedIndex != 0) {
+
+            var data = JSON.stringify({
+                styleSequenceNumber: $('#StyleSequenceNumber').val(),
+                fabricSequenceNumber: $('#FabricSequenceNumber').val()
+            });
+
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/PopulateFabricCuttingChartGrid")',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    debugger;
+                    var grid = $("#FabricCuttingChartGrid").data("kendoGrid");
+                    grid.dataSource.data(result.Data);
+                    grid.refresh();
+
+                },
+                error: function (e) {
+                    debugger;
+                    alert("error");
+                }
+            });
+
+
+        }
+    }
+
+    function StyleSequenceNumberChange(e) {
+        if (e.sender.selectedIndex != 0) {
+
+            var multiselectPanel = $("#PanelSelected").data("kendoMultiSelect");
+            multiselectPanel.dataSource.read();
+
+            var multiselectStyleSize = $("#StyleSizeSelected").data("kendoMultiSelect");
+            multiselectStyleSize.dataSource.read();
+            debugger;
+
+            var data = JSON.stringify({
+                styleSequenceNumber: $('#StyleSequenceNumber').val(),
+                fabricSequenceNumber: $('#FabricSequenceNumber').val()
+            });
+
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/PopulateFabricCuttingChartGrid")',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    debugger;
+                    var grid = $("#FabricCuttingChartGrid").data("kendoGrid");
+                    grid.dataSource.data(result.Data);
+                    grid.refresh();
+
+                },
+                error: function (e) {
+                    debugger;
+                    alert("error");
+                }
+            });
+
+
+        }
+
+    }
+
+</script>
+
+
+
+
+
+
+
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmFabricCuttingChart", role = "form", @class = "form-horizontal" }))
+{    
+    
+    <link href="../../css/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="../../css/bootstrap/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="../../css/supr-theme/jquery.ui.supr.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="../../plugins/forms/uniform/uniform.default.css" type="text/css" rel="stylesheet" />
+        <link href="../../css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/main.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2013.3.1119/kendo.dataviz.blueopal.min.css")" rel="stylesheet" type="text/css" />
+    
+    
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h4>
+                        <span>Fabric Cutting Chart</span>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        @Html.LabelFor(m => m.OrderNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+
+                        <div class="col-lg-9">
+                            @(Html.Kendo().NumericTextBoxFor(m => m.OrderNumber)
+                                .Name("OrderNumber").Format("0").Spinners(false)
+                                .HtmlAttributes(new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+
+                        <div class="col-lg-9">
+                            @(Html.Kendo().DatePickerFor(m => m.OrderDate).Format("dd/MM/yyyy")
+                                 .HtmlAttributes(new { @class = "form-control", style = "height:35px;width:200px;" })
+                            )
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().DatePickerFor(m => m.DeliveryDate).Format("dd/MM/yyyy").HtmlAttributes(new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BuyerReferenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.TextBoxFor(m => m.BuyerReferenceNumber, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderQuantity, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.TextBoxFor(m => m.OrderQuantity, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BuyerSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().DropDownListFor(m => m.BuyerSequenceNumber).DataTextField("Value").DataValueField("Key")
+                            .BindTo(Model.BuyerDropDownList).HtmlAttributes(new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StyleSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().DropDownListFor(m => m.StyleSequenceNumber).Name("StyleSequenceNumber").DataTextField("Value")
+                                  .DataValueField("Key").OptionLabel("Select Style...").BindTo(Model.StyleDropDownList)
+                                  .Events(e => e.Change("StyleSequenceNumberChange"))
+                                  .HtmlAttributes(new { required = "required", validationMessage = "Please Select Style", @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FabricSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().DropDownListFor(m => m.FabricSequenceNumber)
+                                  .Name("FabricSequenceNumber")
+                                  .DataTextField("Value")
+                                  .DataValueField("Key")
+                                  .OptionLabel("Select Fabric...")
+                                  .Events(e => e
+                                      .Change("FabricSequenceNumberChange"))
+                                  .DataSource(source =>
+                                  {
+                                      source.Read(read =>
+                                      {
+                                          read.Action("GetCascadeFabric", "FabricCuttingChart")
+                                              .Data("filterFabric");
+                                      })
+                                      .ServerFiltering(true);
+                                  })
+                                  .Enable(false)
+                                  .AutoBind(false)
+                                  .CascadeFrom("StyleSequenceNumber")
+                                  .HtmlAttributes(new { required = "required", validationMessage = "Please Select Fabric", @class = "form-control", style = "height:35px;width:200px;" })
+                                )
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PanelSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().MultiSelectFor(m => m.PanelSelectedList)
+                                             .Name("PanelSelected")
+                                      .DataTextField("Value")
+                                      .DataValueField("Key")
+                                         .DataSource(source =>
+                                         {
+                                             source.Read(read =>
+                                             {
+                                                 read.Action("GetCascadePanel", "FabricCuttingChart")
+                                                     .Data("filterPanel");
+                                             })
+                                                   .ServerFiltering(true);
+                                         })
+                                      .AutoBind(false)
+                                        .HtmlAttributes(new { required = "required", validationMessage = "Please Select Panel", @class = "form-control", style = "height:35px;width:200px;" })
+                                )
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StyleSizeSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().MultiSelectFor(m => m.StyleSizeSelectedList)
+                                             .Name("StyleSizeSelected")
+                                      .DataTextField("Value")
+                                      .DataValueField("Key")
+                                         .DataSource(source =>
+                                         {
+                                             source.Read(read =>
+                                             {
+                                                 read.Action("GetCascadeStyleSize", "FabricCuttingChart")
+                                                     .Data("filterStyleSize");
+                                             })
+                                                   .ServerFiltering(true);
+                                         })
+                                            .AutoBind(false)
+                                                .HtmlAttributes(new { required = "required", validationMessage = "Please Select Size", @class = "form-control", style = "height:35px;width:200px;" })
+                                )
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LoopLength, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.TextBoxFor(m => m.LoopLength, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.KnitGSM, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.TextBoxFor(m => m.KnitGSM, new { @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TableDia, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().NumericTextBoxFor(m => m.TableDia)
+                                .Format("0").Spinners(false)
+                                .HtmlAttributes(new { required = "required", validationMessage = "Please Enter Table Dia", @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Weight, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().NumericTextBoxFor(m => m.Weight)
+                                .Format("0").Spinners(false)
+                                .HtmlAttributes(new { required = "required", validationMessage = "Please Enter Weight", @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Weight, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @(Html.Kendo().NumericTextBoxFor(m => m.Weight)
+                                .Format("0").Spinners(false)
+                                .HtmlAttributes(new { required = "required", validationMessage = "Please Enter Weight", @class = "form-control", style = "height:35px;width:200px;" }))
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-4">
+                            @(Html.Kendo().Button().Name("AddButton").HtmlAttributes(new { type = "button", @class = "btn btn-default marginR10" }).Content("Add"))
+                            <button class="btn btn-danger">Cancel</button>
+                        </div>
+                    </div><!-- End .form-group  -->    
+                    
+                </div>
+                @(Html.Kendo().Grid<Raagam.TextileManagement.Model.FabricCuttingChartMainModel>()
+                        .Name("FabricCuttingChartGrid")
+                        .Columns(columns =>
+                        {
+                            columns.Bound(o => o.SequenceNumber).Width(10).Visible(false);
+                            columns.Bound(o => o.OrderSequenceNumber).Width(10).Visible(false);
+                            columns.Bound(o => o.StyleFabricSequenceNumber).Width(10).Visible(false);
+                            columns.Bound(o => o.StyleSizeSequenceNumber).Width(10).Visible(false);
+                            columns.Bound(o => o.StylePanelName).Width(200).Title("Panel Name");
+                            columns.Bound(o => o.ProductName).Width(200).Title("Fabric Name");
+                            columns.Bound(o => o.TableDia).Width(100).Title("Table Dia");
+                            columns.Bound(o => o.KnitDia).Width(100).Title("Knit Dia");
+                            columns.Bound(o => o.SizeName).Width(100).Title("Size");
+                            columns.Bound(o => o.ColorName).Width(100).Title("Color");
+                            columns.Bound(o => o.Pieces).Width(100).Title("Pieces");
+                            columns.Bound(o => o.Weight).Width(100).Title("Weight");
+                            columns.Bound(o => o.WastagePercentage).Width(100).Title("Wastage%");
+                            columns.Bound(o => o.TotalWeight).Width(100).Title("Total");
+                            columns.Bound(o => o.TempGUID).Width(10).Visible(false);
+                            columns.Bound(o => o.StyleColorSequenceNumber).Width(10).Visible(false);
+                            columns.Bound(o => o.LoopLength).Width(100).Title("Loop Length");
+                            columns.Bound(o => o.KnitGSM).Width(100).Title("Knit GSM");
+                        })
+                        .Sortable()
+                        .Scrollable(scrollable => scrollable.Virtual(true))
+                        .HtmlAttributes(new { style = "height:275px;" })
+                        .AutoBind(false)
+                        .Pageable()
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(100))
+                      )
+            </div>
+            <!-- End .panel -->
+
+        </div>
+        <!-- End .span6 -->
+
+    </div>
+    <!-- End .row -->
+    <!-- End .form-group  -->
+
+}

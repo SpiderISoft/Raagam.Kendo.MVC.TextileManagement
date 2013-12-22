@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.Kendo.MVC.TextileManagement", "Raagam.Kendo.MVC.TextileManagement\Raagam.Kendo.MVC.TextileManagement.csproj", "{83B99D08-502E-4EA7-9DFB-85D84964F24D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D} = {D9DFD4A5-9511-4D1D-8400-84E322F45F1D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.Kendo.MVC.TextileManagementTests", "Raagam.Kendo.MVC.TextileManagementTests\Raagam.Kendo.MVC.TextileManagementTests.csproj", "{F4593B25-E4B3-4808-AE2E-5E9B91E6A384}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CB981EC5-1885-4012-9CEA-4BB40B570805}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Raagam.Kendo.MVC.TextileManagement.vsmdi = Raagam.Kendo.MVC.TextileManagement.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.TextileManagement.WCF.Service", "Raagam.TextileManagement.WCF.Service\Raagam.TextileManagement.WCF.Service.csproj", "{D9DFD4A5-9511-4D1D-8400-84E322F45F1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.TextileManagement.DataAccess", "Raagam.TextileManagement.DataAccess\Raagam.TextileManagement.DataAccess.csproj", "{481AA0FD-E7C6-4EA2-862E-8157C3749251}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.TextileManagement.BusinessAccess", "Raagam.TextileManagement.BusinessAccess\Raagam.TextileManagement.BusinessAccess.csproj", "{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.TextileManagement.Model", "Raagam.TextileManagement.Model\Raagam.TextileManagement.Model.csproj", "{E99B6BF0-45DC-4410-A499-EDE055BAD55C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.TextileManagement.CommonUtility", "Raagam.TextileManagement.CommonUtility\Raagam.TextileManagement.CommonUtility.csproj", "{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raagam.MVC.TextileManagement.UI", "Raagam.MVC.TextileManagement.UI\Raagam.MVC.TextileManagement.UI.csproj", "{3F025D81-97DD-4465-A4A3-2991B1EF265B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D} = {D9DFD4A5-9511-4D1D-8400-84E322F45F1D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Raagam.Kendo.MVC.TextileManagement.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83B99D08-502E-4EA7-9DFB-85D84964F24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B99D08-502E-4EA7-9DFB-85D84964F24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B99D08-502E-4EA7-9DFB-85D84964F24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B99D08-502E-4EA7-9DFB-85D84964F24D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4593B25-E4B3-4808-AE2E-5E9B91E6A384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4593B25-E4B3-4808-AE2E-5E9B91E6A384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4593B25-E4B3-4808-AE2E-5E9B91E6A384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4593B25-E4B3-4808-AE2E-5E9B91E6A384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9DFD4A5-9511-4D1D-8400-84E322F45F1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{481AA0FD-E7C6-4EA2-862E-8157C3749251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{481AA0FD-E7C6-4EA2-862E-8157C3749251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{481AA0FD-E7C6-4EA2-862E-8157C3749251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{481AA0FD-E7C6-4EA2-862E-8157C3749251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E99B6BF0-45DC-4410-A499-EDE055BAD55C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E99B6BF0-45DC-4410-A499-EDE055BAD55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E99B6BF0-45DC-4410-A499-EDE055BAD55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E99B6BF0-45DC-4410-A499-EDE055BAD55C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F025D81-97DD-4465-A4A3-2991B1EF265B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F025D81-97DD-4465-A4A3-2991B1EF265B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F025D81-97DD-4465-A4A3-2991B1EF265B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F025D81-97DD-4465-A4A3-2991B1EF265B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
