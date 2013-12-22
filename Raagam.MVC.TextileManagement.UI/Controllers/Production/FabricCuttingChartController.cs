@@ -46,61 +46,43 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                                                                 OrderQuantity = fabricCuttingChartModel.OrderQuantity, 
                                                                 BuyerDropDownList = fabricCuttingChartModel.BuyerDropDownList, 
                                                                 BuyerSequenceNumber = fabricCuttingChartModel.BuyerSequenceNumber, 
-                                                                StyleDropDownList = fabricCuttingChartModel.StyleDropDownList,
-                                                                FabricLinkDropDownList = fabricCuttingChartModel.FabricLinkDropDownList
+                                                                StyleDropDownList = fabricCuttingChartModel.StyleDropDownList
                                                           } 
                             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCascadeFabric(int? style)
+        public JsonResult GetCascadeFabricPanelSize(int? style)
         {
             FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
             fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
 
             var fabricList = fabricCuttingChartModel.FabricLinkDropDownList.AsQueryable();
+            var panelList = fabricCuttingChartModel.PanelLinkDropDownList.AsQueryable();
+            var styleSizeList = fabricCuttingChartModel.StyleSizeLinkDropDownList.AsQueryable();
+
 
             if (style != null)
             {
                 fabricList = fabricList.Where(f => f.ForeignKey == style);
+                panelList = panelList.Where(f => f.ForeignKey == style);
+                styleSizeList = styleSizeList.Where(f => f.ForeignKey == style);
             }
 
             TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
 
-            return Json(fabricList.Select(f => new { Key = f.Key, Value = f.Value }), JsonRequestBehavior.AllowGet);
-        }
-
-  
-
-        public JsonResult GetCascadePanelSize(int? style)
-        {
-            FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
-            fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
-            if (fabricCuttingChartModel != null)
+            return Json(new
             {
-                var panelList = fabricCuttingChartModel.PanelLinkDropDownList.AsQueryable();
-                var styleSizeList = fabricCuttingChartModel.StyleSizeLinkDropDownList.AsQueryable();
-
-                if (style != null)
+                success = true,
+                data = new
                 {
-                    panelList = panelList.Where(f => f.ForeignKey == style);
-                    styleSizeList = styleSizeList.Where(f => f.ForeignKey == style);
+                    FabricLinkDropDownList = fabricList,
+                    PanelLinkDropDownList = panelList,
+                    StyleSizeLinkDropDownList = styleSizeList
                 }
-
-                TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
-
-                return Json(new { success = true, data = new { 
-                                                                PanelLinkDropDownList = panelList,
-                                                                StyleSizeLinkDropDownList = styleSizeList 
-                                                          } 
-                            }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-
-                return Json("", JsonRequestBehavior.AllowGet);
-            }
-
+            }, JsonRequestBehavior.AllowGet);
         }
+
+ 
 
          
         //public ActionResult PopulateFabricCuttingChartGrid([DataSourceRequest]DataSourceRequest request, long styleSequenceNumber, long? fabricSequenceNumber)

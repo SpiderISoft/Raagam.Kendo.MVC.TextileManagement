@@ -11,25 +11,38 @@
 
     $('#StyleSequenceNumber').change(function (event) {
 
+        var styleSequence =  $('#StyleSequenceNumber').val();
+        
+        if (styleSequence != 0) 
+        {
+
         $.ajax({
-            url: '@Url.Content("/FabricCuttingChart/GetCascadePanelSize")',
+            url: '@Url.Content("/FabricCuttingChart/GetCascadeFabricPanelSize")',
             type: 'POST',
             data:
                         {
-                            style: $('#StyleSequenceNumber').val()
+                            style: styleSequence 
                         },
             success: function (result) {
                 debugger;
+
+
+                $("#FabricSequenceNumber").empty();
+                $("#FabricSequenceNumber").append($("<option></option>").val(0).html('Select Fabric'));
+                $.each(result.data.FabricLinkDropDownList, function (key, data) {
+                    $("#FabricSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
+                });
+                $('#FabricSequenceNumber').val(0).change();
+
+
                 $("#PanelSelectedList").empty();
                 $.each(result.data.PanelLinkDropDownList, function (key, data) {
-                    debugger;
                     $("#PanelSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
                 });
                 $("#PanelSelectedList").chosen();
 
                 $("#StyleSizeSelectedList").empty();
                 $.each(result.data.StyleSizeLinkDropDownList, function (key, data) {
-                    debugger;
                     $("#StyleSizeSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
                 });
                 $("#StyleSizeSelectedList").chosen();
@@ -38,6 +51,7 @@
                 alert(e.responseText);
             }
         });
+        }
     });
 
 
@@ -68,17 +82,6 @@
                     });
 
                     $('#StyleSequenceNumber').val(0).change();
-
-
-                    $("#FabricSequenceNumber").empty();
-                    $("#FabricSequenceNumber").append($("<option></option>").val(0).html('Select Fabric'));
-                    $.each(result.data.FabricLinkDropDownList, function (key, data) {
-                        debugger;
-                        $("#FabricSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
-                    });
-                    $('#FabricSequenceNumber').val(0).change();
-
-
 
                 },
                 error: function (e) {
@@ -154,13 +157,13 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PanelSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:200px;" })
+                            @Html.DropDownListFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleSizeSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:200px;" })
+                            @Html.DropDownListFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">
