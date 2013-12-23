@@ -13,6 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/plugin")
+    <link rel="stylesheet" type="text/css" media="screen" href="../../Content/ui.jqgrid.css" />
+
     <link rel="shortcut icon" href="../../images/favicon.ico" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../images/apple-touch-icon-144-precomposed.png" />
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../images/apple-touch-icon-114-precomposed.png" />
@@ -37,8 +39,8 @@
                 type: 'POST',
                 success: function (result) {
                     debugger;
-                    $('#body').empty();
-                    $('#body').html(result);
+                    $('#bodyContent').empty();
+                    $('#bodyContent').html(result);
                 },
                 error: function (e) {
                     debugger;
@@ -387,11 +389,8 @@
                         Forms</h3>
                 </div>
                 <!-- End .heading-->
-                <div id="body">
-                    @RenderSection("featured", required: false)
-                    <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
+                <div id="bodyContent">
+                   @RenderBody()
                 </div>
             </div>
             <!-- End contentwrapper -->
@@ -400,14 +399,12 @@
     </div>
     <!-- End #wrapper -->
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/themes")
-    @Scripts.Render("~/bundles/jqueryplugin")
-    @Scripts.Render("~/bundles/charts")
-    @Scripts.Render("~/bundles/misc")
-    @Scripts.Render("~/bundles/search")
+    @Scripts.Render("~/bundles/mask")
     @Scripts.Render("~/bundles/grid")
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

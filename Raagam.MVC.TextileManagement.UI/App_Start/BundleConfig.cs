@@ -9,10 +9,12 @@ namespace Raagam.MVC.TextileManagement.UI
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-1.9.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-1.8.20.custom.js",
+                        "~/Scripts/jquery-migrate-1.2.1.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -21,8 +23,7 @@ namespace Raagam.MVC.TextileManagement.UI
 
             bundles.Add(new ScriptBundle("~/bundles/themes").Include(
               "~/js/bootstrap/bootstrap.js",
-              "~/plugins/forms/validate/jquery.validate.min.js",
-              "~/plugins/forms/uniform/jquery.uniform.min.js" 
+              "~/plugins/forms/uniform/jquery.uniform.js" 
               ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryplugin").Include(
@@ -46,35 +47,29 @@ namespace Raagam.MVC.TextileManagement.UI
 
 
             bundles.Add(new ScriptBundle("~/bundles/grid").Include(
-"~/scripts/jqgrid/jquery.jqGrid.js",
-"~/scripts/jqgrid/grid.base.js",
-"~/scripts/jqgrid/grid.common.js",
-"~/scripts/jqgrid/grid.custom.js",
-"~/scripts/jqgrid/grid.filter.js",
-"~/scripts/jqgrid/grid.formedit.js",
-"~/scripts/jqgrid/grid.grouping.js",
-"~/scripts/jqgrid/grid.import.js",
-"~/scripts/jqgrid/grid.inlinedit.js",
-"~/scripts/jqgrid/grid.jqueryui.js",
-"~/scripts/jqgrid/grid.subgrid.js",
-"~/scripts/jqgrid/grid.tbltogrid.js",
-"~/scripts/jqgrid/grid.treegrid.js",
-"~/scripts/jqgrid/jqDnR.js",
-"~/scripts/jqgrid/jqModal.js",
-"~/scripts/jqgrid/jquery.fmatter.js",
-"~/scripts/jqgrid/JsonXml.js" 
+                "~/scripts/i18n/grid.locale-en.js",
+"~/scripts/jquery.jqGrid.src.js" 
 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/mask").Include(
+
+ "~/plugins/forms/maskedinput/jquery.inputmask.js",
+ "~/plugins/forms/maskedinput/jquery.inputmask.date.extensions.js",
+ "~/plugins/forms/maskedinput/jquery.inputmask.extensions.js",
+ "~/plugins/forms/maskedinput/jquery.inputmask.numeric.extensions.js",
+ "~/plugins/forms/maskedinput/jquery.inputmask.phone.extensions.js",
+ "~/plugins/forms/maskedinput/jquery.inputmask.regex.extensions.js",
+ "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
+ "~/Scripts/chosen.jquery.js",
+  "~/Scripts/prism.js"
+
+));
+
 
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
 "~/plugins/forms/elastic/jquery.elastic.js",
     "~/plugins/forms/elastic/jquery.elastic.js",
     "~/plugins/forms/inputlimiter/jquery.inputlimiter.1.3.min.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.date.extensions.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.extensions.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.numeric.extensions.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.phone.extensions.js",
-    "~/plugins/forms/maskedinput/jquery.inputmask.regex.extensions.js",
     "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
     "~/plugins/forms/uniform/jquery.uniform.min.js",
     "~/plugins/forms/globalize/globalize.js",
@@ -83,9 +78,7 @@ namespace Raagam.MVC.TextileManagement.UI
     "~/plugins/forms/select/select2.min.js",
     "~/plugins/forms/dualselect/jquery.dualListBox-1.3.min.js",
     "~/plugins/forms/tiny_mce/tinymce.min.js",
-    "~/js/supr-theme/jquery-ui-sliderAccess.js",
-    "~/Scripts/chosen.jquery.js",
-     "~/Scripts/prism.js"
+    "~/js/supr-theme/jquery-ui-sliderAccess.js" 
 
 ));
 
@@ -110,7 +103,6 @@ namespace Raagam.MVC.TextileManagement.UI
         
 
             bundles.Add(new StyleBundle("~/Content/plugin").Include(
-                        "~/Content/ui.jqgrid.css",
                        "~/plugins/misc/qtip/jquery.qtip.css",
                        "~/plugins/forms/inputlimiter/jquery.inputlimiter.css",
                        "~/plugins/forms/togglebutton/toggle-buttons.css",
