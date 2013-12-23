@@ -3,30 +3,32 @@
     ViewBag.Title = "FabricCuttingChart";
     Layout = null; 
 }
- 
 <script language="javascript" type="text/javascript">
 
-    $('#OrderNumber').inputmask('999999', { placeholder: " " });
-    $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
-    $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
-    
-    $('#grdFabricCuttingChart').jqGrid({
-        height: 'auto',
-        datatype: 'json',
-        rowNum: 50,
-        rowList: [50, 100, 200],
-        caption: 'Fabric Cutting Chart',
-        mtype: 'POST',
-        viewrecords: true,
-        colNames: ['SequenceNumber', 'OrderSequenceNumber', 'StyleFabricSequenceNumber', 'StyleSizeSequenceNumber', 'StylePanelName',
+
+    $(document).ready(function () {
+
+        $('#OrderNumber').inputmask('999999', { placeholder: " " });
+        $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+        $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+
+        $('#grdFabricCuttingChart').jqGrid({
+            height: 'auto',
+            datatype: 'json',
+            rowNum: 50,
+            rowList: [50, 100, 200],
+            caption: 'Fabric Cutting Chart',
+            mtype: 'POST',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'OrderSequenceNumber', 'StyleFabricSequenceNumber', 'StyleSizeSequenceNumber', 'StylePanelName',
                             'ProductName', 'TableDia', 'KnitDia', 'SizeName', 'ColorName', 'Pieces', 'Weight', 'WastagePercentage', 'TotalWeight', 'TempGUID',
                             'StyleColorSequenceNumber', 'LoopLength', 'KnitGSM'
                            ],
-        colModel: [
+            colModel: [
   {
       name: 'SequenceNumber',
       index: 'SequenceNumber',
-      hidden : true
+      hidden: true
   },
                                 {
                                     name: 'OrderSequenceNumber',
@@ -114,100 +116,106 @@
                                      width: 60
                                  }
         ]
-    });
+        });
 
 
-    $('#StyleSequenceNumber').change(function (event) {
+        $('#StyleSequenceNumber').change(function (event) {
 
-        var styleSequence = $('#StyleSequenceNumber').val();
+            var styleSequence = $('#StyleSequenceNumber').val();
 
-        if (styleSequence != 0) {
+            if (styleSequence != 0) {
 
-            $.ajax({
-                url: '@Url.Content("/FabricCuttingChart/GetCascadeFabricPanelSize")',
-                type: 'POST',
-                data:
+                $.ajax({
+                    url: '@Url.Content("/FabricCuttingChart/GetCascadeFabricPanelSize")',
+                    type: 'POST',
+                    data:
                         {
                             style: styleSequence
                         },
-                success: function (result) {
-                    debugger;
+                    success: function (result) {
+                        debugger;
 
 
-                    $("#FabricSequenceNumber").empty();
-                    $("#FabricSequenceNumber").append($("<option></option>").val(0).html('Select Fabric'));
-                    $.each(result.data.FabricLinkDropDownList, function (key, data) {
-                        $("#FabricSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
-                    });
-                    $('#FabricSequenceNumber').val(0).change();
+                        $("#FabricSequenceNumber").empty();
+                        $("#FabricSequenceNumber").append($("<option></option>").val(0).html('Select Fabric'));
+                        $.each(result.data.FabricLinkDropDownList, function (key, data) {
+                            $("#FabricSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
+                        });
+                        $('#FabricSequenceNumber').val(0).change();
 
 
-                    $("#PanelSelectedList").empty();
-                    $.each(result.data.PanelLinkDropDownList, function (key, data) {
-                        $("#PanelSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
-                    });
-                    $("#PanelSelectedList").chosen();
+                        $("#PanelSelectedList").empty();
+                        $.each(result.data.PanelLinkDropDownList, function (key, data) {
+                            $("#PanelSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                        });
+                        $("#PanelSelectedList").chosen();
 
-                    $("#StyleSizeSelectedList").empty();
-                    $.each(result.data.StyleSizeLinkDropDownList, function (key, data) {
-                        $("#StyleSizeSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
-                    });
-                    $("#StyleSizeSelectedList").chosen();
-
-
-                    $("#grdFabricCuttingChart").setGridParam({ 'postData': result.data.fabricCuttingChartMainList });
+                        $("#StyleSizeSelectedList").empty();
+                        $.each(result.data.StyleSizeLinkDropDownList, function (key, data) {
+                            $("#StyleSizeSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                        });
+                        $("#StyleSizeSelectedList").chosen();
 
 
-
-
-                },
-                error: function (e) {
-                    alert(e.responseText);
-                }
-            });
-        }
-    });
+                        $("#grdFabricCuttingChart").setGridParam({ 'postData': result.data.fabricCuttingChartMainList });
 
 
 
-    $('#OrderNumber').keypress(function (event) {
-        if (event.keyCode == 13) {
-            $.ajax({
-                url: '@Url.Content("/FabricCuttingChart/GetOrderDetails")',
-                type: 'POST',
-                data:
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+            }
+        });
+
+
+
+        $('#OrderNumber').keypress(function (event) {
+            if (event.keyCode == 13) {
+                $.ajax({
+                    url: '@Url.Content("/FabricCuttingChart/GetOrderDetails")',
+                    type: 'POST',
+                    data:
                         {
                             OrderNumber: $('#OrderNumber').val()
                         },
-                success: function (result) {
-                    $('#OrderDate').val(result.data.OrderDate);
-                    $('#DeliveryDate').val(result.data.DeliveryDate);
-                    $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
-                    $('#OrderQuantity').val(result.data.OrderQuantity);
-                    $("#BuyerSequenceNumber").empty();
-                    $.each(result.data.BuyerDropDownList, function (key, data) {
-                        $("#BuyerSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
-                    });
+                    success: function (result) {
+                        $('#OrderDate').val(result.data.OrderDate);
+                        $('#DeliveryDate').val(result.data.DeliveryDate);
+                        $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
+                        $('#OrderQuantity').val(result.data.OrderQuantity);
+                        $("#BuyerSequenceNumber").empty();
+                        $.each(result.data.BuyerDropDownList, function (key, data) {
+                            $("#BuyerSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
+                        });
 
-                    $("#StyleSequenceNumber").empty();
-                    $("#StyleSequenceNumber").append($("<option></option>").val(0).html('Select Style'));
-                    $.each(result.data.StyleDropDownList, function (key, data) {
-                        $("#StyleSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
-                    });
+                        $("#StyleSequenceNumber").empty();
+                        $("#StyleSequenceNumber").append($("<option></option>").val(0).html('Select Style'));
+                        $.each(result.data.StyleDropDownList, function (key, data) {
+                            $("#StyleSequenceNumber").append($("<option></option>").val(data.Value).html(data.Text));
+                        });
 
-                    $('#StyleSequenceNumber').val(0).change();
+                        $('#StyleSequenceNumber').val(0).change();
 
-                },
-                error: function (e) {
-                    alert(e.responseText);
-                }
-            });
-        }
-        return false;
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+            }
+            return false;
+        });
+
+
     });
 
-    
+     
+
+     
 </script>
+}
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmFabricCuttingChart", role = "form", @class = "form-horizontal" }))
 {    
     
@@ -309,14 +317,13 @@
                             <input type="button" value="Add" class="btn marginR10" />
                             <button class="btn btn-danger">
                                 Cancel</button>
-                            
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1">
-                        <table id="grdFabricCuttingChart">
+                            <table id="grdFabricCuttingChart">
                             </table>
-                        </div>                
+                        </div>
                     </div>
                     <!-- End .form-group  -->
                 </div>
