@@ -29,8 +29,23 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             fabricCuttingChartModel.StyleDropDownList = new List<SelectListItem>();
             fabricCuttingChartModel.FabricLinkDropDownList = new List<LinkDropDownModel>();
             fabricCuttingChartModel.StyleSizeLinkDropDownList  = new List<LinkDropDownModel>();
+            fabricCuttingChartModel.fabricCuttingChartMainList = new List<FabricCuttingChartMainModel>();
 
             return View(url, fabricCuttingChartModel);
+        }
+
+        public JsonResult LoadGrid()
+        {
+         
+            FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
+            fabricCuttingChartModel.fabricCuttingChartMainList = new List<FabricCuttingChartMainModel>();
+
+
+            return Json(new
+            {
+                fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList
+                 
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetOrderDetails(long OrderNumber)
@@ -59,6 +74,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             var fabricList = fabricCuttingChartModel.FabricLinkDropDownList.AsQueryable();
             var panelList = fabricCuttingChartModel.PanelLinkDropDownList.AsQueryable();
             var styleSizeList = fabricCuttingChartModel.StyleSizeLinkDropDownList.AsQueryable();
+            
 
 
             if (style != null)
@@ -77,7 +93,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 {
                     FabricLinkDropDownList = fabricList,
                     PanelLinkDropDownList = panelList,
-                    StyleSizeLinkDropDownList = styleSizeList
+                    StyleSizeLinkDropDownList = styleSizeList,
+                    fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList
                 }
             }, JsonRequestBehavior.AllowGet);
         }

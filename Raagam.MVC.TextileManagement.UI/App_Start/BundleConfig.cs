@@ -44,6 +44,27 @@ namespace Raagam.MVC.TextileManagement.UI
 "~/plugins/misc/search/tipuesearch.js"
 ));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/grid").Include(
+"~/scripts/jqgrid/jquery.jqGrid.js",
+"~/scripts/jqgrid/grid.base.js",
+"~/scripts/jqgrid/grid.common.js",
+"~/scripts/jqgrid/grid.custom.js",
+"~/scripts/jqgrid/grid.filter.js",
+"~/scripts/jqgrid/grid.formedit.js",
+"~/scripts/jqgrid/grid.grouping.js",
+"~/scripts/jqgrid/grid.import.js",
+"~/scripts/jqgrid/grid.inlinedit.js",
+"~/scripts/jqgrid/grid.jqueryui.js",
+"~/scripts/jqgrid/grid.subgrid.js",
+"~/scripts/jqgrid/grid.tbltogrid.js",
+"~/scripts/jqgrid/grid.treegrid.js",
+"~/scripts/jqgrid/jqDnR.js",
+"~/scripts/jqgrid/jqModal.js",
+"~/scripts/jqgrid/jquery.fmatter.js",
+"~/scripts/jqgrid/JsonXml.js" 
+));
+
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
 "~/plugins/forms/elastic/jquery.elastic.js",
     "~/plugins/forms/elastic/jquery.elastic.js",
@@ -89,6 +110,7 @@ namespace Raagam.MVC.TextileManagement.UI
         
 
             bundles.Add(new StyleBundle("~/Content/plugin").Include(
+                        "~/Content/ui.jqgrid.css",
                        "~/plugins/misc/qtip/jquery.qtip.css",
                        "~/plugins/forms/inputlimiter/jquery.inputlimiter.css",
                        "~/plugins/forms/togglebutton/toggle-buttons.css",
