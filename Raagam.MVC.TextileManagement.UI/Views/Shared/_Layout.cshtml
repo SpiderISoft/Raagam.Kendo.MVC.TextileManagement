@@ -24,8 +24,21 @@
 
         @Scripts.Render("~/bundles/modernizr")
     </head>
-    <body class="loginPage">
-        <div id="body">
+    <body >
+     <div class="container">
+        <div id="header">
+            <div class="row">
+                <div class="navbar">
+                    <div class="container">
+                    </div>
+                </div>
+                <!-- /navbar -->
+            </div>
+            <!-- End .row -->
+        </div>
+        <!-- End #header -->
+    </div>
+        <div id="bodyContent">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
