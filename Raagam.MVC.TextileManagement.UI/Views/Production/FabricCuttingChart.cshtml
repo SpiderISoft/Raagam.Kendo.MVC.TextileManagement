@@ -143,19 +143,19 @@
                         $('#FabricSequenceNumber').val(0).change();
 
 
-                        $("#PanelSelectedList").empty();
+                        $("#PanelSelected").empty();
                         $.each(result.data.PanelLinkDropDownList, function (key, data) {
-                            $("#PanelSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                            $("#PanelSelected").append($("<option></option>").val(data.Key).html(data.Value));
                         });
-                        $("#PanelSelectedList").chosen();
+                        $("#PanelSelected").chosen();
 
-                        $("#StyleSizeSelectedList").empty();
+                        $("#StyleSizeSelected").empty();
                         $.each(result.data.StyleSizeLinkDropDownList, function (key, data) {
-                            $("#StyleSizeSelectedList").append($("<option></option>").val(data.Key).html(data.Value));
+                            $("#StyleSizeSelected").append($("<option></option>").val(data.Key).html(data.Value));
                         });
-                        $("#StyleSizeSelectedList").chosen();
+                        $("#StyleSizeSelected").chosen();
 
-
+                        jQuery('#grdFabricCuttingChart').clearGridData();
                         var rowid = 0;
                         $.each(result.data.fabricCuttingChartMainList, function (key, data) {
                             jQuery("#grdFabricCuttingChart").addRowData(rowid, data);
@@ -214,13 +214,16 @@
         $('#AddButton').click(function (event) {
             debugger;
 
+            var sStyleSizeSelected = $('#StyleSizeSelected').val().toString();
+            var sPanelSelected = $('#PanelSelected').val().toString();
+
             $.ajax({
                 url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
                 type: 'POST',
                 data:
                         {
-                            sStyleSizeSelected: $('#StyleSizeSelectedList').chosen().val(),
-                            sPanelSelected : $('#PanelSelectedList').val(),
+                            StyleSizeSelectedList: sStyleSizeSelected,
+                            PanelSelectedList: sPanelSelected,
                             styleSequenceNumber: $('#StyleSequenceNumber').val(),
                             orderSequenceNumber: $('#OrderNumber').val(),
                             styleFabricSequenceNumber: $('#FabricSequenceNumber').val(),
@@ -325,13 +328,13 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PanelSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.ListBoxFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:400px;" })
+                            @Html.ListBoxFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { id="PanelSelected",name="PanelSelected", @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleSizeSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.ListBoxFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:400px;" })
+                            @Html.ListBoxFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { id="StyleSizeSelected",name="StyleSizeSelected", @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">

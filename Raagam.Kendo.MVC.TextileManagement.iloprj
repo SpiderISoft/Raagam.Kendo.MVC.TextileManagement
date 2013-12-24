@@ -11,26 +11,6 @@
           </SoftwareWatermark>
         </NineRays.ILOMD.Options.Options>
       </ObfuscationOptions>
-      <Name>Raagam.Kendo.MVC.TextileManagement\bin\Raagam.Kendo.MVC.TextileManagement.dll</Name>
-    </NineRays.ILOMD.Options.AssemblyFileName>
-    <NineRays.ILOMD.Options.AssemblyFileName>
-      <Flags>VSProject</Flags>
-      <ObfuscationOptions>
-        <NineRays.ILOMD.Options.Options>
-          <SoftwareWatermark>
-          </SoftwareWatermark>
-        </NineRays.ILOMD.Options.Options>
-      </ObfuscationOptions>
-      <Name>Raagam.Kendo.MVC.TextileManagementTests\bin\Debug\Raagam.Kendo.MVC.TextileManagementTests.dll</Name>
-    </NineRays.ILOMD.Options.AssemblyFileName>
-    <NineRays.ILOMD.Options.AssemblyFileName>
-      <Flags>VSProject</Flags>
-      <ObfuscationOptions>
-        <NineRays.ILOMD.Options.Options>
-          <SoftwareWatermark>
-          </SoftwareWatermark>
-        </NineRays.ILOMD.Options.Options>
-      </ObfuscationOptions>
       <Name>Raagam.TextileManagement.WCF.Service\bin\Raagam.TextileManagement.WCF.Service.dll</Name>
     </NineRays.ILOMD.Options.AssemblyFileName>
     <NineRays.ILOMD.Options.AssemblyFileName>

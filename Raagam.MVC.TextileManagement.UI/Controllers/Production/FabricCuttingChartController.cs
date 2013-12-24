@@ -119,13 +119,13 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
         //}
 
         [HttpPost]
-        public ActionResult AddFabricCuttingChart(long styleSequenceNumber, long orderSequenceNumber, long styleFabricSequenceNumber, decimal weight, decimal tableDia, string loopLength, string knitGSM)
+        public ActionResult AddFabricCuttingChart(string StyleSizeSelectedList, string PanelSelectedList, long styleSequenceNumber, long orderSequenceNumber, long styleFabricSequenceNumber, decimal weight, decimal tableDia, string loopLength, string knitGSM)
         {
 
             string sPanelName = "";
 
-            List<long> StyleSizeSelected = Request.Form["sStyleSizeSelected[]"].ToString().Split(',').Select(long.Parse).ToList();
-            List<long> PanelSelected = Request.Form["sPanelSelected[]"].ToString().Split(',').Select(long.Parse).ToList();
+            List<long> StyleSizeSelected = StyleSizeSelectedList.Split(',').Select(long.Parse).ToList();
+            List<long> PanelSelected = PanelSelectedList.Split(',').Select(long.Parse).ToList();
 
             List<FabricCuttingChartPanelColorModel> panelColorMatchedModelList = new List<FabricCuttingChartPanelColorModel>();
             List<long> panelColorMatchedSequenceNumberList = new List<long>();
