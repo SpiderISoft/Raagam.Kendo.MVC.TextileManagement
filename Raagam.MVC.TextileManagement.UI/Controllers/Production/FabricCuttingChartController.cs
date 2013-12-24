@@ -25,12 +25,6 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
         {
             string url = "~/Views/Production/FabricCuttingChart.cshtml";
             FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
-            fabricCuttingChartModel.BuyerDropDownList = new List<SelectListItem>();
-            fabricCuttingChartModel.StyleDropDownList = new List<SelectListItem>();
-            fabricCuttingChartModel.FabricLinkDropDownList = new List<LinkDropDownModel>();
-            fabricCuttingChartModel.StyleSizeLinkDropDownList  = new List<LinkDropDownModel>();
-            fabricCuttingChartModel.fabricCuttingChartMainList = new List<FabricCuttingChartMainModel>();
-
             return View(url, fabricCuttingChartModel);
         }
 
@@ -124,168 +118,181 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
 
         //}
 
+        [HttpPost]
+        public ActionResult AddFabricCuttingChart(long styleSequenceNumber, long orderSequenceNumber, long styleFabricSequenceNumber, decimal weight, decimal tableDia, string loopLength, string knitGSM)
+        {
 
-        //public ActionResult AddFabricCuttingChart([DataSourceRequest]DataSourceRequest request, List<long> sStyleSizeSelected, List<long> sPanelSelected, long styleSequenceNumber, long orderSequenceNumber, long styleFabricSequenceNumber, decimal weight, decimal tableDia, string loopLength, string knitGSM)
-        //{
+            string sPanelName = "";
 
-        //    string sPanelName = "";
-            
-        //    List<FabricCuttingChartPanelColorModel> panelColorMatchedModelList = new List<FabricCuttingChartPanelColorModel>();
-        //    List<long> panelColorMatchedSequenceNumberList = new List<long>();
-        //    List<long> panelColorNotMatchedSequenceNumberList = new List<long>();
+            List<long> StyleSizeSelected = Request.Form["sStyleSizeSelected[]"].ToString().Split(',').Select(long.Parse).ToList();
+            List<long> PanelSelected = Request.Form["sPanelSelected[]"].ToString().Split(',').Select(long.Parse).ToList();
 
-            
-        //    FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
-            
-        //    fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
-
-        //    var _fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
-        //    var _fabricCuttingChartDetailList = fabricCuttingChartModel.fabricCuttingChartDetailList.AsQueryable();
-
-        //    var _fabricCuttingChartList = _fabricCuttingChartMainList.Join(_fabricCuttingChartDetailList, m => m.SequenceNumber, d => d.FabricCuttingChartMainSequenceNumber, (m, d) => new {  MainList = m, DetailList = d }).AsQueryable();
-
-        //    if (_fabricCuttingChartList.Where(x => sStyleSizeSelected.Contains(x.MainList.StyleSizeSequenceNumber) && sPanelSelected.Contains(x.DetailList.StylePanelSequenceNumber) && x.MainList.StyleFabricSequenceNumber == styleFabricSequenceNumber && x.MainList.OrderSequenceNumber == orderSequenceNumber).ToList().Count > 0)
-        //    {
-        //        TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
-        //        return Json(new DataSourceResult {Errors = "Already Some of this Combination is Available"}   , JsonRequestBehavior.AllowGet);
-        //    }
-            
+            List<FabricCuttingChartPanelColorModel> panelColorMatchedModelList = new List<FabricCuttingChartPanelColorModel>();
+            List<long> panelColorMatchedSequenceNumberList = new List<long>();
+            List<long> panelColorNotMatchedSequenceNumberList = new List<long>();
 
 
+            FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
 
-        //    List<FabricCuttingChartPanelColorModel> panelColorModelList = new List<FabricCuttingChartPanelColorModel>();
+            fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
 
-        //    var panelColorModelQueryable = fabricCuttingChartModel.panelColorModelList.AsQueryable();
+            var _fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
+            var _fabricCuttingChartDetailList = fabricCuttingChartModel.fabricCuttingChartDetailList.AsQueryable();
 
-        //    if (panelColorModelQueryable != null)
-        //    {
+            var _fabricCuttingChartList = _fabricCuttingChartMainList.Join(_fabricCuttingChartDetailList, m => m.SequenceNumber, d => d.FabricCuttingChartMainSequenceNumber, (m, d) => new { MainList = m, DetailList = d }).AsQueryable();
 
-        //        panelColorMatchedModelList = panelColorModelQueryable.Where(p => sPanelSelected.Contains(p.StylePanelSequenceNumber) && p.StyleSequenceNumber == styleSequenceNumber).ToList();
-
-        //        panelColorMatchedSequenceNumberList = panelColorMatchedModelList.Select(x => x.StylePanelSequenceNumber).ToList();
-
-        //        panelColorNotMatchedSequenceNumberList = sPanelSelected.Except(panelColorMatchedSequenceNumberList).ToList();
-
-
-        //        foreach (long panelColorNotMatched in panelColorNotMatchedSequenceNumberList)
-        //        {
-        //            string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == panelColorNotMatched).Select(x => x.Value).First().ToString();
-
-        //            if (sPanelName.Length == 0)
-        //                sPanelName = PanelName;
-        //            else
-        //                sPanelName += "/" + PanelName;
-
-        //        }
-        //    }
-
-        //    foreach (long itemSize in sStyleSizeSelected)
-        //    {
-        //        int orderExcessQty = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == itemSize).Select(x => x.OrderExcessQty).First();
-        //        string sizeName = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == itemSize).Select(x => x.SizeName).First();
-        //        string fabricName = fabricCuttingChartModel.FabricLinkDropDownList.Where(x => x.Key == styleFabricSequenceNumber).Select(x => x.Value).First();
-        //        string TempGUID =  Guid.NewGuid().ToString();
-
-        //        if (sPanelName.Length > 0)
-        //        {
-
-        //            FabricCuttingChartMainModel fabricCuttingChartMain = new FabricCuttingChartMainModel();
-        //            fabricCuttingChartMain.OrderSequenceNumber = orderSequenceNumber;
-        //            fabricCuttingChartMain.StyleFabricSequenceNumber = styleFabricSequenceNumber;
-        //            fabricCuttingChartMain.StyleSizeSequenceNumber = itemSize;
-        //            fabricCuttingChartMain.StyleColorSequenceNumber = 0;
-        //            fabricCuttingChartMain.ColorName = "";
-        //            fabricCuttingChartMain.Weight = weight;
-        //            fabricCuttingChartMain.TableDia = tableDia;
-        //            fabricCuttingChartMain.KnitDia = tableDia;
-        //            fabricCuttingChartMain.Pieces = orderExcessQty;
-        //            fabricCuttingChartMain.WastagePercentage = 7;
-        //            fabricCuttingChartMain.TotalWeight = (weight + ((weight * 7) / 100)) * orderExcessQty;
-        //            fabricCuttingChartMain.ProductName = fabricName;
-        //            fabricCuttingChartMain.StylePanelName = sPanelName;
-        //            fabricCuttingChartMain.SizeName = sizeName;
-        //            fabricCuttingChartMain.TempGUID =TempGUID;
-        //            fabricCuttingChartMain.LoopLength = loopLength;
-        //            fabricCuttingChartMain.KnitGSM = knitGSM;
-
-        //            fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
-
-        //            foreach (long panelColorNotMatched in panelColorNotMatchedSequenceNumberList)
-        //            {
-        //                string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == panelColorNotMatched).Select(x => x.Value).First().ToString();
-
-        //                FabricCuttingChartDetailModel fabricCuttingChartDetailModel = new FabricCuttingChartDetailModel();
-        //                fabricCuttingChartDetailModel.SequenceNumber = 0;
-        //                fabricCuttingChartDetailModel.StylePanelSequenceNumber = panelColorNotMatched;
-        //                fabricCuttingChartDetailModel.PanelName = PanelName;
-        //                fabricCuttingChartDetailModel.TempGUID = TempGUID;
-        //                fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
-                     
-        //            }
-
-
-        //        }
+            if (_fabricCuttingChartList.Where(x => StyleSizeSelected.Contains(x.MainList.StyleSizeSequenceNumber) && PanelSelected.Contains(x.DetailList.StylePanelSequenceNumber) && x.MainList.StyleFabricSequenceNumber == styleFabricSequenceNumber && x.MainList.OrderSequenceNumber == orderSequenceNumber).ToList().Count > 0)
+            {
+                TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
+                return Json(new {
+                                    success = false,
+                                    errors =   "Already Some of this Combination is Available" 
+                                }, JsonRequestBehavior.AllowGet);
+            }
 
 
 
-        //    }
 
-        //    foreach (FabricCuttingChartPanelColorModel _fabricCuttingChartPanelColorModel in panelColorMatchedModelList)
-        //    {
+            List<FabricCuttingChartPanelColorModel> panelColorModelList = new List<FabricCuttingChartPanelColorModel>();
 
-        //        if (panelColorModelQueryable.Where(p => p.StylePanelSequenceNumber == _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber && p.StyleSequenceNumber == styleSequenceNumber && p.StyleSizeSequenceNumber == _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber).ToList().Count == 0)
-        //        {
-        //            break;
-        //        }
-        //        string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber).Select(x => x.Value).First().ToString();
-        //        int orderExcessQty = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber).Select(x => x.OrderExcessQty).First();
-        //        string fabricName = fabricCuttingChartModel.FabricLinkDropDownList.Where(x => x.Key == styleFabricSequenceNumber).Select(x => x.Value).First();
+            var panelColorModelQueryable = fabricCuttingChartModel.panelColorModelList.AsQueryable();
 
+            if (panelColorModelQueryable != null)
+            {
 
-        //        FabricCuttingChartMainModel fabricCuttingChartMain = new FabricCuttingChartMainModel();
-        //        fabricCuttingChartMain.OrderSequenceNumber = orderSequenceNumber;
-        //        fabricCuttingChartMain.StyleFabricSequenceNumber = styleFabricSequenceNumber;
-        //        fabricCuttingChartMain.StyleSizeSequenceNumber = _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber;
-        //        fabricCuttingChartMain.StyleColorSequenceNumber = _fabricCuttingChartPanelColorModel.StyleColorSequenceNumber;
-        //        fabricCuttingChartMain.ColorName = _fabricCuttingChartPanelColorModel.ColorName;
-        //        fabricCuttingChartMain.Weight = weight;
-        //        fabricCuttingChartMain.TableDia = tableDia;
-        //        fabricCuttingChartMain.KnitDia = tableDia;
-        //        fabricCuttingChartMain.Pieces = orderExcessQty;
-        //        fabricCuttingChartMain.WastagePercentage = 7;
-        //        fabricCuttingChartMain.TotalWeight = (weight + ((weight * 7) / 100)) * orderExcessQty;
-        //        fabricCuttingChartMain.ProductName = fabricName;
-        //        fabricCuttingChartMain.StylePanelName = sPanelName;
-        //        fabricCuttingChartMain.SizeName = _fabricCuttingChartPanelColorModel.SizeName;
-        //        fabricCuttingChartMain.TempGUID = Guid.NewGuid().ToString();
-        //        fabricCuttingChartMain.LoopLength = loopLength;
-        //        fabricCuttingChartMain.KnitGSM = knitGSM;
+                panelColorMatchedModelList = panelColorModelQueryable.Where(p => PanelSelected.Contains(p.StylePanelSequenceNumber) && p.StyleSequenceNumber == styleSequenceNumber).ToList();
 
-        //        fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
+                panelColorMatchedSequenceNumberList = panelColorMatchedModelList.Select(x => x.StylePanelSequenceNumber).ToList();
+
+                panelColorNotMatchedSequenceNumberList = PanelSelected.Except(panelColorMatchedSequenceNumberList).ToList();
 
 
-        //        FabricCuttingChartDetailModel fabricCuttingChartDetailModel = new FabricCuttingChartDetailModel();
-        //        fabricCuttingChartDetailModel.SequenceNumber = 0;
-        //        fabricCuttingChartDetailModel.StylePanelSequenceNumber = _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber;
-        //        fabricCuttingChartDetailModel.PanelName = PanelName ;
-        //        fabricCuttingChartDetailModel.TempGUID = _fabricCuttingChartPanelColorModel.TempGUID;
-        //        fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
-        //    }
+                foreach (long panelColorNotMatched in panelColorNotMatchedSequenceNumberList)
+                {
+                    string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == panelColorNotMatched).Select(x => x.Value).First().ToString();
+
+                    if (sPanelName.Length == 0)
+                        sPanelName = PanelName;
+                    else
+                        sPanelName += "/" + PanelName;
+
+                }
+            }
+
+            foreach (long itemSize in StyleSizeSelected)
+            {
+                int orderExcessQty = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == itemSize).Select(x => x.OrderExcessQty).First();
+                string sizeName = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == itemSize).Select(x => x.SizeName).First();
+                string fabricName = fabricCuttingChartModel.FabricLinkDropDownList.Where(x => x.Key == styleFabricSequenceNumber).Select(x => x.Value).First();
+                string TempGUID = Guid.NewGuid().ToString();
+
+                if (sPanelName.Length > 0)
+                {
+
+                    FabricCuttingChartMainModel fabricCuttingChartMain = new FabricCuttingChartMainModel();
+                    fabricCuttingChartMain.OrderSequenceNumber = orderSequenceNumber;
+                    fabricCuttingChartMain.StyleFabricSequenceNumber = styleFabricSequenceNumber;
+                    fabricCuttingChartMain.StyleSizeSequenceNumber = itemSize;
+                    fabricCuttingChartMain.StyleColorSequenceNumber = 0;
+                    fabricCuttingChartMain.ColorName = "";
+                    fabricCuttingChartMain.Weight = weight;
+                    fabricCuttingChartMain.TableDia = tableDia;
+                    fabricCuttingChartMain.KnitDia = tableDia;
+                    fabricCuttingChartMain.Pieces = orderExcessQty;
+                    fabricCuttingChartMain.WastagePercentage = 7;
+                    fabricCuttingChartMain.TotalWeight = (weight + ((weight * 7) / 100)) * orderExcessQty;
+                    fabricCuttingChartMain.ProductName = fabricName;
+                    fabricCuttingChartMain.StylePanelName = sPanelName;
+                    fabricCuttingChartMain.SizeName = sizeName;
+                    fabricCuttingChartMain.TempGUID = TempGUID;
+                    fabricCuttingChartMain.LoopLength = loopLength;
+                    fabricCuttingChartMain.KnitGSM = knitGSM;
+
+                    fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
+
+                    foreach (long panelColorNotMatched in panelColorNotMatchedSequenceNumberList)
+                    {
+                        string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == panelColorNotMatched).Select(x => x.Value).First().ToString();
+
+                        FabricCuttingChartDetailModel fabricCuttingChartDetailModel = new FabricCuttingChartDetailModel();
+                        fabricCuttingChartDetailModel.SequenceNumber = 0;
+                        fabricCuttingChartDetailModel.StylePanelSequenceNumber = panelColorNotMatched;
+                        fabricCuttingChartDetailModel.PanelName = PanelName;
+                        fabricCuttingChartDetailModel.TempGUID = TempGUID;
+                        fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
+
+                    }
+
+
+                }
 
 
 
-        //    IQueryable<FabricCuttingChartMainModel> fabricCuttingChartMainModel = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
+            }
 
-        //    DataSourceResult result = fabricCuttingChartMainModel.ToDataSourceResult(request);
-       
+            foreach (FabricCuttingChartPanelColorModel _fabricCuttingChartPanelColorModel in panelColorMatchedModelList)
+            {
 
-        //    TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
+                if (panelColorModelQueryable.Where(p => p.StylePanelSequenceNumber == _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber && p.StyleSequenceNumber == styleSequenceNumber && p.StyleSizeSequenceNumber == _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber).ToList().Count == 0)
+                {
+                    break;
+                }
+                string PanelName = fabricCuttingChartModel.PanelLinkDropDownList.Where(x => x.Key == _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber).Select(x => x.Value).First().ToString();
+                int orderExcessQty = fabricCuttingChartModel.orderDetailsModelList.Where(x => x.StyleSizeSequenceNumber == _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber).Select(x => x.OrderExcessQty).First();
+                string fabricName = fabricCuttingChartModel.FabricLinkDropDownList.Where(x => x.Key == styleFabricSequenceNumber).Select(x => x.Value).First();
 
-        //    return Json(result, JsonRequestBehavior.AllowGet);
+
+                FabricCuttingChartMainModel fabricCuttingChartMain = new FabricCuttingChartMainModel();
+                fabricCuttingChartMain.OrderSequenceNumber = orderSequenceNumber;
+                fabricCuttingChartMain.StyleFabricSequenceNumber = styleFabricSequenceNumber;
+                fabricCuttingChartMain.StyleSizeSequenceNumber = _fabricCuttingChartPanelColorModel.StyleSizeSequenceNumber;
+                fabricCuttingChartMain.StyleColorSequenceNumber = _fabricCuttingChartPanelColorModel.StyleColorSequenceNumber;
+                fabricCuttingChartMain.ColorName = _fabricCuttingChartPanelColorModel.ColorName;
+                fabricCuttingChartMain.Weight = weight;
+                fabricCuttingChartMain.TableDia = tableDia;
+                fabricCuttingChartMain.KnitDia = tableDia;
+                fabricCuttingChartMain.Pieces = orderExcessQty;
+                fabricCuttingChartMain.WastagePercentage = 7;
+                fabricCuttingChartMain.TotalWeight = (weight + ((weight * 7) / 100)) * orderExcessQty;
+                fabricCuttingChartMain.ProductName = fabricName;
+                fabricCuttingChartMain.StylePanelName = sPanelName;
+                fabricCuttingChartMain.SizeName = _fabricCuttingChartPanelColorModel.SizeName;
+                fabricCuttingChartMain.TempGUID = Guid.NewGuid().ToString();
+                fabricCuttingChartMain.LoopLength = loopLength;
+                fabricCuttingChartMain.KnitGSM = knitGSM;
+
+                fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
+
+
+                FabricCuttingChartDetailModel fabricCuttingChartDetailModel = new FabricCuttingChartDetailModel();
+                fabricCuttingChartDetailModel.SequenceNumber = 0;
+                fabricCuttingChartDetailModel.StylePanelSequenceNumber = _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber;
+                fabricCuttingChartDetailModel.PanelName = PanelName;
+                fabricCuttingChartDetailModel.TempGUID = _fabricCuttingChartPanelColorModel.TempGUID;
+                fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
+            }
 
 
 
-        //}
+            IQueryable<FabricCuttingChartMainModel> fabricCuttingChartMainModel = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
+
+ 
+
+
+            TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
+
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList
+                }
+            }, JsonRequestBehavior.AllowGet);
+
+
+
+        }
 
     }
 }

@@ -11,6 +11,23 @@ namespace Raagam.TextileManagement.Model
     [DataContract]
     public class FabricCuttingChartModel
     {
+        public FabricCuttingChartModel()
+        {
+            BuyerDropDownList = new List<SelectListItem>();
+            StyleDropDownList = new List<SelectListItem>();
+            FabricLinkDropDownList = new List<LinkDropDownModel>();
+            StyleSizeLinkDropDownList = new List<LinkDropDownModel>();
+            fabricCuttingChartMainList = new List<FabricCuttingChartMainModel>();
+            BuyerReferenceNumber = "";
+            fabricCuttingChartDetailList = new List<FabricCuttingChartDetailModel>();
+            KnitGSM = "";
+            LoopLength = "";
+            orderDetailsModelList = new List<FabricCuttingChartOrderDetailsModel>();
+            panelColorModelList = new List<FabricCuttingChartPanelColorModel>();
+            PanelLinkDropDownList = new List<LinkDropDownModel>();
+            PanelSelectedList = new List<long>();
+            StyleSizeSelectedList = new List<long>();
+        }
        
         [DataMember]
         [DisplayName("Order Number")]

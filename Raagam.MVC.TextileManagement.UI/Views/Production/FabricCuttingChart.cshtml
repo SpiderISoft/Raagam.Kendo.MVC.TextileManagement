@@ -14,11 +14,10 @@
 
         $('#grdFabricCuttingChart').jqGrid({
             height: 'auto',
-            datatype: 'json',
+            datatype: 'local',
             rowNum: 50,
             rowList: [50, 100, 200],
             caption: 'Fabric Cutting Chart',
-            mtype: 'POST',
             viewrecords: true,
             colNames: ['SequenceNumber', 'OrderSequenceNumber', 'StyleFabricSequenceNumber', 'StyleSizeSequenceNumber', 'StylePanelName',
                             'ProductName', 'TableDia', 'KnitDia', 'SizeName', 'ColorName', 'Pieces', 'Weight', 'WastagePercentage', 'TotalWeight', 'TempGUID',
@@ -157,8 +156,11 @@
                         $("#StyleSizeSelectedList").chosen();
 
 
-                        $("#grdFabricCuttingChart").setGridParam({ 'postData': result.data.fabricCuttingChartMainList });
-
+                        var rowid = 0;
+                        $.each(result.data.fabricCuttingChartMainList, function (key, data) {
+                            jQuery("#grdFabricCuttingChart").addRowData(rowid, data);
+                            rowid = rowid + 1;
+                        });
 
 
 
@@ -209,13 +211,57 @@
         });
 
 
+        $('#AddButton').click(function (event) {
+            debugger;
+
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
+                type: 'POST',
+                data:
+                        {
+                            sStyleSizeSelected: $('#StyleSizeSelectedList').chosen().val(),
+                            sPanelSelected : $('#PanelSelectedList').val(),
+                            styleSequenceNumber: $('#StyleSequenceNumber').val(),
+                            orderSequenceNumber: $('#OrderNumber').val(),
+                            styleFabricSequenceNumber: $('#FabricSequenceNumber').val(),
+                            weight: $('#Weight').val(),
+                            tableDia: $('#TableDia').val(),
+                            loopLength: $('#LoopLength').val(),
+                            knitGSM: $('#KnitGSM').val()
+                        },
+                success: function (result) {
+                    if (result.success) {
+
+                        jQuery('#grdFabricCuttingChart').clearGridData();
+                        var rowid = 0;
+                        $.each(result.data.fabricCuttingChartMainList, function (key, data) {
+                            jQuery("#grdFabricCuttingChart").addRowData(rowid, data);
+                            rowid = rowid + 1;
+                        });
+
+                        alert('Sucessfully Added');
+                    }
+                    else {
+                        alert(result.errors);
+                    }
+
+
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+
+
     });
 
      
 
      
 </script>
-}
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmFabricCuttingChart", role = "form", @class = "form-horizontal" }))
 {    
     
@@ -279,13 +325,13 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PanelSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:400px;" })
+                            @Html.ListBoxFor(m => m.PanelSelectedList, new SelectList(Model.FabricLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Panel...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleSizeSelectedList, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:400px;" })
+                            @Html.ListBoxFor(m => m.StyleSizeSelectedList, new SelectList(Model.StyleSizeLinkDropDownList, "Key", "Value"), new { @class = "form-control", data_placeholder = "Choose  Size...", multiple = "multiple", style = "height:35px;width:400px;" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -314,7 +360,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-offset-4">
-                            <input type="button" value="Add" class="btn marginR10" />
+                            <input type="button" value="Add" id="AddButton" class="btn marginR10" />
                             <button class="btn btn-danger">
                                 Cancel</button>
                         </div>
