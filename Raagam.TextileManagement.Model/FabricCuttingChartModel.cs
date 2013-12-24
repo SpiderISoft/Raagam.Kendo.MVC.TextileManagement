@@ -5,11 +5,12 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 using System.ComponentModel;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.Model
 {
     [DataContract]
-    public class FabricCuttingChartModel
+    public class FabricCuttingChartModel  
     {
         public FabricCuttingChartModel()
         {
@@ -124,9 +125,10 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<FabricCuttingChartPanelColorModel> panelColorModelList { get; set; }
+         
 
 
-
+         
     }
 
     [DataContract]
@@ -144,7 +146,8 @@ namespace Raagam.TextileManagement.Model
     }
 
     [DataContract]
-    public class FabricCuttingChartMainModel
+    public class FabricCuttingChartMainModel  
+
     {
         [DataMember]
         public long SequenceNumber { get; set; }
@@ -200,6 +203,10 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public string KnitGSM { get; set; }
 
+        [DataMember]
+        public EnumConstants.ModelCurrentState State { get; set; } 
+
+                 
     }
 
     [DataContract]
@@ -219,6 +226,10 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public string TempGUID { get; set; }
+
+
+        [DataMember]
+        public EnumConstants.ModelCurrentState State { get; set; } 
     }
 
     [DataContract]

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Raagam.TextileManagement.Model;
 using Newtonsoft.Json;
 using Raagam.MVC.TextileManagement.UI.ProductionService;
+using Raagam.TextileManagement.CommonUtility;
 
 
 
@@ -207,6 +208,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                     fabricCuttingChartMain.TempGUID = TempGUID;
                     fabricCuttingChartMain.LoopLength = loopLength;
                     fabricCuttingChartMain.KnitGSM = knitGSM;
+                    fabricCuttingChartMain.State = EnumConstants.ModelCurrentState.Added;
 
                     fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
 
@@ -219,6 +221,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                         fabricCuttingChartDetailModel.StylePanelSequenceNumber = panelColorNotMatched;
                         fabricCuttingChartDetailModel.PanelName = PanelName;
                         fabricCuttingChartDetailModel.TempGUID = TempGUID;
+                        fabricCuttingChartDetailModel.State = EnumConstants.ModelCurrentState.Added;
                         fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
 
                     }
@@ -260,6 +263,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 fabricCuttingChartMain.TempGUID = Guid.NewGuid().ToString();
                 fabricCuttingChartMain.LoopLength = loopLength;
                 fabricCuttingChartMain.KnitGSM = knitGSM;
+                fabricCuttingChartMain.State = EnumConstants.ModelCurrentState.Added;
 
                 fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
 
@@ -269,6 +273,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 fabricCuttingChartDetailModel.StylePanelSequenceNumber = _fabricCuttingChartPanelColorModel.StylePanelSequenceNumber;
                 fabricCuttingChartDetailModel.PanelName = PanelName;
                 fabricCuttingChartDetailModel.TempGUID = _fabricCuttingChartPanelColorModel.TempGUID;
+                fabricCuttingChartDetailModel.State = EnumConstants.ModelCurrentState.Added;
                 fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetailModel);
             }
 

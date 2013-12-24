@@ -132,7 +132,7 @@ namespace Raagam.TextileManagement.DataAccess
                         fabricCuttingChartMain.ColorName = fabricCuttingChartMainDataRow["color_name"].ToString();
                         fabricCuttingChartMain.LoopLength = fabricCuttingChartMainDataRow["fabric_cutting_chart_looplength"].ToString();
                         fabricCuttingChartMain.KnitGSM  = fabricCuttingChartMainDataRow["fabric_cutting_chart_knitgsm"].ToString();
-
+                        fabricCuttingChartMain.State = EnumConstants.ModelCurrentState.UnChanged;
                         fabricCuttingChartModel.fabricCuttingChartMainList.Add(fabricCuttingChartMain);
                     }
 
@@ -145,7 +145,7 @@ namespace Raagam.TextileManagement.DataAccess
                         fabricCuttingChartDetail.StylePanelSequenceNumber = Convert.ToInt64(fabricCuttingChartDetailDataRow["fabric_cutting_chart_details_style_panel_id"]);
                         fabricCuttingChartDetail.PanelName  = fabricCuttingChartDetailDataRow["style_panel_name"].ToString();
                         fabricCuttingChartDetail.TempGUID = fabricCuttingChartDetailDataRow["fabric_cutting_chart_details_temp_id"].ToString();
-
+                        fabricCuttingChartDetail.State = EnumConstants.ModelCurrentState.UnChanged;
                         fabricCuttingChartModel.fabricCuttingChartDetailList.Add(fabricCuttingChartDetail);
                     }
 
