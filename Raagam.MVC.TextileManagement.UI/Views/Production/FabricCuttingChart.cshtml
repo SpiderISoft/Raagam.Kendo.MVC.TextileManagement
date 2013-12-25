@@ -221,18 +221,6 @@
             var sStyleSizeSelected = $('#StyleSizeSelected').val().toString();
             var sPanelSelected = $('#PanelSelected').val().toString();
 
-//            if (
-//                    (OrderNumber == 0) || (OrderNumber == '') || 
-//                    (FabricSequenceNumber == 0) || (FabricSequenceNumber == '') ||
-//                    (StyleSequenceNumber == 0) || (StyleSequenceNumber == '') ||
-//                    (sStyleSizeSelected == 0) || (sStyleSizeSelected == '')  ||
-//                    (sPanelSelected == 0) || (sPanelSelected == '')
-//                ) 
-//            {
-//                alert('Fill All Mandatory Fields');
-//                return true;
-//            }
-
             $.ajax({
                 url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
                 type: 'POST',

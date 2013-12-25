@@ -12,8 +12,37 @@
       <xs:element minOccurs="0" name="OrderDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
       <xs:element minOccurs="0" name="OrderQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="StyleColorList" nillable="true" type="tns:ArrayOfOrderStyleColorModel" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleDropDownList" nillable="true" type="q2:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="StyleSizeList" nillable="true" type="tns:ArrayOfOrderStyleSizeModel" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrderMainModel" nillable="true" type="tns:OrderMainModel" />
+  <xs:complexType name="ArrayOfOrderStyleColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderStyleColorModel" nillable="true" type="tns:OrderStyleColorModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderStyleColorModel" nillable="true" type="tns:ArrayOfOrderStyleColorModel" />
+  <xs:complexType name="OrderStyleColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleColorSequence" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderStyleColorModel" nillable="true" type="tns:OrderStyleColorModel" />
+  <xs:complexType name="ArrayOfOrderStyleSizeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderStyleSizeModel" nillable="true" type="tns:OrderStyleSizeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderStyleSizeModel" nillable="true" type="tns:ArrayOfOrderStyleSizeModel" />
+  <xs:complexType name="OrderStyleSizeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SizeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleSizeSequence" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderStyleSizeModel" nillable="true" type="tns:OrderStyleSizeModel" />
 </xs:schema>

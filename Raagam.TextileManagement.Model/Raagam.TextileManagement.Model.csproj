@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DropDownModel.cs" />
+    <Compile Include="Merchandiser\Order\OrderStyleColorModel.cs" />
+    <Compile Include="Merchandiser\Order\OrderStyleSizeModel.cs" />
+    <Compile Include="Merchandiser\Style\StyleColorModel.cs" />
     <Compile Include="Production\FabricCuttingChart\FabricCuttingChartModel.cs" />
     <Compile Include="Common\LoginModel.cs" />
     <Compile Include="Merchandiser\Order\OrderDetailModel.cs" />
@@ -92,9 +95,7 @@
       <Name>Raagam.TextileManagement.CommonUtility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Merchandiser\Style\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

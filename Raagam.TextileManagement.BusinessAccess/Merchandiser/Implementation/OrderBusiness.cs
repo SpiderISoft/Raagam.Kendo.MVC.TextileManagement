@@ -20,5 +20,10 @@ namespace Raagam.TextileManagement.BusinessAccess
         {
             return _orderDataAccess.PopulateDropDown(orderMainModel);
         }
+
+        public OrderMainModel SelectColorSize(long StyleSequenceNumber)
+        {
+            return _orderDataAccess.SelectColorSize(StyleSequenceNumber);
+        }
     }
 }

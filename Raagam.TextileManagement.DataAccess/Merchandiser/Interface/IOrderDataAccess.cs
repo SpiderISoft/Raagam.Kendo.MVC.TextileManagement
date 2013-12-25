@@ -10,6 +10,7 @@ namespace Raagam.TextileManagement.DataAccess
     {
 
         OrderMainModel PopulateDropDown(OrderMainModel orderMainModel);
+        OrderMainModel SelectColorSize(long StyleSequenceNumber);
         
     }
 }

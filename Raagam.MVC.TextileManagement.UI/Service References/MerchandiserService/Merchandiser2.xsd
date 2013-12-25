@@ -15,4 +15,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SelectColorSize">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectColorSizeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SelectColorSizeResult" nillable="true" type="q3:OrderMainModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

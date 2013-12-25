@@ -13,5 +13,8 @@ namespace Raagam.TextileManagement.WCF.Service
     {
         [OperationContract]
         OrderMainModel PopulateDropDown(OrderMainModel orderMainModel);
+
+        [OperationContract]
+        OrderMainModel SelectColorSize(long StyleSequenceNumber);
     }
 }

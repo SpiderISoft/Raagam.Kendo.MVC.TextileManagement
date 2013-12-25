@@ -17,6 +17,9 @@ namespace Raagam.MVC.TextileManagement.UI.MerchandiserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMerchandiser/PopulateDropDown", ReplyAction="http://tempuri.org/IMerchandiser/PopulateDropDownResponse")]
         Raagam.TextileManagement.Model.OrderMainModel PopulateDropDown(Raagam.TextileManagement.Model.OrderMainModel orderMainModel);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMerchandiser/SelectColorSize", ReplyAction="http://tempuri.org/IMerchandiser/SelectColorSizeResponse")]
+        Raagam.TextileManagement.Model.OrderMainModel SelectColorSize(long StyleSequenceNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -48,6 +51,10 @@ namespace Raagam.MVC.TextileManagement.UI.MerchandiserService {
         
         public Raagam.TextileManagement.Model.OrderMainModel PopulateDropDown(Raagam.TextileManagement.Model.OrderMainModel orderMainModel) {
             return base.Channel.PopulateDropDown(orderMainModel);
+        }
+        
+        public Raagam.TextileManagement.Model.OrderMainModel SelectColorSize(long StyleSequenceNumber) {
+            return base.Channel.SelectColorSize(StyleSequenceNumber);
         }
     }
 }

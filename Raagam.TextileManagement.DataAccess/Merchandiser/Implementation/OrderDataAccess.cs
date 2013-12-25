@@ -54,6 +54,43 @@ namespace Raagam.TextileManagement.DataAccess
             return orderMainModel;
         }
 
+        public OrderMainModel SelectColorSize(long StyleSequenceNumber)
+        {
+            OrderMainModel orderMainModel = new OrderMainModel();
+            orderMainModel.StyleColorList = new List<OrderStyleColorModel>();
+            orderMainModel.StyleSizeList = new List<OrderStyleSizeModel>();
+
+            using (DbCommand colorSizeCommand = _dbHelper.GetStoredProcCommand("rx_sel_style_color_size"))
+            {
+
+                _dbHelper.AddInParameter(colorSizeCommand, "@style_id",
+                              DbType.Int64, StyleSequenceNumber);
+
+                using (DataSet DropDownDataSet = _dbHelper.ExecuteDataSet(colorSizeCommand))
+                {
+                    foreach (DataRow colorDataRow in DropDownDataSet.Tables[0].Rows)
+                    {
+                        OrderStyleColorModel styleColorModel = new OrderStyleColorModel();
+                        styleColorModel.StyleColorSequence = Convert.ToInt64(colorDataRow["style_color_id"]);
+                        styleColorModel.ColorName = colorDataRow["color_name"].ToString();
+                        orderMainModel.StyleColorList.Add(styleColorModel);
+                    }
+
+                    foreach (DataRow sizeDataRow in DropDownDataSet.Tables[1].Rows)
+                    {
+                        OrderStyleSizeModel styleSizeModel = new OrderStyleSizeModel();
+                        styleSizeModel.StyleSizeSequence = Convert.ToInt64(sizeDataRow["style_size_id"]);
+                        styleSizeModel.SizeName = sizeDataRow["size_name"].ToString();
+                        orderMainModel.StyleSizeList.Add(styleSizeModel);
+                    }
+ 
+                }
+            }
+
+            return orderMainModel;
+            
+        }
+
         #endregion
 }
 }

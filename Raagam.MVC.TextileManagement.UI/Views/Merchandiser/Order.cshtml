@@ -2,9 +2,115 @@
 
 @{
     ViewBag.Title = "Order";
-    Layout = null; 
+    Layout = "~/Views/Shared/_RaagamLayout.cshtml";  
 }
 
+@section scripts
+{
+<script language="javascript" type="text/javascript">
+
+    $(document).ready(function (e) {
+
+        $('#OrderNumber').inputmask('999999', { placeholder: " " });
+        $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+        $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+        $('#ExcessPercentage').inputmask('99');
+
+
+        $('#grdOrder').jqGrid({
+            height: 'auto',
+            datatype: 'local',
+            rowNum: 10,
+            caption: 'Order',
+            viewrecords: true,
+            colNames: ['StyleColorSequence', 'ColorName'],
+            colModel: [{
+                name: 'StyleColorSequence',
+                index: 'StyleColorSequence',
+                hidden: true
+            },
+                   {
+                       name: 'ColorName',
+                       index: 'ColorName'
+                   }
+                 ],
+            cellEdit: true
+        });
+
+
+        $('#StyleSequenceNumber').change(function (event) {
+
+
+            var StyleSequenceNumber = $('#StyleSequenceNumber').val();
+
+            $.ajax({
+                url: '@Url.Content("/Order/SelectOrderColorSize")',
+                data:
+                {
+                    StyleSequenceNumber: StyleSequenceNumber
+                },
+                type: 'POST',
+                success: function (result) {
+                    if (result.success) {
+                        debugger;
+                        $("#grdOrder").jqGrid('GridUnload');
+
+                        var obj = jQuery.parseJSON(result.data.ColModel);
+                        var colN = result.data.ColNames;
+                        var colM = obj.DocumentElement.colModel;
+                        var lastSel;
+
+                        $('#grdOrder').jqGrid({
+                            height: 'auto',
+                            datatype: 'local',
+                            rowNum: 10,
+                            caption: 'Order',
+                            viewrecords: true,
+                            colNames: colN,
+                            colModel: colM,
+                            cellEdit: true
+                        });
+
+                        debugger;
+                        var columnProp;
+                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colNames');
+                        $.each(columnNames, function (key, colName) {
+                            debugger;
+                            columnProp = $('#grdOrder').jqGrid('getColProp', colName);
+                            if (columnProp.editable == "true") {
+                                columnProp.editable = true;
+                            }
+                        });
+
+
+
+
+
+
+                        jQuery('#grdOrder').clearGridData();
+                        var rowid = 0;
+                        $.each(result.data.styleColorList, function (key, data) {
+                            jQuery("#grdOrder").addRowData(rowid, data);
+                            rowid = rowid + 1;
+                        });
+
+
+
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+    });
+</script>
+}
 <h2>Order</h2>
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmOrder", role = "form", @class = "form-horizontal" }))
 {    
@@ -89,8 +195,9 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1">
-                            <table id="grdFabricCuttingChart">
+                            <table id="grdOrder">
                             </table>
+ 
                         </div>
                     </div>
                     <!-- End .form-group  -->

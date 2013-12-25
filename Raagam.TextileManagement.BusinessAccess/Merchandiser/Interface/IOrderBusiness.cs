@@ -9,5 +9,6 @@ namespace Raagam.TextileManagement.BusinessAccess
     public interface IOrderBusiness
     {
         OrderMainModel PopulateDropDown(OrderMainModel orderMainModel);
+        OrderMainModel  SelectColorSize(long StyleSequenceNumber);
     }
 }

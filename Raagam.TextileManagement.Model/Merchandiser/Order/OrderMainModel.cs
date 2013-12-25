@@ -52,5 +52,12 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<SelectListItem> StyleDropDownList { get; set; }
+
+        [DataMember]
+        public List<OrderStyleColorModel> StyleColorList { get; set; }
+
+        [DataMember]
+        public List<OrderStyleSizeModel> StyleSizeList { get; set; }
+ 
     }
 }

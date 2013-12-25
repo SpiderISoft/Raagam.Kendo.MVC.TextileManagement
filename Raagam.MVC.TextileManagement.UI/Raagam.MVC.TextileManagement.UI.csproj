@@ -1528,6 +1528,7 @@
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.FabricCuttingChartModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.LoginModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderMainModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderStyleColorSizeModel.datasource" />
     <None Include="Service References\CommonService\Common.wsdl" />
     <None Include="Service References\CommonService\Common.xsd">
       <SubType>Designer</SubType>
