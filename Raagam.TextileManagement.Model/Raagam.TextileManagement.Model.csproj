@@ -57,9 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DropDownModel.cs" />
-    <Compile Include="FabricCuttingChartModel.cs" />
-    <Compile Include="LoginModel.cs" />
+    <Compile Include="Common\DropDownModel.cs" />
+    <Compile Include="Production\FabricCuttingChart\FabricCuttingChartModel.cs" />
+    <Compile Include="Common\LoginModel.cs" />
+    <Compile Include="Merchandiser\Order\OrderDetailModel.cs" />
+    <Compile Include="Merchandiser\Order\OrderMainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +91,9 @@
       <Project>{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}</Project>
       <Name>Raagam.TextileManagement.CommonUtility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Merchandiser\Style\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

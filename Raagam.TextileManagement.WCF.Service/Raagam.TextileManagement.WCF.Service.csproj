@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\Implementation\Common.svc" />
+    <Content Include="Merchandiser\Implementation\Merchandiser.svc" />
     <Content Include="Production\Implementation\Production.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -70,6 +71,10 @@
       <DependentUpon>Common.svc</DependentUpon>
     </Compile>
     <Compile Include="Common\Interface\ICommon.cs" />
+    <Compile Include="Merchandiser\Implementation\Merchandiser.svc.cs">
+      <DependentUpon>Merchandiser.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Merchandiser\Interface\IMerchandiser.cs" />
     <Compile Include="Production\Implementation\Production.svc.cs">
       <DependentUpon>Production.svc</DependentUpon>
     </Compile>

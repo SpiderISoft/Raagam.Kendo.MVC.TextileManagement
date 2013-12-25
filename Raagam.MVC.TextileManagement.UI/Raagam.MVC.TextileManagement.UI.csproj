@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Common\HomeController.cs" />
     <Compile Include="Controllers\Common\LoginController.cs" />
+    <Compile Include="Controllers\Merchandiser\OrderController.cs" />
     <Compile Include="Controllers\Production\FabricCuttingChartController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -174,6 +175,11 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\CommonService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\MerchandiserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -1521,6 +1527,7 @@
     <None Include="plugins\tables\dataTables\images\psd\printer.psd" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.FabricCuttingChartModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.LoginModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderMainModel.datasource" />
     <None Include="Service References\CommonService\Common.wsdl" />
     <None Include="Service References\CommonService\Common.xsd">
       <SubType>Designer</SubType>
@@ -1529,6 +1536,19 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\CommonService\Common2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MerchandiserService\Merchandiser.wsdl" />
+    <None Include="Service References\MerchandiserService\Merchandiser.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MerchandiserService\Merchandiser1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MerchandiserService\Merchandiser2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MerchandiserService\Merchandiser3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ProductionService\Production.disco" />
@@ -1554,6 +1574,13 @@
     <Content Include="Scripts\prism.js" />
     <Content Include="Scripts\ui\jquery.ui.combobox.css" />
     <Content Include="Scripts\ui\jquery.ui.combobox.js" />
+    <None Include="Service References\MerchandiserService\Merchandiser.disco" />
+    <None Include="Service References\MerchandiserService\configuration91.svcinfo" />
+    <None Include="Service References\MerchandiserService\configuration.svcinfo" />
+    <None Include="Service References\MerchandiserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1607,6 +1634,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\_RaagamLayout.cshtml" />
+    <Content Include="Views\Merchandiser\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1640,6 +1668,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\CommonService\" />
+    <WCFMetadataStorage Include="Service References\MerchandiserService\" />
     <WCFMetadataStorage Include="Service References\ProductionService\" />
   </ItemGroup>
   <PropertyGroup>

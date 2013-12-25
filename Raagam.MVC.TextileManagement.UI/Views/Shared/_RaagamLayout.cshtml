@@ -33,10 +33,28 @@
     @Scripts.Render("~/bundles/modernizr")
     <script language="javascript" type="text/javascript">
 
-        function FabricCuttingChart_Click() {
+        function FabricCuttingChartMenu_Click() {
             debugger;
             $.ajax({
                 url: '@Url.Content("/FabricCuttingChart/FabricCuttingChart")',
+                type: 'POST',
+                success: function (result) {
+                    debugger;
+                    $('#bodyContent').empty();
+                    $('#bodyContent').html(result);
+                },
+                error: function (e) {
+                    debugger;
+                    alert(e.responseText);
+                }
+            });
+            return false;
+        }
+
+        function OrderMenu_Click() {
+            debugger;
+            $.ajax({
+                url: '@Url.Content("/Order/Order")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -203,21 +221,9 @@
                 <!-- End .sidenav-widget -->
                 <div class="mainnav">
                     <ul>
-                        <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChart_Click();"><span
+                        <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChartMenu_Click();"><span
                             class="icon16 icomoon-icon-stats-up"></span>Fabric Cutting Chart</a></li>
-                        <li><a href="#"><span class="icon16 icomoon-icon-list"></span>Forms<span class="notification red">sub2</span></a>
-                            <ul class="sub">
-                                <li><a href="forms.html"><span class="icon16 icomoon-icon-file"></span>Forms Stuff</a></li>
-                                <li><a href="forms-validation.html"><span class="icon16 icomoon-icon-file"></span>Validation</a></li>
-                                <li><a href="#"><span class="icon16 icomoon-icon-file"></span>Sub Level 2<span class="notification red">new</span></a>
-                                    <ul class="sub">
-                                        <li><a href="#"><span class="icon16 icomoon-icon-arrow-right-3"></span>Item</a></li>
-                                        <li><a href="#"><span class="icon16 icomoon-icon-arrow-right-3"></span>Item</a></li>
-                                        <li><a href="#"><span class="icon16 icomoon-icon-arrow-right-3"></span>Item</a></li>
-                                        <li><a href="#"><span class="icon16 icomoon-icon-arrow-right-3"></span>Item</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <li><a id="OrderMenu" href="#" onclick="OrderMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Order</a>
                         </li>
                         <li><a href="#"><span class="icon16 icomoon-icon-table-2"></span>Tables</a>
                             <ul class="sub">

@@ -1,0 +1,108 @@
+﻿@model Raagam.TextileManagement.Model.OrderMainModel 
+
+@{
+    ViewBag.Title = "Order";
+    Layout = null; 
+}
+
+<h2>Order</h2>
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmOrder", role = "form", @class = "form-horizontal" }))
+{    
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <span>Order</span>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                 <div class="form-group">
+                        <div class="col-lg-offset-8">
+                            <input type="button" value="Save" id="SaveButton" class="btn marginR10" />
+                            <button class="btn btn-danger" id="CancelButton">Cancel</button>
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.OrderNumber, new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.OrderDate, new { @class = "form-control", style = "height:35px;width:200px;", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DeliveryDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.DeliveryDate, new { @class = "form-control", style = "height:35px;width:200px;"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BuyerReferenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.BuyerReferenceNumber, new { @class = "form-control", style = "height:35px;width:200px;"  })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.BuyerSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.DropDownListFor(m => m.BuyerSequenceNumber, Model.BuyerDropDownList,"Select Buyer" ,new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ExcessPercentage, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.ExcessPercentage, new { @class = "form-control", style = "height:35px;width:200px;"  })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderQuantity, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.OrderQuantity, new { @class = "form-control", style = "height:35px;width:200px;", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ExcessQuantity, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.ExcessQuantity, new { @class = "form-control", style = "height:35px;width:200px;", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StyleSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList,"Select Order", new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                     
+                    <div class="form-group">
+                        <div class="col-lg-offset-4">
+                            <input type="button" value="Add" id="AddButton" class="btn marginR10" />
+                            <button class="btn btn-danger">
+                                Cancel</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1">
+                            <table id="grdFabricCuttingChart">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+            </div>
+            <!-- End .panel -->
+        </div>
+        <!-- End .span6 -->
+    </div>
+    <!-- End .row -->
+    <!-- End .form-group  -->
+
+}
+
+
