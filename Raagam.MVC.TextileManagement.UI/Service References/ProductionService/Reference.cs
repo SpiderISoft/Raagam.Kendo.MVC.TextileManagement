@@ -17,6 +17,9 @@ namespace Raagam.MVC.TextileManagement.UI.ProductionService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProduction/GetOrderDetails", ReplyAction="http://tempuri.org/IProduction/GetOrderDetailsResponse")]
         Raagam.TextileManagement.Model.FabricCuttingChartModel GetOrderDetails(long OrderNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProduction/SaveFabricCuttingChart", ReplyAction="http://tempuri.org/IProduction/SaveFabricCuttingChartResponse")]
+        Raagam.TextileManagement.CommonUtility.EnumConstants.SaveStatus SaveFabricCuttingChart(Raagam.TextileManagement.Model.FabricCuttingChartModel fabricCuttingChartModel);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -48,6 +51,10 @@ namespace Raagam.MVC.TextileManagement.UI.ProductionService {
         
         public Raagam.TextileManagement.Model.FabricCuttingChartModel GetOrderDetails(long OrderNumber) {
             return base.Channel.GetOrderDetails(OrderNumber);
+        }
+        
+        public Raagam.TextileManagement.CommonUtility.EnumConstants.SaveStatus SaveFabricCuttingChart(Raagam.TextileManagement.Model.FabricCuttingChartModel fabricCuttingChartModel) {
+            return base.Channel.SaveFabricCuttingChart(fabricCuttingChartModel);
         }
     }
 }

@@ -84,6 +84,10 @@
       <Project>{C949640A-1A6F-4CDD-A214-97FFE2CA8A7D}</Project>
       <Name>Raagam.TextileManagement.BusinessAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Raagam.TextileManagement.CommonUtility\Raagam.TextileManagement.CommonUtility.csproj">
+      <Project>{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}</Project>
+      <Name>Raagam.TextileManagement.CommonUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raagam.TextileManagement.Model\Raagam.TextileManagement.Model.csproj">
       <Project>{E99B6BF0-45DC-4410-A499-EDE055BAD55C}</Project>
       <Name>Raagam.TextileManagement.Model</Name>

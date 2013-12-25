@@ -85,6 +85,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Raagam.TextileManagement.CommonUtility\Raagam.TextileManagement.CommonUtility.csproj">
+      <Project>{1AED8E1D-E670-4DBB-9E7F-A711EBC1F0DE}</Project>
+      <Name>Raagam.TextileManagement.CommonUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raagam.TextileManagement.DataAccess\Raagam.TextileManagement.DataAccess.csproj">
       <Project>{481AA0FD-E7C6-4EA2-862E-8157C3749251}</Project>
       <Name>Raagam.TextileManagement.DataAccess</Name>

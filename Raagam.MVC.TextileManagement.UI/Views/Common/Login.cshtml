@@ -12,7 +12,7 @@
                     <label class="col-lg-12 control-label" for="username">
                         Username:</label>
                     <div class="col-lg-12">
-                        @Html.TextBoxFor(m => m.LoginName, new { id = "LoginName", type = "text", name = "username", @class = "form-control", placeholder = "Enter your username ..." })
+                        @Html.TextBoxFor(m => m.LoginName, new { id = "LoginName",  type = "text", name = "username", @class = "form-control", placeholder = "Enter your username ..." })
                     </div>
                 </div>
                 <!-- End .form-group  -->
@@ -20,7 +20,7 @@
                     <label class="col-lg-12 control-label" for="password">
                         Password:</label>
                     <div class="col-lg-12">
-                        @Html.TextBoxFor(m => m.Password, new { id = "Password", type = "password", name = "password", @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Password, new { id = "Password",  type = "password", name = "password", @class = "form-control" })
                         <span class="forgot help-block"><a href="#">Forgot your password?</a></span>
                     </div>
                 </div>
@@ -49,28 +49,28 @@
         $(document).ready(function () {
 
 
-            $("#loginForm").validate({
-                rules: {
-                    username: {
-                        required: true,
-                        minlength: 4
+                $("#loginForm").validate({
+                    rules: {
+                        username: {
+                            required: true,
+                            minlength: 4
+                        },
+                        password: {
+                            required: true,
+                            minlength: 6
+                        }
                     },
-                    password: {
-                        required: true,
-                        minlength: 6
+                    messages: {
+                        username: {
+                            required: "Fill me please",
+                            minlength: "My name is bigger"
+                        },
+                        password: {
+                            required: "Please provide a password",
+                            minlength: "My password is more that 6 chars"
+                        }
                     }
-                },
-                messages: {
-                    username: {
-                        required: "Fill me please",
-                        minlength: "My name is bigger"
-                    },
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "My password is more that 6 chars"
-                    }
-                }
-            });
+                });
 
             
         });

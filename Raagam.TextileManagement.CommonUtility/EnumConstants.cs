@@ -13,6 +13,13 @@ namespace Raagam.TextileManagement.CommonUtility
             Updated,
             Added,
             Deleted
-        };
+        }
+
+
+        public enum SaveStatus
+        {
+            Saved,
+            NotSaved
+        }
     }
 }

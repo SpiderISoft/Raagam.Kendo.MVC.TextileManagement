@@ -25,8 +25,10 @@
     <MetadataFile FileName="Production.xsd" MetadataType="Schema" ID="d6a48975-a3d9-4994-9422-6b5cdbade09a" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd2" />
     <MetadataFile FileName="Production.wsdl" MetadataType="Wsdl" ID="dcd2b8ca-e7fa-488f-8ae9-d51adee5888d" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?wsdl" />
     <MetadataFile FileName="Production1.xsd" MetadataType="Schema" ID="93390478-6bba-4e9f-8d17-fcbe5d27c86b" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd1" />
+    <MetadataFile FileName="Production4.xsd" MetadataType="Schema" ID="4e0b27b7-063e-4bb2-a4b1-9098e1c1022d" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd5" />
     <MetadataFile FileName="Production2.xsd" MetadataType="Schema" ID="844ffbd7-97c7-4d5a-8a2d-0fa854aa1123" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd3" />
     <MetadataFile FileName="Production3.xsd" MetadataType="Schema" ID="4f5e3f3b-6ad4-4a9f-928e-08e89df25e30" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd0" />
+    <MetadataFile FileName="Production41.xsd" MetadataType="Schema" ID="8733abb0-de7d-4e03-95c1-adb19c8e5b53" SourceId="1" SourceUrl="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

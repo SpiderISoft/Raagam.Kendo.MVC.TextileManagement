@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Raagam.TextileManagement.Model;
 using Raagam.TextileManagement.DataAccess;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.BusinessAccess 
 {
@@ -24,6 +25,10 @@ namespace Raagam.TextileManagement.BusinessAccess
             return _fabricCuttingChartDataAccess.GetOrderDetails(OrderNumber);
         }
 
+        public EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel)
+        {
+            return _fabricCuttingChartDataAccess.SaveFabricCuttingChart(fabricCuttingChartModel);
+        }
         #endregion
     }
 }

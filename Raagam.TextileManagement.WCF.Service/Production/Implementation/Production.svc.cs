@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Raagam.TextileManagement.Model;
 using Raagam.TextileManagement.BusinessAccess;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.WCF.Service 
 {
@@ -22,6 +23,12 @@ namespace Raagam.TextileManagement.WCF.Service
         {
             _fabricCuttingChartBusiness = new FabricCuttingChartBusiness();
             return _fabricCuttingChartBusiness.GetOrderDetails(OrderNumber);
+        }
+
+        public EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel)
+        {
+            _fabricCuttingChartBusiness = new FabricCuttingChartBusiness();
+            return _fabricCuttingChartBusiness.SaveFabricCuttingChart(fabricCuttingChartModel);
         }
 
         #endregion

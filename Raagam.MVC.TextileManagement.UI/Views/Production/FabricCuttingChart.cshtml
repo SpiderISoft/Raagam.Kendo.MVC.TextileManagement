@@ -214,8 +214,24 @@
         $('#AddButton').click(function (event) {
             debugger;
 
+
+            var OrderNumber = $('#OrderNumber').val();
+            var FabricSequenceNumber = $('#FabricSequenceNumber').val();
+            var StyleSequenceNumber = $('#StyleSequenceNumber').val();
             var sStyleSizeSelected = $('#StyleSizeSelected').val().toString();
             var sPanelSelected = $('#PanelSelected').val().toString();
+
+            if (
+                    (OrderNumber == 0) || (OrderNumber == '') || 
+                    (FabricSequenceNumber == 0) || (FabricSequenceNumber == '') ||
+                    (StyleSequenceNumber == 0) || (StyleSequenceNumber == '') ||
+                    (sStyleSizeSelected == 0) || (sStyleSizeSelected == '')  ||
+                    (sPanelSelected == 0) || (sPanelSelected == '')
+                ) 
+            {
+                alert('Fill All Mandatory Fields');
+                return true;
+            }
 
             $.ajax({
                 url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
@@ -234,7 +250,14 @@
                         },
                 success: function (result) {
                     if (result.success) {
-
+                        $('#StyleSequenceNumber').val(0).change();
+                        $('#FabricSequenceNumber').val(0).change();
+                        $('#Weight').val('');
+                        $('#TableDia').val('');
+                        $('#LoopLength').val('');
+                        $('#KnitGSM').val('');
+                        $('#StyleSizeSelected').chosen_reset({ width: '400px' });
+                        $('#PanelSelected').chosen_reset({ width: '400px' });
                         jQuery('#grdFabricCuttingChart').clearGridData();
                         var rowid = 0;
                         $.each(result.data.fabricCuttingChartMainList, function (key, data) {
@@ -259,6 +282,35 @@
         });
 
 
+        $('#SaveButton').click(function (event) {
+            debugger;
+
+            $.ajax({
+                url: '@Url.Content("/FabricCuttingChart/SaveFabriCuttingChart")',
+                type: 'POST',
+                success: function (result) {
+                    if (result.success) {
+                        alert(result.data);
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+
+        jQuery.fn.chosen_reset = function (n) {
+            $(this).chosen('destroy');
+            $(this).prop('selectedIndex', -1);
+            $(this).chosen(n)
+        }
+
+
     });
 
      
@@ -277,6 +329,12 @@
                     </h4>
                 </div>
                 <div class="panel-body">
+                 <div class="form-group">
+                        <div class="col-lg-offset-8">
+                            <input type="button" value="Save" id="SaveButton" class="btn marginR10" />
+                            <button class="btn btn-danger" id="CancelButton">Cancel</button>
+                          </div>
+                    </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.OrderNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">

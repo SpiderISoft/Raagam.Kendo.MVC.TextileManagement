@@ -7,6 +7,8 @@ using Raagam.TextileManagement.CommonUtility;
 using System.Data.Common;
 using System.Data;
 using System.Web.Mvc;
+using System.Reflection;
+using System.Data.SqlClient;
 
 namespace Raagam.TextileManagement.DataAccess 
 {
@@ -167,6 +169,89 @@ namespace Raagam.TextileManagement.DataAccess
                 }
             }
             return fabricCuttingChartModel;
+        }
+
+    
+
+
+        #endregion
+
+
+
+        #region IFabricCuttingChartDataAccess Members
+
+        public DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
+        }
+
+        EnumConstants.SaveStatus IFabricCuttingChartDataAccess.SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel)
+        {
+            List<FabricCuttingChartMainModel> fabricCuttingChartMainModel = new List<FabricCuttingChartMainModel>();
+            fabricCuttingChartMainModel = fabricCuttingChartModel.fabricCuttingChartMainList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
+
+            List<FabricCuttingChartDetailModel> fabricCuttingChartDetailModel = new List<FabricCuttingChartDetailModel>();
+            fabricCuttingChartDetailModel = fabricCuttingChartModel.fabricCuttingChartDetailList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
+
+            DataTable fabricCuttingChartMainDataTable = ToDataTable(fabricCuttingChartMainModel);
+            DataTable fabricCuttingChartDetailDataTable = ToDataTable(fabricCuttingChartDetailModel);
+
+            
+            using (DbCommand saveFabricCuttingChartMainCommand = _dbHelper.GetStoredProcCommand("rx_ins_fabric_cutting_chart"))
+            {
+                
+                
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_order_id", DbType.Int64, "OrderSequenceNumber", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_style_fabric_id", DbType.Int64, "StyleFabricSequenceNumber", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_style_size_id", DbType.Int64, "StyleSizeSequenceNumber" , DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_temp_id", DbType.String, "TempGUID", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_style_color_id", DbType.Int64, "StyleColorSequenceNumber", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_looplength", DbType.String, "LoopLength", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_knitgsm", DbType.String, "KnitGSM", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_weight", DbType.Decimal, "Weight", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_tabledia", DbType.Decimal, "TableDia", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_knitdia", DbType.Decimal, "KnitDia", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_pieces", DbType.Decimal, "Pieces" , DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_wastage_percentage", DbType.Decimal, "WastagePercentage", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartMainCommand, "@fabric_cutting_chart_total_weight", DbType.Decimal, "TotalWeight", DataRowVersion.Current);
+
+                _dbHelper.Fill(saveFabricCuttingChartMainCommand, fabricCuttingChartMainDataTable);
+              
+            }
+
+            using (DbCommand saveFabricCuttingChartDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_fabric_cutting_chart_details"))
+            {
+
+
+                _dbHelper.AddInParameter(saveFabricCuttingChartDetailCommand, "@fabric_cutting_chart_details_style_panel_id", DbType.Int64, "StylePanelSequenceNumber", DataRowVersion.Current);
+                _dbHelper.AddInParameter(saveFabricCuttingChartDetailCommand, "@fabric_cutting_chart_details_temp_id", DbType.String, "TempGUID", DataRowVersion.Current);
+
+                _dbHelper.Fill(saveFabricCuttingChartDetailCommand, fabricCuttingChartDetailDataTable);
+
+            }
+
+            return EnumConstants.SaveStatus.Saved;
+
         }
 
         #endregion

@@ -36,6 +36,8 @@ namespace Raagam.TextileManagement.CommonUtility
 
             #region DBHelper Methods
 
+            
+
             #region GetStoredProcCommand
 
             public virtual DbCommand GetStoredProcCommand(string storedProcedureName)
@@ -90,6 +92,8 @@ namespace Raagam.TextileManagement.CommonUtility
             #endregion
 
             #region ExecuteScalar
+
+
 
             public virtual object ExecuteScalar(DbCommand command)
             {
@@ -182,6 +186,25 @@ namespace Raagam.TextileManagement.CommonUtility
                 {
                     returnvalue = _database.ExecuteDataSet(command);
                     return returnvalue;
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+
+                }
+
+            }
+
+
+            public virtual int Fill(DbCommand command,DataTable dataTable)
+            {
+                DbDataAdapter adapter = _database.GetDataAdapter();
+
+                try
+                {
+                    adapter.InsertCommand = command;
+                    adapter.InsertCommand.Connection = _database.CreateConnection();
+                    return adapter.Update(dataTable);
                 }
                 catch (SqlException ex)
                 {

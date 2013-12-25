@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Web.Mvc" />
+  <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
   <xs:complexType name="FabricCuttingChartModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BuyerDropDownList" nillable="true" type="tns:ArrayOfDropDownModel" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="BuyerDropDownList" nillable="true" type="q1:ArrayOfSelectListItem" />
       <xs:element minOccurs="0" name="BuyerReferenceNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BuyerSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="DeliveryDate" type="xs:dateTime" />
@@ -16,12 +18,12 @@
       <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
       <xs:element minOccurs="0" name="OrderQuantity" type="xs:int" />
       <xs:element minOccurs="0" name="PanelLinkDropDownList" nillable="true" type="tns:ArrayOfLinkDropDownModel" />
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PanelSelectedList" nillable="true" type="q1:ArrayOflong" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PanelSelectedList" nillable="true" type="q2:ArrayOflong" />
       <xs:element minOccurs="0" name="Pieces" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StyleDropDownList" nillable="true" type="tns:ArrayOfDropDownModel" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleDropDownList" nillable="true" type="q3:ArrayOfSelectListItem" />
       <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StyleSizeLinkDropDownList" nillable="true" type="tns:ArrayOfLinkDropDownModel" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StyleSizeSelectedList" nillable="true" type="q2:ArrayOflong" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StyleSizeSelectedList" nillable="true" type="q4:ArrayOflong" />
       <xs:element minOccurs="0" name="TableDia" type="xs:decimal" />
       <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
       <xs:element minOccurs="0" name="fabricCuttingChartDetailList" nillable="true" type="tns:ArrayOfFabricCuttingChartDetailModel" />
@@ -31,19 +33,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FabricCuttingChartModel" nillable="true" type="tns:FabricCuttingChartModel" />
-  <xs:complexType name="ArrayOfDropDownModel">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DropDownModel" nillable="true" type="tns:DropDownModel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDropDownModel" nillable="true" type="tns:ArrayOfDropDownModel" />
-  <xs:complexType name="DropDownModel">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Key" type="xs:long" />
-      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="DropDownModel" nillable="true" type="tns:DropDownModel" />
   <xs:complexType name="ArrayOfLinkDropDownModel">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LinkDropDownModel" nillable="true" type="tns:LinkDropDownModel" />
@@ -69,6 +58,7 @@
       <xs:element minOccurs="0" name="FabricCuttingChartMainSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="PanelName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q5:EnumConstants.ModelCurrentState" />
       <xs:element minOccurs="0" name="StylePanelSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="TempGUID" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -91,6 +81,7 @@
       <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="SizeName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q6:EnumConstants.ModelCurrentState" />
       <xs:element minOccurs="0" name="StyleColorSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StyleFabricSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StylePanelName" nillable="true" type="xs:string" />

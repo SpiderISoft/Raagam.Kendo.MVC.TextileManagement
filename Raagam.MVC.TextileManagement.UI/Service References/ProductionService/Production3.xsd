@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" />
+  <xs:import schemaLocation="http://localhost:26976/Production/Implementation/Production.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
   <xs:element name="GetOrderDetails">
     <xs:complexType>
       <xs:sequence>
@@ -12,6 +13,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="GetOrderDetailsResult" nillable="true" type="q1:FabricCuttingChartModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveFabricCuttingChart">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="fabricCuttingChartModel" nillable="true" type="q2:FabricCuttingChartModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveFabricCuttingChartResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="SaveFabricCuttingChartResult" type="q3:EnumConstants.SaveStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

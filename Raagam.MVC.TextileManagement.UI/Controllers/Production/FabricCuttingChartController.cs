@@ -9,7 +9,6 @@ using Raagam.MVC.TextileManagement.UI.ProductionService;
 using Raagam.TextileManagement.CommonUtility;
 
 
-
 namespace Raagam.MVC.TextileManagement.UI.Controllers
 {
     public class FabricCuttingChartController : Controller
@@ -118,6 +117,20 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
         //    return Json(result, JsonRequestBehavior.AllowGet);
 
         //}
+
+        [HttpPost]
+        public ActionResult SaveFabriCuttingChart()
+        {
+            FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
+            fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
+            EnumConstants.SaveStatus result =  productionServiceClient.SaveFabricCuttingChart(fabricCuttingChartModel);
+            return Json(new
+            {
+                success = result == EnumConstants.SaveStatus.Saved ? true : false,
+                data = result == EnumConstants.SaveStatus.Saved ? "Saved Successfully" : "Save Failed"
+            }, JsonRequestBehavior.AllowGet);
+
+        }
 
         [HttpPost]
         public ActionResult AddFabricCuttingChart(string StyleSizeSelectedList, string PanelSelectedList, long styleSequenceNumber, long orderSequenceNumber, long styleFabricSequenceNumber, decimal weight, decimal tableDia, string loopLength, string knitGSM)
