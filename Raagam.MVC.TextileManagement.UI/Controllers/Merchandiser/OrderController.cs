@@ -76,7 +76,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 drSizeRow["index"] = orderServiceMainModel.StyleSizeList[i].SizeName;
                 drSizeRow["editable"] = true;
                 drSizeRow["width"] = 100;
-                //drSizeRow["editoptions"] = "{size:'20',maxlength:'30'}";
+                //drSizeRow["editoptions"] = "{ size: 20, maxlength: 30, dataInit: function (elem) { debugger; $(elem).inputmask('99999999'); }}";
 
                 dcm.Rows.Add(drSizeRow);
                 ColNamesList.Add(orderServiceMainModel.StyleSizeList[i].SizeName);
