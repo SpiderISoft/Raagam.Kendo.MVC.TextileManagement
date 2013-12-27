@@ -92,32 +92,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
-
- 
-
          
-        //public ActionResult PopulateFabricCuttingChartGrid([DataSourceRequest]DataSourceRequest request, long styleSequenceNumber, long? fabricSequenceNumber)
-        //{
-
-        //    FabricCuttingChartModel fabricCuttingChartModel = new FabricCuttingChartModel();
-            
-        //    fabricCuttingChartModel = (FabricCuttingChartModel)TempData["fabricCuttingChartModel"];
-
-        //    IQueryable<FabricCuttingChartMainModel> fabricCuttingChartMainModel = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
-
-        //    if ((fabricSequenceNumber!= null)  && (fabricSequenceNumber != 0))
-        //    {
-        //        fabricCuttingChartMainModel = fabricCuttingChartMainModel.Where(f => f.StyleFabricSequenceNumber == fabricSequenceNumber);
-        //    }
-
-        //    DataSourceResult result = fabricCuttingChartMainModel.ToDataSourceResult(request);
-
-        //    TempData["fabricCuttingChartModel"] = fabricCuttingChartModel;
-
-        //    return Json(result, JsonRequestBehavior.AllowGet);
-
-        //}
-
         [HttpPost]
         public ActionResult SaveFabriCuttingChart()
         {

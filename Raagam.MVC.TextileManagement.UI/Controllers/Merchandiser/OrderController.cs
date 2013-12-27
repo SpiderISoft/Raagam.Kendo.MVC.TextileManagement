@@ -9,6 +9,9 @@ using System.Data;
 using System.IO;
 using System.Xml;
 using Newtonsoft.Json;
+using Lib.Web.Mvc.JQuery.JqGrid;
+using System.Web.Script.Serialization;
+
 
 namespace Raagam.MVC.TextileManagement.UI.Controllers
 {
@@ -46,20 +49,17 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             dcm.Columns.Add("index");
             dcm.Columns.Add("editable",typeof(bool));
             dcm.Columns.Add("width");
-            //dcm.Columns.Add("editoptions");
-            dcm.Columns.Add("sorttype");
 
             DataRow drColorSequenceRow = dcm.NewRow();
             drColorSequenceRow["name"] = "StyleColorSequence";
-            drColorSequenceRow["index"] = "StyleColorSequence";
+            drColorSequenceRow["index"] = "StyleColorSequence";  
             drColorSequenceRow["editable"] = false;
             drColorSequenceRow["width"] = 0;
-            drColorSequenceRow["sorttype"] = "'int'";
             dcm.Rows.Add(drColorSequenceRow);
 
             DataRow drColorRow = dcm.NewRow();
             drColorRow["name"] = "ColorName";
-            drColorRow["index"] = "ColorName";
+            drColorRow["index"] = "ColorName"; 
             drColorRow["editable"] = false;
             drColorRow["width"] = 200;
             dcm.Rows.Add(drColorRow);
@@ -72,11 +72,11 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             for (int i = 0; i < orderServiceMainModel.StyleSizeList.Count; i++)
             {
                 DataRow drSizeRow = dcm.NewRow();
-                drSizeRow["name"] = orderServiceMainModel.StyleSizeList[i].SizeName;
-                drSizeRow["index"] = orderServiceMainModel.StyleSizeList[i].SizeName;
+                drSizeRow["name"] = "Col_" + orderServiceMainModel.StyleSizeList[i].SizeName;
+                drSizeRow["index"] =  orderServiceMainModel.StyleSizeList[i].StyleSizeSequence; 
                 drSizeRow["editable"] = true;
                 drSizeRow["width"] = 100;
-                //drSizeRow["editoptions"] = "{ size: 20, maxlength: 30, dataInit: function (elem) { debugger; $(elem).inputmask('99999999'); }}";
+                 
 
                 dcm.Rows.Add(drSizeRow);
                 ColNamesList.Add(orderServiceMainModel.StyleSizeList[i].SizeName);
@@ -105,6 +105,13 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
 
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveOrder(OrderMainModel orderMainModel, List<OrderDetailModel> orderDetailModel)
+        {
+ 
+            return null;
         }
 
     }

@@ -11,6 +11,21 @@ namespace Raagam.TextileManagement.Model
     [DataContract]
     public class OrderMainModel
     {
+
+        public OrderMainModel()
+        {
+            OrderDetailModelList = new List<OrderDetailModel>();
+            BuyerReferenceNumber = "";
+            BuyerDropDownList = new List<SelectListItem>();
+            StyleDropDownList = new List<SelectListItem>();
+            StyleColorList = new List<OrderStyleColorModel>();
+            StyleSizeList = new List<OrderStyleSizeModel>();
+            PackingType = "";
+            PackingInstructions = "";
+            AssortmentDetails = "";
+            Comments = "";
+
+        }
         [DataMember]
         [DisplayName("Order Number")]
         public long OrderNumber { get; set; }
@@ -58,6 +73,29 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<OrderStyleSizeModel> StyleSizeList { get; set; }
+
+
+        [DataMember]
+        public List<OrderDetailModel> OrderDetailModelList { get; set; }
+
+
+        [DataMember]
+        [DisplayName("Packing Type")]
+        public string PackingType { get; set; }
+
+
+        [DataMember]
+        [DisplayName("Packing Instructions")]
+        public string PackingInstructions { get; set; }
+
+
+        [DataMember]
+        [DisplayName("Assortment Details")]
+        public string AssortmentDetails { get; set; }
+
+        [DataMember]
+        [DisplayName("Comments")]
+        public string Comments { get; set; }
  
     }
 }

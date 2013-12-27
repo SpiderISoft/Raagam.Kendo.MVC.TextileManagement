@@ -9,12 +9,16 @@
 <script language="javascript" type="text/javascript">
 
     $(document).ready(function (e) {
+        $.lastSelectedRow = null;
+
 
         $('#OrderNumber').inputmask('999999', { placeholder: " " });
         $('#OrderDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
         $('#DeliveryDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
-        $('#ExcessPercentage').inputmask('99');
-
+        $('#ExcessPercentage').inputmask('99', { placeholder: " " });
+        $('#DeliveryDate').datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, minDate: 0,
+            changeYear: true
+        });
 
         $('#grdOrder').jqGrid({
             height: 'auto',
@@ -34,6 +38,25 @@
                    }
                  ],
             cellEdit: true
+        });
+
+        jQuery("#grdOrder").jqGrid('navGrid', '#Pager', { edit: true, add: false, del: false }, null, null, true, { multipleSearch: true });
+
+        $('#ExcessPercentage').keyup(function (event) {
+            var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+            if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                ExcessPercentage = 0;
+            }
+
+            var TotalQuantity = parseInt($('#OrderQuantity').val());
+
+            if ((TotalQuantity == null) || (TotalQuantity == '')) {
+                TotalQuantity = 0;
+            }
+
+            ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
+            $('#ExcessQuantity').val(ExcessQuantity);
         });
 
 
@@ -67,18 +90,82 @@
                             viewrecords: true,
                             colNames: colN,
                             colModel: colM,
-                            cellEdit: true
+                            cellEdit: true,
+                            onSelectCell: function (currentSelectedRow) {
+                                debugger;
+                                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                                    $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
+                                    $.lastSelectedRow = currentSelectedRow;
+                                }
+                                $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
+                            },
+                            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+
+                                inputControl.bind("keydown", function (e) {
+
+                                    if (e.keyCode === 13) {  // Enter key:
+                                        var increment = e.shiftKey ? -1 : 1;
+                                        var colModel = $("#grdOrder")[0].p.colModel;
+                                        var lastRowInd = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
+                                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+                                        var iRCnt = 0;
+                                        var TotalQuantity = 0;
+                                        var ExcessQuantity = 0;
+                                        var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+                                        if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                                            ExcessPercentage = 0;
+                                        }
+
+                                        $.each(columnNames, function (key, colName) {
+                                            debugger;
+                                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
+                                            if (colName.editable == true) {
+
+
+                                                for (iRCnt = 0; iRCnt < lastRowInd; iRCnt++) {
+
+
+
+                                                    var Quantity = $('#grdOrder').jqGrid('getCell', iRCnt, colName.name);
+
+                                                    if ((Quantity != null) && (Quantity != '')) {
+                                                        TotalQuantity += parseInt(Quantity);
+                                                        ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
+                                                    }
+                                                    $('#OrderQuantity').val(TotalQuantity);
+                                                    $('#ExcessQuantity').val(ExcessQuantity);
+                                                }
+                                            }
+                                        });
+                                        $('#grdOrder').jqGrid('nextCell', iRow, iCol);
+                                        if (colModel.length - 1 == iCol) {
+
+                                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                                return;
+                                            else {
+                                                jQuery("#grdOrder").jqGrid("editCell", iRow + increment, 2, true);
+                                            }
+                                        }
+                                    }
+                                });
+
+
+                            },
+                            //editurl: '@Url.Action("GridSave","Order")',
+                            cellsubmit: 'clientArray',
+                            rowNum: 10,
+                            rowList: [5, 10, 20, 50]
                         });
 
-                        debugger;
                         var columnProp;
-                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colNames');
+                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
                         $.each(columnNames, function (key, colName) {
-                            debugger;
-                            columnProp = $('#grdOrder').jqGrid('getColProp', colName);
-                            if (columnProp.editable == "true") {
-                                columnProp.editable = true;
-                                columnProp.editoptions = { size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
+                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
+                            if (colName.editable == "true") {
+                                colName.editable = true;
+                                colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
                             }
                         });
 
@@ -104,12 +191,93 @@
             });
 
         });
+
+        function formOrderDetailModel() {
+
+            var ruledetail = new Array();
+
+
+            var columnProp;
+            var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+            var cRows = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
+            var ExcessQuantity;
+            var iRow;
+
+            var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+            if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                ExcessPercentage = 0;
+            }
+
+            $.each(columnNames, function (key, colName) {
+
+                //columnProp = $('#grdOrder').jqGrid('getColProp',   colName);
+                if (colName.editable == true) {
+                    for (iRow = 0; iRow < cRows; iRow++) {
+
+                        ExcessQuantity = 0;
+
+                        var Quantity = $('#grdOrder').jqGrid('getCell', iRow, colName.name);
+
+                        if ((Quantity != null) && (Quantity != '')) {
+                            ExcessQuantity = Math.floor(parseInt(Quantity) + (parseInt(Quantity) * (ExcessPercentage / 100)));
+                        }
+                        else {
+                            Quantity = 0;
+                        }
+
+                        ruledetail.push({
+                            SequenceNumber: 0,
+                            OrderNumber: 0,
+                            StyleSequenceNumber: parseInt($('#StyleSequenceNumber').val()),
+                            StyleColorSequenceNumber: parseInt(jQuery('#grdOrder').jqGrid('getCell', iRow, "StyleColorSequence")),
+                            StyleSizeSequenceNumber: parseInt(colName.index),
+                            OrderDetailQuantity: parseInt(Quantity),
+                            OrderDetailExcessQuantity: parseInt(ExcessQuantity)
+                        });
+
+                    }
+                }
+            });
+
+            return ruledetail;
+
+        }
+
+
+        $('#SaveButton').click(function (event) {
+            debugger;
+
+            var orderData = JSON.stringify({ 'orderMainModel': $('#frmOrder').jsonify(), 'orderDetailModel': formOrderDetailModel() });
+
+             $.ajax({
+                url: '@Url.Content("/Order/SaveOrder")',
+                type: 'POST',
+                 dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: orderData,
+                success: function (result) {
+                    if (result.success) {
+                        alert(result.data);
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+
+
     });
 </script>
 <h2>Order</h2>
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmOrder", role = "form", @class = "form-horizontal" }))
 {    
-    
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -180,19 +348,38 @@
                             @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList,"Select Order", new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
-                     
-                    <div class="form-group">
-                        <div class="col-lg-offset-4">
-                            <input type="button" value="Add" id="AddButton" class="btn marginR10" />
-                            <button class="btn btn-danger">
-                                Cancel</button>
-                        </div>
-                    </div>
+ 
                     <div class="form-group">
                         <div class="col-lg-1">
-                            <table id="grdOrder">
-                            </table>
- 
+                            <table id="grdOrder"></table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PackingType, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.PackingType , new { @class = "form-control", style = "height:35px;width: 400px;"  })
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        @Html.LabelFor(m => m.PackingInstructions, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextAreaFor(m => m.PackingInstructions,5, 400, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    
+                     <div class="form-group">
+                        @Html.LabelFor(m => m.AssortmentDetails, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextAreaFor(m => m.AssortmentDetails, 5, 400, new { @class = "form-control" })
+                        </div>
+                    </div>
+                                        
+                     <div class="form-group">
+                        @Html.LabelFor(m => m.Comments, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextAreaFor(m => m.Comments, 5, 400, new { @class = "form-control"  })
                         </div>
                     </div>
                     <!-- End .form-group  -->

@@ -61,7 +61,8 @@ namespace Raagam.MVC.TextileManagement.UI
  "~/plugins/forms/maskedinput/jquery.inputmask.regex.extensions.js",
  "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
  "~/Scripts/chosen.jquery.js",
-  "~/Scripts/prism.js"
+  "~/Scripts/prism.js",
+    "~/Scripts/jsonify.js" 
 
 ));
 
