@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" />
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Web.Mvc" />
+      <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMerchandiser_PopulateDropDown_InputMessage">
@@ -20,6 +21,18 @@
   <wsdl:message name="IMerchandiser_SelectColorSize_OutputMessage">
     <wsdl:part name="parameters" element="tns:SelectColorSizeResponse" />
   </wsdl:message>
+  <wsdl:message name="IMerchandiser_SaveOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveOrder" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_SaveOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_GetOrderDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_GetOrderDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMerchandiser">
     <wsdl:operation name="PopulateDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/PopulateDropDown" message="tns:IMerchandiser_PopulateDropDown_InputMessage" />
@@ -28,6 +41,14 @@
     <wsdl:operation name="SelectColorSize">
       <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/SelectColorSize" message="tns:IMerchandiser_SelectColorSize_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/SelectColorSizeResponse" message="tns:IMerchandiser_SelectColorSize_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/SaveOrder" message="tns:IMerchandiser_SaveOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/SaveOrderResponse" message="tns:IMerchandiser_SaveOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/GetOrderDetails" message="tns:IMerchandiser_GetOrderDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/GetOrderDetailsResponse" message="tns:IMerchandiser_GetOrderDetails_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMerchandiser" type="tns:IMerchandiser">
@@ -43,6 +64,24 @@
     </wsdl:operation>
     <wsdl:operation name="SelectColorSize">
       <soap:operation soapAction="http://tempuri.org/IMerchandiser/SelectColorSize" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveOrder">
+      <soap:operation soapAction="http://tempuri.org/IMerchandiser/SaveOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <soap:operation soapAction="http://tempuri.org/IMerchandiser/GetOrderDetails" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

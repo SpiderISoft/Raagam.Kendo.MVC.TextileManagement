@@ -20,6 +20,12 @@ namespace Raagam.MVC.TextileManagement.UI.MerchandiserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMerchandiser/SelectColorSize", ReplyAction="http://tempuri.org/IMerchandiser/SelectColorSizeResponse")]
         Raagam.TextileManagement.Model.OrderMainModel SelectColorSize(long StyleSequenceNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMerchandiser/SaveOrder", ReplyAction="http://tempuri.org/IMerchandiser/SaveOrderResponse")]
+        long SaveOrder(Raagam.TextileManagement.Model.OrderMainModel orderMainModel);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMerchandiser/GetOrderDetails", ReplyAction="http://tempuri.org/IMerchandiser/GetOrderDetailsResponse")]
+        Raagam.TextileManagement.Model.OrderMainModel GetOrderDetails(long OrderNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +61,14 @@ namespace Raagam.MVC.TextileManagement.UI.MerchandiserService {
         
         public Raagam.TextileManagement.Model.OrderMainModel SelectColorSize(long StyleSequenceNumber) {
             return base.Channel.SelectColorSize(StyleSequenceNumber);
+        }
+        
+        public long SaveOrder(Raagam.TextileManagement.Model.OrderMainModel orderMainModel) {
+            return base.Channel.SaveOrder(orderMainModel);
+        }
+        
+        public Raagam.TextileManagement.Model.OrderMainModel GetOrderDetails(long OrderNumber) {
+            return base.Channel.GetOrderDetails(OrderNumber);
         }
     }
 }

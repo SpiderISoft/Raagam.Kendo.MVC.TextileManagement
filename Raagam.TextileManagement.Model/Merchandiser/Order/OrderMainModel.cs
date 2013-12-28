@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 using System.Web.Mvc;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.Model
 {
@@ -24,8 +25,15 @@ namespace Raagam.TextileManagement.Model
             PackingInstructions = "";
             AssortmentDetails = "";
             Comments = "";
+            IsCompleted = false;
+            Mode = EnumConstants.ScreenMode.New;
 
         }
+
+        [DataMember]
+        public EnumConstants.ScreenMode Mode { get; set; }
+
+
         [DataMember]
         [DisplayName("Order Number")]
         public long OrderNumber { get; set; }
@@ -44,15 +52,15 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         [DisplayName("Order Quantity")]
-        public int OrderQuantity { get; set; }
+        public decimal OrderQuantity { get; set; }
 
         [DataMember]
         [DisplayName("Excess Quantity")]
-        public int ExcessQuantity { get; set; }
+        public decimal ExcessQuantity { get; set; }
 
         [DataMember]
         [DisplayName("Excess %")]
-        public int ExcessPercentage { get; set; }
+        public decimal ExcessPercentage { get; set; }
 
         [DataMember]
         [DisplayName("Buyer")]
@@ -96,6 +104,10 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         [DisplayName("Comments")]
         public string Comments { get; set; }
- 
+
+
+        [DataMember]
+        [DisplayName("Completed")]
+        public bool IsCompleted { get; set; }
     }
 }

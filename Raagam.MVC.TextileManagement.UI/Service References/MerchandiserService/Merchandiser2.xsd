@@ -29,4 +29,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SaveOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="orderMainModel" nillable="true" type="q4:OrderMainModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SaveOrderResult" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrderDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="GetOrderDetailsResult" nillable="true" type="q5:OrderMainModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

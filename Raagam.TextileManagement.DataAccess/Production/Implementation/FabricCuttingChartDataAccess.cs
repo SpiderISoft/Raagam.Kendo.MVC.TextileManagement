@@ -180,30 +180,7 @@ namespace Raagam.TextileManagement.DataAccess
 
         #region IFabricCuttingChartDataAccess Members
 
-        public DataTable ToDataTable<T>(List<T> items)
-        {
-            DataTable dataTable = new DataTable(typeof(T).Name);
-
-            //Get all the properties
-            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo prop in Props)
-            {
-                //Setting column names as Property names
-                dataTable.Columns.Add(prop.Name);
-            }
-            foreach (T item in items)
-            {
-                var values = new object[Props.Length];
-                for (int i = 0; i < Props.Length; i++)
-                {
-                    //inserting property values to datatable rows
-                    values[i] = Props[i].GetValue(item, null);
-                }
-                dataTable.Rows.Add(values);
-            }
-            //put a breakpoint here and check datatable
-            return dataTable;
-        }
+       
 
         EnumConstants.SaveStatus IFabricCuttingChartDataAccess.SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel)
         {
@@ -213,8 +190,8 @@ namespace Raagam.TextileManagement.DataAccess
             List<FabricCuttingChartDetailModel> fabricCuttingChartDetailModel = new List<FabricCuttingChartDetailModel>();
             fabricCuttingChartDetailModel = fabricCuttingChartModel.fabricCuttingChartDetailList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
 
-            DataTable fabricCuttingChartMainDataTable = ToDataTable(fabricCuttingChartMainModel);
-            DataTable fabricCuttingChartDetailDataTable = ToDataTable(fabricCuttingChartDetailModel);
+            DataTable fabricCuttingChartMainDataTable = UtilityMethods.ToDataTable(fabricCuttingChartMainModel);
+            DataTable fabricCuttingChartDetailDataTable = UtilityMethods.ToDataTable(fabricCuttingChartDetailModel);
 
             
             using (DbCommand saveFabricCuttingChartMainCommand = _dbHelper.GetStoredProcCommand("rx_ins_fabric_cutting_chart"))

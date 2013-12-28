@@ -28,7 +28,18 @@ namespace Raagam.TextileManagement.WCF.Service
             _orderBusiness = new OrderBusiness();
             return _orderBusiness.SelectColorSize(StyleSequenceNumber);
         }
-               
+
+        public long SaveOrder(OrderMainModel orderMainModel)
+        {
+            _orderBusiness = new OrderBusiness();
+            return _orderBusiness.SaveOrder(orderMainModel);
+        }
+
+        public OrderMainModel GetOrderDetails(long OrderNumber)
+        {
+            _orderBusiness = new OrderBusiness();
+            return _orderBusiness.GetOrderDetails(OrderNumber);
+        }
         #endregion
     }
 }

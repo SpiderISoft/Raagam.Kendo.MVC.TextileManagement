@@ -1563,6 +1563,9 @@
     <None Include="Service References\MerchandiserService\Merchandiser3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\MerchandiserService\Merchandiser4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ProductionService\Production.disco" />
     <None Include="Service References\ProductionService\configuration91.svcinfo" />
     <None Include="Service References\ProductionService\configuration.svcinfo" />

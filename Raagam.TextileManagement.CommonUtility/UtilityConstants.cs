@@ -10,6 +10,8 @@ namespace Raagam.TextileManagement.CommonUtility
 {
     public static class UtilityConstants
     {
+
+
         public const string DatabaseSectionName = "dataConfiguration";
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["TextileManagementConnection"].ToString();
 

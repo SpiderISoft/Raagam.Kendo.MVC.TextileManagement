@@ -10,5 +10,7 @@ namespace Raagam.TextileManagement.BusinessAccess
     {
         OrderMainModel PopulateDropDown(OrderMainModel orderMainModel);
         OrderMainModel  SelectColorSize(long StyleSequenceNumber);
+        long SaveOrder(OrderMainModel orderMainModel);
+        OrderMainModel GetOrderDetails(long OrderNumber);
     }
 }

@@ -25,5 +25,15 @@ namespace Raagam.TextileManagement.BusinessAccess
         {
             return _orderDataAccess.SelectColorSize(StyleSequenceNumber);
         }
+
+        public long SaveOrder(OrderMainModel orderMainModel)
+        {
+            return _orderDataAccess.SaveOrder(orderMainModel);
+        }
+        
+        public OrderMainModel GetOrderDetails(long OrderNumber)
+        {
+            return _orderDataAccess.GetOrderDetails(OrderNumber);
+        }
     }
 }

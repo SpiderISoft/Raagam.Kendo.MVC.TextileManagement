@@ -21,5 +21,11 @@ namespace Raagam.TextileManagement.CommonUtility
             Saved,
             NotSaved
         }
+
+        public enum ScreenMode
+        {
+            New,
+            Edit
+        }
     }
 }

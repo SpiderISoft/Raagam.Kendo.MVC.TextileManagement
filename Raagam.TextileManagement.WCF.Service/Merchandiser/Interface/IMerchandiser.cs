@@ -16,5 +16,11 @@ namespace Raagam.TextileManagement.WCF.Service
 
         [OperationContract]
         OrderMainModel SelectColorSize(long StyleSequenceNumber);
+
+        [OperationContract]
+        long SaveOrder(OrderMainModel orderMainModel);
+
+        [OperationContract]
+        OrderMainModel GetOrderDetails(long OrderNumber);
     }
 }

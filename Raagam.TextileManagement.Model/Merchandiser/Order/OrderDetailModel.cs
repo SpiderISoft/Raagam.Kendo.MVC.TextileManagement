@@ -25,9 +25,13 @@ namespace Raagam.TextileManagement.Model
         public long StyleSizeSequenceNumber { get; set; }
 
         [DataMember]
-        public int OrderDetailQuantity { get; set; }
+        public decimal OrderDetailQuantity { get; set; }
 
         [DataMember]
-        public int OrderDetailExcessQuantity { get; set; }
+        public decimal OrderDetailExcessQuantity { get; set; }
+
+        [DataMember]
+        public Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState State { get; set; }
+
     }
 }

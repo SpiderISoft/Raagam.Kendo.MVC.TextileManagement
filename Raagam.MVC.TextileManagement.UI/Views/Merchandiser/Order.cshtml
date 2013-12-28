@@ -59,8 +59,196 @@
             $('#ExcessQuantity').val(ExcessQuantity);
         });
 
+        $('#OrderNumber').keypress(function (e) {
+            if (e.keyCode == 13) {
+                $.ajax({
+                    url: '@Url.Content("/Order/GetOrderDetails")',
+                    type: 'POST',
+                    data:
+                        {
+                            OrderNumber: $('#OrderNumber').val()
+                        },
+                    success: function (result) {
+                        $('#Mode').val(result.data.Mode);
+
+
+
+                        $('#OrderDate').val(result.data.OrderDate);
+                        $('#DeliveryDate').val(result.data.DeliveryDate);
+                        $('#BuyerReferenceNumber').val(result.data.BuyerReferenceNumber);
+                        $('#BuyerSequenceNumber').val(result.data.BuyerSequenceNumber);
+
+                        $('#OrderQuantity').val(result.data.OrderQuantity);
+                        $('#ExcessPercentage').val(result.data.ExcessPercentage);
+                        //$('#ExcessQuantity').val(result.data.ExcessQuantity);
+                        $('#StyleSequenceNumber').val(result.data.StyleSequenceNumber);
+
+                        $('#PackingType').val(result.data.PackingType);
+                        $('#PackingInstructions').val(result.data.PackingInstructions);
+                        $('#AssortmentDetails').val(result.data.AssortmentDetails);
+
+                        $('#Comments').val(result.data.Comments);
+                        $('#IsCompleted').val(result.data.IsCompleted);
+
+                        $("#grdOrder").jqGrid('GridUnload');
+                        var obj = jQuery.parseJSON(result.data.ColModel);
+                        var colN = result.data.ColNames;
+                        var colM = obj.DocumentElement.colModel;
+                        var OrderDetailModelList = result.data.OrderDetailModelList;
+                        var lastSel;
+                        debugger;
+                        $('#grdOrder').jqGrid({
+                            height: 'auto',
+                            datatype: 'local',
+                            rowNum: 10,
+                            caption: 'Order',
+                            viewrecords: true,
+                            colNames: colN,
+                            colModel: colM,
+                            cellEdit: true,
+                            onSelectCell: function (currentSelectedRow) {
+                                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                                    $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
+                                    $.lastSelectedRow = currentSelectedRow;
+                                }
+                                $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
+                            },
+                            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+
+                                inputControl.bind("keydown", function (e) {
+
+                                    if (e.keyCode === 13) {  // Enter key:
+                                        var increment = e.shiftKey ? -1 : 1;
+                                        var colModel = $("#grdOrder")[0].p.colModel;
+                                        var lastRowInd = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
+                                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+                                        var iRCnt = 0;
+                                        var TotalQuantity = 0;
+                                        var ExcessQuantity = 0;
+                                        var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+                                        if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                                            ExcessPercentage = 0;
+                                        }
+
+                                        $.each(columnNames, function (key, colName) {
+                                            debugger;
+                                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
+                                            if (colName.editable == true) {
+
+
+                                                for (iRCnt = 0; iRCnt < lastRowInd; iRCnt++) {
+
+
+
+                                                    var Quantity = $('#grdOrder').jqGrid('getCell', iRCnt, colName.name);
+
+                                                    if ((Quantity != null) && (Quantity != '')) {
+                                                        TotalQuantity += parseInt(Quantity);
+                                                        ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
+                                                    }
+                                                    $('#OrderQuantity').val(TotalQuantity);
+                                                    $('#ExcessQuantity').val(ExcessQuantity);
+                                                }
+                                            }
+                                        });
+                                        $('#grdOrder').jqGrid('nextCell', iRow, iCol);
+                                        if (colModel.length - 1 == iCol) {
+
+                                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                                return;
+                                            else {
+                                                jQuery("#grdOrder").jqGrid("editCell", iRow + increment, 2, true);
+                                            }
+                                        }
+                                    }
+                                });
+
+
+                            },
+                            //editurl: '@Url.Action("GridSave","Order")',
+                            cellsubmit: 'clientArray',
+                            rowNum: 10,
+                            rowList: [5, 10, 20, 50]
+                        });
+
+                        var columnProp;
+                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+                        var iRow = 0;
+
+
+                        $.each(columnNames, function (key, colName) {
+                            debugger;
+                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
+                            if (colName.editable == "true") {
+                                colName.editable = true;
+                                colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
+                            }
+                        });
+
+
+                        jQuery('#grdOrder').clearGridData();
+                        var rowid = 0;
+                        $.each(result.data.styleColorList, function (key, data) {
+                            debugger;
+                            jQuery("#grdOrder").addRowData(rowid, data);
+                            rowid = rowid + 1;
+                        });
+
+                        $.each(OrderDetailModelList, function (key, data) {
+                            debugger;
+                            $.each(columnNames, function (key, colName) {
+                                debugger;
+                                if (colName.index == data.StyleSizeSequenceNumber) {
+                                    $.each(result.data.styleColorList, function (key, colorData) {
+                                        debugger;
+                                        if (colorData.StyleColorSequence == data.StyleColorSequenceNumber) {
+                                            return false;
+
+                                        }
+                                        else {
+                                            iRow += 1;
+                                        }
+
+                                    });
+                                    debugger;
+
+                                    $('#grdOrder').jqGrid("setCell", iRow, colName.name, data.OrderDetailQuantity);
+                                    iRow = 0;
+                                }
+                            });
+                        });
+
+
+                        var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+                        if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                            ExcessPercentage = 0;
+                        }
+
+                        var TotalQuantity = parseInt($('#OrderQuantity').val());
+
+                        if ((TotalQuantity == null) || (TotalQuantity == '')) {
+                            TotalQuantity = 0;
+                        }
+
+                        ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
+                        $('#ExcessQuantity').val(ExcessQuantity);
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+                return false;
+            }
+        });
+
 
         $('#StyleSequenceNumber').change(function (event) {
+            if ($('#Mode').val() == "Edit")
+                return true;
 
 
             var StyleSequenceNumber = $('#StyleSequenceNumber').val();
@@ -74,7 +262,6 @@
                 type: 'POST',
                 success: function (result) {
                     if (result.success) {
-                        debugger;
                         $("#grdOrder").jqGrid('GridUnload');
 
                         var obj = jQuery.parseJSON(result.data.ColModel);
@@ -226,6 +413,14 @@
                             Quantity = 0;
                         }
 
+                        var State;
+                        if ($('#Mode').val() == 'New') {
+                            State = 'Added';
+                        }
+                        else {
+                            State = 'Updated';
+                        }
+
                         ruledetail.push({
                             SequenceNumber: 0,
                             OrderNumber: 0,
@@ -233,7 +428,8 @@
                             StyleColorSequenceNumber: parseInt(jQuery('#grdOrder').jqGrid('getCell', iRow, "StyleColorSequence")),
                             StyleSizeSequenceNumber: parseInt(colName.index),
                             OrderDetailQuantity: parseInt(Quantity),
-                            OrderDetailExcessQuantity: parseInt(ExcessQuantity)
+                            OrderDetailExcessQuantity: parseInt(ExcessQuantity),
+                            State: State
                         });
 
                     }
@@ -250,15 +446,16 @@
 
             var orderData = JSON.stringify({ 'orderMainModel': $('#frmOrder').jsonify(), 'orderDetailModel': formOrderDetailModel() });
 
-             $.ajax({
+            $.ajax({
                 url: '@Url.Content("/Order/SaveOrder")',
                 type: 'POST',
-                 dataType: "json",
+                dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: orderData,
                 success: function (result) {
                     if (result.success) {
-                        alert(result.data);
+                        $('#OrderNumber').val(result.data.OrderNumber);
+                        alert("Saved Successfully");
                     }
                     else {
                         alert(result.data);
@@ -278,6 +475,7 @@
 <h2>Order</h2>
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmOrder", role = "form", @class = "form-horizontal" }))
 {    
+       @Html.HiddenFor(m => m.Mode)
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -289,6 +487,9 @@
                 <div class="panel-body">
                  <div class="form-group">
                         <div class="col-lg-offset-8">
+                            <label class="checkbox-inline">
+                            @Html.CheckBoxFor(m => m.IsCompleted)&nbsp;&nbsp;Completed
+                            </label>
                             <input type="button" value="Save" id="SaveButton" class="btn marginR10" />
                             <button class="btn btn-danger" id="CancelButton">Cancel</button>
                           </div>
