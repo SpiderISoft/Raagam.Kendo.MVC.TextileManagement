@@ -15,6 +15,7 @@ namespace Raagam.TextileManagement.Model
 
         public OrderMainModel()
         {
+            OrderDate = DateTime.Today;
             OrderDetailModelList = new List<OrderDetailModel>();
             BuyerReferenceNumber = "";
             BuyerDropDownList = new List<SelectListItem>();

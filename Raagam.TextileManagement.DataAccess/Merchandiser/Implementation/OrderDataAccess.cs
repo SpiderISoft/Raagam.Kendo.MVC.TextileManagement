@@ -158,49 +158,90 @@ namespace Raagam.TextileManagement.DataAccess
         public long SaveOrder(OrderMainModel orderMainModel)
         {
 
-
-            List<OrderDetailModel> orderDetailModel = new List<OrderDetailModel>();
-            orderDetailModel = orderMainModel.OrderDetailModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
-
-            
-
-            DataTable orderDetailDataTable = UtilityMethods.ToDataTable(orderDetailModel);
-
-
-            using (DbCommand saveOrderMainCommand = _dbHelper.GetStoredProcCommand("rx_ins_order"))
+            if (orderMainModel.Mode == EnumConstants.ScreenMode.New)
             {
+                List<OrderDetailModel> orderDetailModel = new List<OrderDetailModel>();
+                orderDetailModel = orderMainModel.OrderDetailModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
+
+                DataTable orderDetailDataTable = UtilityMethods.ToDataTable(orderDetailModel);
+
+                using (DbCommand saveOrderMainCommand = _dbHelper.GetStoredProcCommand("rx_ins_order"))
+                {
+
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_date", DbType.DateTime, orderMainModel.OrderDate);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_id", DbType.Int64, orderMainModel.BuyerSequenceNumber);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_delivery_date", DbType.DateTime, orderMainModel.DeliveryDate);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_refno", DbType.String, orderMainModel.BuyerReferenceNumber);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_qty", DbType.Int64, orderMainModel.OrderQuantity);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_type", DbType.String, orderMainModel.PackingType);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_instructions", DbType.String, orderMainModel.PackingInstructions);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_assortment_details", DbType.String, orderMainModel.AssortmentDetails);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_comments", DbType.String, orderMainModel.Comments);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_iscompleted", DbType.Boolean, orderMainModel.IsCompleted);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_excess", DbType.Int16, orderMainModel.ExcessPercentage);
+
+                    IDataReader dbReader = _dbHelper.ExecuteReader(saveOrderMainCommand);
+                    dbReader.Read();
+                    orderMainModel.OrderNumber = long.Parse(dbReader["order_id"].ToString());
 
 
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_date", DbType.DateTime, orderMainModel.OrderDate);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_id", DbType.Int64, orderMainModel.BuyerSequenceNumber);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_delivery_date", DbType.DateTime, orderMainModel.DeliveryDate);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_refno", DbType.String, orderMainModel.BuyerReferenceNumber);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_qty", DbType.Int64, orderMainModel.OrderQuantity);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_type", DbType.String, orderMainModel.PackingType);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_instructions", DbType.String, orderMainModel.PackingInstructions);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_assortment_details", DbType.String, orderMainModel.AssortmentDetails);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_comments", DbType.String, orderMainModel.Comments);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_iscompleted", DbType.Boolean,orderMainModel.IsCompleted);
-                _dbHelper.AddInParameter(saveOrderMainCommand, "@order_excess", DbType.Int16,orderMainModel.ExcessPercentage);
+                }
 
-                IDataReader dbReader = _dbHelper.ExecuteReader(saveOrderMainCommand);
-                dbReader.Read();
-                orderMainModel.OrderNumber = long.Parse(dbReader["order_id"].ToString());
-                
+                using (DbCommand saveOrderDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_order_details"))
+                {
 
+
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_order_id", DbType.Int64, orderMainModel.OrderNumber);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_id", DbType.Int64, "StyleSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_color_id", DbType.Int64, "StyleColorSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_size_id", DbType.Int64, "StyleSizeSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_qty", DbType.Int64, "OrderDetailQuantity", DataRowVersion.Current);
+
+                    _dbHelper.Fill(saveOrderDetailCommand, orderDetailDataTable);
+
+                }
             }
-
-            using (DbCommand saveOrderDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_order_details"))
+            else
             {
+                List<OrderDetailModel> orderDetailModel = new List<OrderDetailModel>();
+                orderDetailModel = orderMainModel.OrderDetailModelList;
 
+                DataTable orderDetailDataTable = UtilityMethods.ToDataTable(orderDetailModel);
 
-                _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_order_id", DbType.Int64,orderMainModel.OrderNumber);
-                _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_id", DbType.Int64, "StyleSequenceNumber", DataRowVersion.Current);
-                _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_color_id", DbType.Int64, "StyleColorSequenceNumber", DataRowVersion.Current);
-                _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_size_id", DbType.Int64, "StyleSizeSequenceNumber", DataRowVersion.Current);
-                _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_qty", DbType.Int64, "OrderDetailQuantity", DataRowVersion.Current);
+                using (DbCommand saveOrderMainCommand = _dbHelper.GetStoredProcCommand("rx_upd_order"))
+                {
 
-                _dbHelper.Fill(saveOrderDetailCommand, orderDetailDataTable);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_id", DbType.Int64, orderMainModel.OrderNumber );
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_date", DbType.DateTime, orderMainModel.OrderDate);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_id", DbType.Int64, orderMainModel.BuyerSequenceNumber);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_delivery_date", DbType.DateTime, orderMainModel.DeliveryDate);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_buyer_refno", DbType.String, orderMainModel.BuyerReferenceNumber);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_qty", DbType.Int64, orderMainModel.OrderQuantity);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_type", DbType.String, orderMainModel.PackingType);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_packing_instructions", DbType.String, orderMainModel.PackingInstructions);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_assortment_details", DbType.String, orderMainModel.AssortmentDetails);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_comments", DbType.String, orderMainModel.Comments);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_iscompleted", DbType.Boolean, orderMainModel.IsCompleted);
+                    _dbHelper.AddInParameter(saveOrderMainCommand, "@order_excess", DbType.Int16, orderMainModel.ExcessPercentage);
+
+                    _dbHelper.ExecuteNonQuery(saveOrderMainCommand);
+                    
+
+                }
+
+                using (DbCommand saveOrderDetailCommand = _dbHelper.GetStoredProcCommand("rx_upd_order_details"))
+                {
+
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_id", DbType.Int64, "SequenceNumber",DataRowVersion.Current );
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_order_id", DbType.Int64, orderMainModel.OrderNumber);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_id", DbType.Int64, "StyleSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_color_id", DbType.Int64, "StyleColorSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_style_size_id", DbType.Int64, "StyleSizeSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(saveOrderDetailCommand, "@order_details_qty", DbType.Int64, "OrderDetailQuantity", DataRowVersion.Current);
+
+                    _dbHelper.Fill(saveOrderDetailCommand, orderDetailDataTable);
+
+                }
 
             }
 

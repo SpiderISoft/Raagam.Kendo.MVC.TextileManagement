@@ -50,6 +50,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             dcm.Columns.Add("editable",typeof(bool));
             dcm.Columns.Add("width");
 
+
+
             DataRow drColorSequenceRow = dcm.NewRow();
             drColorSequenceRow["name"] = "StyleColorSequence";
             drColorSequenceRow["index"] = "StyleColorSequence";  
@@ -65,6 +67,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             dcm.Rows.Add(drColorRow);
 
             List<string> ColNamesList = new List<string>();
+
             ColNamesList.Add("StyleColorSequence");
             ColNamesList.Add("ColorName");
 
@@ -82,6 +85,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 ColNamesList.Add(orderServiceMainModel.StyleSizeList[i].SizeName);
             }
 
+ 
             orderMainModel.StyleColorList = orderServiceMainModel.StyleColorList;
 
             dcm.WriteXml(SW);
@@ -125,6 +129,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             dcm.Columns.Add("editable", typeof(bool));
             dcm.Columns.Add("width");
 
+   
+
             DataRow drColorSequenceRow = dcm.NewRow();
             drColorSequenceRow["name"] = "StyleColorSequence";
             drColorSequenceRow["index"] = "StyleColorSequence";
@@ -167,6 +173,14 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             {
                 jResult = JsonConvert.SerializeXmlNode(XDoc.DocumentElement);
             }
+
+            if (orderMainModel.OrderDetailModelList != null)
+            {
+                if (orderMainModel.OrderDetailModelList.Count > 0)
+                {
+                    orderMainModel.StyleSequenceNumber = orderMainModel.OrderDetailModelList[0].StyleSequenceNumber;
+                }
+            }
             orderMainModel.Mode = Raagam.TextileManagement.CommonUtility.EnumConstants.ScreenMode.Edit;
 
             TempData["orderMainModel"] = orderMainModel;
@@ -176,6 +190,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
                 data = new
                 {
                     Mode = orderMainModel.Mode.ToString(),
+                    OrderNumber = orderMainModel.OrderNumber,
                     OrderDate = orderMainModel.OrderDate.ToString("dd/MM/yyyy"),
                     DeliveryDate = orderMainModel.DeliveryDate.ToString("dd/MM/yyyy"),
                     BuyerReferenceNumber = orderMainModel.BuyerReferenceNumber,
@@ -202,8 +217,22 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
         [HttpPost]
         public ActionResult SaveOrder(OrderMainModel orderMainModel, List<OrderDetailModel> orderDetailModel)
         {
+            OrderMainModel TempOrderMainModel = (OrderMainModel)TempData["orderMainModel"];
+            
+
             orderMainModel.OrderDetailModelList = orderDetailModel;
+
+            if (orderMainModel.Mode == Raagam.TextileManagement.CommonUtility.EnumConstants.ScreenMode.Edit)
+            {
+                foreach (OrderDetailModel _ordDetailModel in orderDetailModel)
+                {
+                    _ordDetailModel.SequenceNumber = TempOrderMainModel.OrderDetailModelList.Where(x => x.StyleColorSequenceNumber == _ordDetailModel.StyleColorSequenceNumber && x.StyleSizeSequenceNumber == _ordDetailModel.StyleSizeSequenceNumber && x.StyleSequenceNumber == _ordDetailModel.StyleSequenceNumber).FirstOrDefault().SequenceNumber;
+                }
+            }
+
             long OrderNumber = merchandiserServiceClient.SaveOrder(orderMainModel);
+            
+
             return Json(new
             {
                 success = true,

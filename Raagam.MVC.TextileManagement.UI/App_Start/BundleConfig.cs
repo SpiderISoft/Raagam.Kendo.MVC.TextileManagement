@@ -48,7 +48,8 @@ namespace Raagam.MVC.TextileManagement.UI
 
             bundles.Add(new ScriptBundle("~/bundles/grid").Include(
                 "~/scripts/i18n/grid.locale-en.js",
-"~/scripts/jquery.jqGrid.src.js" 
+"~/scripts/jquery.jqGrid.src.js" ,
+"~/Scripts/CommonScripts.js"
 ));
 
             bundles.Add(new ScriptBundle("~/bundles/mask").Include(

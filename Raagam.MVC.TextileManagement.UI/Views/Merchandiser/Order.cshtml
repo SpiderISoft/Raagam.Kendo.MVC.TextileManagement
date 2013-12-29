@@ -60,18 +60,35 @@
         });
 
         $('#OrderNumber').keypress(function (e) {
+
+
             if (e.keyCode == 13) {
+
+
+                var OrderNumber = $('#OrderNumber').val();
+
+                if ((OrderNumber == null) || (OrderNumber == 0) || OrderNumber == '') {
+                    alert('Please Enter OrderNumbber');
+                    return false;
+                }
+
+
                 $.ajax({
                     url: '@Url.Content("/Order/GetOrderDetails")',
                     type: 'POST',
                     data:
                         {
-                            OrderNumber: $('#OrderNumber').val()
+                            OrderNumber: OrderNumber
                         },
                     success: function (result) {
+
                         $('#Mode').val(result.data.Mode);
 
-
+                        if (result.data.OrderNumber == 0) {
+                            $('#frmOrder')[0].reset();
+                            $('#Mode').val('New');
+                            alert('Order Not Exists');
+                        }
 
                         $('#OrderDate').val(result.data.OrderDate);
                         $('#DeliveryDate').val(result.data.DeliveryDate);
@@ -88,113 +105,49 @@
                         $('#AssortmentDetails').val(result.data.AssortmentDetails);
 
                         $('#Comments').val(result.data.Comments);
-                        $('#IsCompleted').val(result.data.IsCompleted);
 
-                        $("#grdOrder").jqGrid('GridUnload');
-                        var obj = jQuery.parseJSON(result.data.ColModel);
-                        var colN = result.data.ColNames;
-                        var colM = obj.DocumentElement.colModel;
-                        var OrderDetailModelList = result.data.OrderDetailModelList;
-                        var lastSel;
-                        debugger;
-                        $('#grdOrder').jqGrid({
-                            height: 'auto',
-                            datatype: 'local',
-                            rowNum: 10,
-                            caption: 'Order',
-                            viewrecords: true,
-                            colNames: colN,
-                            colModel: colM,
-                            cellEdit: true,
-                            onSelectCell: function (currentSelectedRow) {
-                                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
-                                    $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
-                                    $.lastSelectedRow = currentSelectedRow;
-                                }
-                                $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
-                            },
-                            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
-                                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+                        $('#IsCompleted').attr('checked', result.data.IsCompleted);
 
-                                inputControl.bind("keydown", function (e) {
+                        var makeEditable = true;
+                        if ($('#Mode').val() == 'Edit') {
+                            if (result.data.IsCompleted == true) {
+                                makeEditable = false;
 
-                                    if (e.keyCode === 13) {  // Enter key:
-                                        var increment = e.shiftKey ? -1 : 1;
-                                        var colModel = $("#grdOrder")[0].p.colModel;
-                                        var lastRowInd = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
-                                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
-                                        var iRCnt = 0;
-                                        var TotalQuantity = 0;
-                                        var ExcessQuantity = 0;
-                                        var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+                                $('#DeliveryDate').attr('readonly', 'readonly');
+                                $('#BuyerReferenceNumber').attr('readonly', 'readonly');
+                                $('#BuyerSequenceNumber').attr('readonly', 'readonly');
+                                $('#ExcessPercentage').attr('readonly', 'readonly');
+                                $('#StyleSequenceNumber').attr('readonly', 'readonly');
+                                $('#PackingType').attr('readonly', 'readonly');
+                                $('#PackingInstructions').attr('readonly', 'readonly');
+                                $('#AssortmentDetails').attr('readonly', 'readonly');
+                                $('#Comments').attr('readonly', 'readonly');
+                                $('#IsCompleted').attr('readonly', 'readonly');
+                                $('#IsCompleted').attr('disabled', 'disabled');
+                                $('#SaveButton').attr('disabled', 'disabled');
 
-                                        if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
-                                            ExcessPercentage = 0;
-                                        }
-
-                                        $.each(columnNames, function (key, colName) {
-                                            debugger;
-                                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
-                                            if (colName.editable == true) {
-
-
-                                                for (iRCnt = 0; iRCnt < lastRowInd; iRCnt++) {
-
-
-
-                                                    var Quantity = $('#grdOrder').jqGrid('getCell', iRCnt, colName.name);
-
-                                                    if ((Quantity != null) && (Quantity != '')) {
-                                                        TotalQuantity += parseInt(Quantity);
-                                                        ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
-                                                    }
-                                                    $('#OrderQuantity').val(TotalQuantity);
-                                                    $('#ExcessQuantity').val(ExcessQuantity);
-                                                }
-                                            }
-                                        });
-                                        $('#grdOrder').jqGrid('nextCell', iRow, iCol);
-                                        if (colModel.length - 1 == iCol) {
-
-                                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
-                                                return;
-                                            else {
-                                                jQuery("#grdOrder").jqGrid("editCell", iRow + increment, 2, true);
-                                            }
-                                        }
-                                    }
-                                });
-
-
-                            },
-                            //editurl: '@Url.Action("GridSave","Order")',
-                            cellsubmit: 'clientArray',
-                            rowNum: 10,
-                            rowList: [5, 10, 20, 50]
-                        });
-
-                        var columnProp;
-                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
-                        var iRow = 0;
-
-
-                        $.each(columnNames, function (key, colName) {
-                            debugger;
-                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
-                            if (colName.editable == "true") {
-                                colName.editable = true;
-                                colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
                             }
-                        });
+                            else {
+                                $('#DeliveryDate').removeAttr('readonly');
+                                $('#BuyerReferenceNumber').removeAttr('readonly');
+                                $('#BuyerSequenceNumber').removeAttr('readonly');
+                                $('#ExcessPercentage').removeAttr('readonly');
+                                $('#StyleSequenceNumber').removeAttr('readonly');
+                                $('#PackingType').removeAttr('readonly');
+                                $('#PackingInstructions').removeAttr('readonly');
+                                $('#AssortmentDetails').removeAttr('readonly');
+                                $('#Comments').removeAttr('readonly');
+                                $('#IsCompleted').removeAttr('readonly');
+                                $('#IsCompleted').removeAttr('disabled');
+                                $('#SaveButton').removeAttr('disabled');
+                            }
+                        }
 
+                        jQGridBinding(result.data, makeEditable);
 
-                        jQuery('#grdOrder').clearGridData();
-                        var rowid = 0;
-                        $.each(result.data.styleColorList, function (key, data) {
-                            debugger;
-                            jQuery("#grdOrder").addRowData(rowid, data);
-                            rowid = rowid + 1;
-                        });
+                        var iRow = 0;
+                        var OrderDetailModelList = result.data.OrderDetailModelList;
+                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
 
                         $.each(OrderDetailModelList, function (key, data) {
                             debugger;
@@ -203,17 +156,13 @@
                                 if (colName.index == data.StyleSizeSequenceNumber) {
                                     $.each(result.data.styleColorList, function (key, colorData) {
                                         debugger;
-                                        if (colorData.StyleColorSequence == data.StyleColorSequenceNumber) {
+                                        if (colorData.StyleColorSequence == data.StyleColorSequenceNumber)
                                             return false;
-
-                                        }
-                                        else {
+                                        else
                                             iRow += 1;
-                                        }
-
                                     });
                                     debugger;
-
+                                    //$('#grdOrder').jqGrid("setCell", iRow, "SequenceNumber", data.SequenceNumber);
                                     $('#grdOrder').jqGrid("setCell", iRow, colName.name, data.OrderDetailQuantity);
                                     iRow = 0;
                                 }
@@ -253,6 +202,11 @@
 
             var StyleSequenceNumber = $('#StyleSequenceNumber').val();
 
+            if ((StyleSequenceNumber == null) || (StyleSequenceNumber == 0)) {
+                alert('Please Select Style');
+                return false;
+            }
+
             $.ajax({
                 url: '@Url.Content("/Order/SelectOrderColorSize")',
                 data:
@@ -262,108 +216,15 @@
                 type: 'POST',
                 success: function (result) {
                     if (result.success) {
-                        $("#grdOrder").jqGrid('GridUnload');
 
-                        var obj = jQuery.parseJSON(result.data.ColModel);
-                        var colN = result.data.ColNames;
-                        var colM = obj.DocumentElement.colModel;
-                        var lastSel;
-
-                        $('#grdOrder').jqGrid({
-                            height: 'auto',
-                            datatype: 'local',
-                            rowNum: 10,
-                            caption: 'Order',
-                            viewrecords: true,
-                            colNames: colN,
-                            colModel: colM,
-                            cellEdit: true,
-                            onSelectCell: function (currentSelectedRow) {
-                                debugger;
-                                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
-                                    $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
-                                    $.lastSelectedRow = currentSelectedRow;
-                                }
-                                $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
-                            },
-                            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
-                                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
-
-                                inputControl.bind("keydown", function (e) {
-
-                                    if (e.keyCode === 13) {  // Enter key:
-                                        var increment = e.shiftKey ? -1 : 1;
-                                        var colModel = $("#grdOrder")[0].p.colModel;
-                                        var lastRowInd = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
-                                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
-                                        var iRCnt = 0;
-                                        var TotalQuantity = 0;
-                                        var ExcessQuantity = 0;
-                                        var ExcessPercentage = parseInt($('#ExcessPercentage').val());
-
-                                        if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
-                                            ExcessPercentage = 0;
-                                        }
-
-                                        $.each(columnNames, function (key, colName) {
-                                            debugger;
-                                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
-                                            if (colName.editable == true) {
-
-
-                                                for (iRCnt = 0; iRCnt < lastRowInd; iRCnt++) {
-
-
-
-                                                    var Quantity = $('#grdOrder').jqGrid('getCell', iRCnt, colName.name);
-
-                                                    if ((Quantity != null) && (Quantity != '')) {
-                                                        TotalQuantity += parseInt(Quantity);
-                                                        ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
-                                                    }
-                                                    $('#OrderQuantity').val(TotalQuantity);
-                                                    $('#ExcessQuantity').val(ExcessQuantity);
-                                                }
-                                            }
-                                        });
-                                        $('#grdOrder').jqGrid('nextCell', iRow, iCol);
-                                        if (colModel.length - 1 == iCol) {
-
-                                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
-                                                return;
-                                            else {
-                                                jQuery("#grdOrder").jqGrid("editCell", iRow + increment, 2, true);
-                                            }
-                                        }
-                                    }
-                                });
-
-
-                            },
-                            //editurl: '@Url.Action("GridSave","Order")',
-                            cellsubmit: 'clientArray',
-                            rowNum: 10,
-                            rowList: [5, 10, 20, 50]
-                        });
-
-                        var columnProp;
-                        var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
-                        $.each(columnNames, function (key, colName) {
-                            //columnProp = $('#grdOrder').jqGrid('getColProp',  colName);
-                            if (colName.editable == "true") {
-                                colName.editable = true;
-                                colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
+                        var makeEditable = true;
+                        if ($('#Mode').val() == 'Edit') {
+                            if (result.data.IsCompleted == true) {
+                                makeEditable = false;
                             }
-                        });
+                        }
 
-
-                        jQuery('#grdOrder').clearGridData();
-                        var rowid = 0;
-                        $.each(result.data.styleColorList, function (key, data) {
-                            jQuery("#grdOrder").addRowData(rowid, data);
-                            rowid = rowid + 1;
-                        });
-
+                        jQGridBinding(result.data, makeEditable);
 
 
                     }
@@ -378,6 +239,119 @@
             });
 
         });
+
+
+        jQGridBinding = function (data, makeGridEditable) {
+
+
+            $("#grdOrder").jqGrid('GridUnload');
+
+            var obj = jQuery.parseJSON(data.ColModel);
+            var colN = data.ColNames;
+            var colM = obj.DocumentElement.colModel;
+            var lastSel;
+
+            $('#grdOrder').jqGrid({
+                height: 'auto',
+                datatype: 'local',
+                rowNum: 10,
+                caption: 'Order',
+                viewrecords: true,
+                colNames: colN,
+                colModel: colM,
+                cellEdit: true,
+                onSelectCell: function (currentSelectedRow) {
+                    debugger;
+                    if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                        $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
+                        $.lastSelectedRow = currentSelectedRow;
+                    }
+                    $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
+                },
+                afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                    var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+
+                    inputControl.bind("keydown", function (e) {
+
+                        if (e.keyCode === 13) {
+                            var increment = e.shiftKey ? -1 : 1;
+                            var colModel = $("#grdOrder")[0].p.colModel;
+                            var lastRowInd = jQuery("#grdOrder").jqGrid("getGridParam", "reccount");
+                            var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+                            var iRCnt = 0;
+                            var TotalQuantity = 0;
+                            var ExcessQuantity = 0;
+                            var ExcessPercentage = parseInt($('#ExcessPercentage').val());
+
+                            if ((ExcessPercentage == null) || (ExcessPercentage == '')) {
+                                ExcessPercentage = 0;
+                            }
+
+                            $.each(columnNames, function (key, colName) {
+                                debugger;
+
+                                if (colName.editable == true) {
+
+
+                                    for (iRCnt = 0; iRCnt < lastRowInd; iRCnt++) {
+
+
+
+                                        var Quantity = $('#grdOrder').jqGrid('getCell', iRCnt, colName.name);
+
+                                        if ((Quantity != null) && (Quantity != '')) {
+                                            TotalQuantity += parseInt(Quantity);
+                                            ExcessQuantity = Math.floor(TotalQuantity + (TotalQuantity * (ExcessPercentage / 100)));
+                                        }
+                                        $('#OrderQuantity').val(TotalQuantity);
+                                        $('#ExcessQuantity').val(ExcessQuantity);
+                                    }
+                                }
+                            });
+
+                            $('#grdOrder').jqGrid('nextCell', iRow, iCol);
+
+                            if (colModel.length - 1 == iCol) {
+
+                                if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                    return;
+                                else {
+                                    jQuery("#grdOrder").jqGrid("editCell", iRow + increment, 2, true);
+                                }
+                            }
+                        }
+                    });
+
+
+                },
+
+                cellsubmit: 'clientArray',
+                rowNum: 10,
+                rowList: [5, 10, 20, 50]
+
+            }); //End of JQGrid
+
+
+
+
+            var columnNames = $("#grdOrder").jqGrid('getGridParam', 'colModel');
+            $.each(columnNames, function (key, colName) {
+                if ((colName.editable == "true") && (makeGridEditable == true)) {
+                    colName.editable = true;
+                    colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
+                }
+            });
+
+            jQuery('#grdOrder').clearGridData();
+            var rowid = 0;
+            $.each(data.styleColorList, function (key, data) {
+                debugger;
+                jQuery("#grdOrder").addRowData(rowid, data);
+                rowid = rowid + 1;
+            });
+
+        }; //End of jQGridBinding
+
 
         function formOrderDetailModel() {
 
@@ -422,7 +396,7 @@
                         }
 
                         ruledetail.push({
-                            SequenceNumber: 0,
+                            SequenceNumber: parseInt(jQuery('#grdOrder').jqGrid('getCell', iRow, "SequenceNumber")),
                             OrderNumber: 0,
                             StyleSequenceNumber: parseInt($('#StyleSequenceNumber').val()),
                             StyleColorSequenceNumber: parseInt(jQuery('#grdOrder').jqGrid('getCell', iRow, "StyleColorSequence")),
@@ -455,7 +429,7 @@
                 success: function (result) {
                     if (result.success) {
                         $('#OrderNumber').val(result.data.OrderNumber);
-                        alert("Saved Successfully");
+                        alert("Order Number " + result.data.OrderNumber + " Saved Successfully");
                     }
                     else {
                         alert(result.data);

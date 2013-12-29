@@ -195,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\chosen.css" />
+    <Content Include="Content\jquery.msgbox.css" />
     <Content Include="Content\prism.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1471,6 +1472,7 @@
     <Content Include="plugins\tables\dataTables\ZeroClipboard.js" />
     <Content Include="plugins\tables\responsive-tables\responsive-tables.js" />
     <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\CommonScripts.js" />
     <Content Include="Scripts\i18n\grid.locale-en.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -1478,6 +1480,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.custom.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
+    <Content Include="Scripts\jquery.msgbox.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
