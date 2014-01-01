@@ -57,4 +57,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="StylePopulateDropDown">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="styleModel" nillable="true" type="q6:StyleModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StylePopulateDropDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="StylePopulateDropDownResult" nillable="true" type="q7:StyleModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -170,6 +170,7 @@
     <Compile Include="Controllers\Common\HomeController.cs" />
     <Compile Include="Controllers\Common\LoginController.cs" />
     <Compile Include="Controllers\Merchandiser\OrderController.cs" />
+    <Compile Include="Controllers\Merchandiser\StyleController.cs" />
     <Compile Include="Controllers\Production\FabricCuttingChartController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -1543,6 +1544,7 @@
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.LoginModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderMainModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderStyleColorSizeModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.StyleModel.datasource" />
     <None Include="Service References\CommonService\Common.wsdl" />
     <None Include="Service References\CommonService\Common.xsd">
       <SubType>Designer</SubType>
@@ -1653,6 +1655,7 @@
     </None>
     <Content Include="Views\Shared\_RaagamLayout.cshtml" />
     <Content Include="Views\Merchandiser\Order.cshtml" />
+    <Content Include="Views\Merchandiser\Style.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

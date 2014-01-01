@@ -58,7 +58,9 @@
   <ItemGroup>
     <Compile Include="Common\Implementation\LoginDataAccess.cs" />
     <Compile Include="Common\Interface\ILoginDataAccess.cs" />
+    <Compile Include="Merchandiser\Implementation\StyleDataAccess.cs" />
     <Compile Include="Merchandiser\Implementation\OrderDataAccess.cs" />
+    <Compile Include="Merchandiser\Interface\IStyleDataAccess.cs" />
     <Compile Include="Merchandiser\Interface\IOrderDataAccess.cs" />
     <Compile Include="Production\Implementation\FabricCuttingChartDataAccess.cs" />
     <Compile Include="Production\Interface\IFabricCuttingChartDataAccess.cs" />

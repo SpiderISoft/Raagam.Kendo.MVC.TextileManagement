@@ -17,6 +17,8 @@ namespace Raagam.TextileManagement.WCF.Service
 
         IOrderBusiness _orderBusiness;
 
+        IStyleBusiness _styleBusiness;
+
         public OrderMainModel PopulateDropDown(OrderMainModel orderMainModel)
         {
             _orderBusiness = new OrderBusiness();
@@ -40,6 +42,13 @@ namespace Raagam.TextileManagement.WCF.Service
             _orderBusiness = new OrderBusiness();
             return _orderBusiness.GetOrderDetails(OrderNumber);
         }
+
+        public StyleModel StylePopulateDropDown(StyleModel styleModel)
+        {
+            _styleBusiness = new StyleBusiness();
+            return _styleBusiness.PopulateDropDown(styleModel);
+        }
+
         #endregion
     }
 }

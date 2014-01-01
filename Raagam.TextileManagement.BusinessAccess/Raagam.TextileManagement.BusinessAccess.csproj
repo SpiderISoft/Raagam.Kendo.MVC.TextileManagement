@@ -57,7 +57,9 @@
   <ItemGroup>
     <Compile Include="Common\Implementation\LoginBusiness.cs" />
     <Compile Include="Common\Interface\ILoginBusiness.cs" />
+    <Compile Include="Merchandiser\Implementation\StyleBusiness.cs" />
     <Compile Include="Merchandiser\Implementation\OrderBusiness.cs" />
+    <Compile Include="Merchandiser\Interface\IStyleBusiness.cs" />
     <Compile Include="Merchandiser\Interface\IOrderBusiness.cs" />
     <Compile Include="Production\Implementation\FabricCuttingChartBusiness.cs" />
     <Compile Include="Production\Interface\IFabricCuttingChartBusiness.cs" />

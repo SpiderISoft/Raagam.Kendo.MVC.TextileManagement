@@ -10,17 +10,18 @@
       <xs:element minOccurs="0" name="BuyerSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DeliveryDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="ExcessPercentage" type="xs:int" />
-      <xs:element minOccurs="0" name="ExcessQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ExcessPercentage" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ExcessQuantity" type="xs:decimal" />
       <xs:element minOccurs="0" name="IsCompleted" type="xs:boolean" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="Mode" type="q2:EnumConstants.ScreenMode" />
       <xs:element minOccurs="0" name="OrderDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="OrderDetailModelList" nillable="true" type="tns:ArrayOfOrderDetailModel" />
       <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
-      <xs:element minOccurs="0" name="OrderQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderQuantity" type="xs:decimal" />
       <xs:element minOccurs="0" name="PackingInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PackingType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StyleColorList" nillable="true" type="tns:ArrayOfOrderStyleColorModel" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleDropDownList" nillable="true" type="q2:ArrayOfSelectListItem" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleDropDownList" nillable="true" type="q3:ArrayOfSelectListItem" />
       <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StyleSizeList" nillable="true" type="tns:ArrayOfOrderStyleSizeModel" />
     </xs:sequence>
@@ -34,11 +35,11 @@
   <xs:element name="ArrayOfOrderDetailModel" nillable="true" type="tns:ArrayOfOrderDetailModel" />
   <xs:complexType name="OrderDetailModel">
     <xs:sequence>
-      <xs:element minOccurs="0" name="OrderDetailExcessQuantity" type="xs:int" />
-      <xs:element minOccurs="0" name="OrderDetailQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderDetailExcessQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OrderDetailQuantity" type="xs:decimal" />
       <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
       <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q3:EnumConstants.ModelCurrentState" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q4:EnumConstants.ModelCurrentState" />
       <xs:element minOccurs="0" name="StyleColorSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="StyleSizeSequenceNumber" type="xs:long" />
@@ -71,4 +72,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrderStyleSizeModel" nillable="true" type="tns:OrderStyleSizeModel" />
+  <xs:complexType name="StyleModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsCompleted" type="xs:boolean" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q5:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleImage" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="StyleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleTypeDropDownList" nillable="true" type="q6:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="StyleTypeSequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleModel" nillable="true" type="tns:StyleModel" />
 </xs:schema>
