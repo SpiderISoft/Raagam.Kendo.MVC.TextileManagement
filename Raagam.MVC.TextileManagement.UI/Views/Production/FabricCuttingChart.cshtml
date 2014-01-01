@@ -221,6 +221,7 @@
             var sStyleSizeSelected = $('#StyleSizeSelected').val().toString();
             var sPanelSelected = $('#PanelSelected').val().toString();
 
+
             $.ajax({
                 url: '@Url.Content("/FabricCuttingChart/AddFabricCuttingChart")',
                 type: 'POST',
@@ -238,12 +239,13 @@
                         },
                 success: function (result) {
                     if (result.success) {
-                        $('#StyleSequenceNumber').val(0).change();
-                        $('#FabricSequenceNumber').val(0).change();
+//                        $('#StyleSequenceNumber').val(0).change();
+//                        $('#FabricSequenceNumber').val(0).change();
                         $('#Weight').val('');
                         $('#TableDia').val('');
                         $('#LoopLength').val('');
                         $('#KnitGSM').val('');
+ 
                         $('#StyleSizeSelected').chosen_reset({ width: '400px' });
                         $('#PanelSelected').chosen_reset({ width: '400px' });
                         jQuery('#grdFabricCuttingChart').clearGridData();
@@ -293,6 +295,7 @@
         });
 
         jQuery.fn.chosen_reset = function (n) {
+            //$(this).empty();
             $(this).chosen('destroy');
             $(this).prop('selectedIndex', -1);
             $(this).chosen(n)

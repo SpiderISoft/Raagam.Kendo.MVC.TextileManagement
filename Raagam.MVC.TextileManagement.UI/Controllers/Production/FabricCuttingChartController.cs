@@ -128,7 +128,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             var _fabricCuttingChartMainList = fabricCuttingChartModel.fabricCuttingChartMainList.AsQueryable();
             var _fabricCuttingChartDetailList = fabricCuttingChartModel.fabricCuttingChartDetailList.AsQueryable();
 
-            var _fabricCuttingChartList = _fabricCuttingChartMainList.Join(_fabricCuttingChartDetailList, m => m.SequenceNumber, d => d.FabricCuttingChartMainSequenceNumber, (m, d) => new { MainList = m, DetailList = d }).AsQueryable();
+            var _fabricCuttingChartList = _fabricCuttingChartMainList.Join(_fabricCuttingChartDetailList, m => m.TempGUID , d => d.TempGUID , (m, d) => new { MainList = m, DetailList = d }).AsQueryable();
 
             if (_fabricCuttingChartList.Where(x => StyleSizeSelected.Contains(x.MainList.StyleSizeSequenceNumber) && PanelSelected.Contains(x.DetailList.StylePanelSequenceNumber) && x.MainList.StyleFabricSequenceNumber == styleFabricSequenceNumber && x.MainList.OrderSequenceNumber == orderSequenceNumber).ToList().Count > 0)
             {
@@ -149,7 +149,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers
             if (panelColorModelQueryable != null)
             {
 
-                panelColorMatchedModelList = panelColorModelQueryable.Where(p => PanelSelected.Contains(p.StylePanelSequenceNumber) && p.StyleSequenceNumber == styleSequenceNumber).ToList();
+                panelColorMatchedModelList = panelColorModelQueryable.Where(p => PanelSelected.Contains(p.StylePanelSequenceNumber) && p.StyleSequenceNumber == styleSequenceNumber && StyleSizeSelected.Contains(p.StyleSizeSequenceNumber)).ToList();
 
                 panelColorMatchedSequenceNumberList = panelColorMatchedModelList.Select(x => x.StylePanelSequenceNumber).ToList();
 
