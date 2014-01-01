@@ -62,6 +62,7 @@
     <Compile Include="Common\DropDownModel.cs" />
     <Compile Include="Merchandiser\Order\OrderStyleColorModel.cs" />
     <Compile Include="Merchandiser\Order\OrderStyleSizeModel.cs" />
+    <Compile Include="Merchandiser\Style\StyleModel.cs" />
     <Compile Include="Merchandiser\Style\StyleColorModel.cs" />
     <Compile Include="Production\FabricCuttingChart\FabricCuttingChartModel.cs" />
     <Compile Include="Common\LoginModel.cs" />
