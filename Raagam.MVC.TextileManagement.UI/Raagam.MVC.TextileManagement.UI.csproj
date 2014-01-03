@@ -1656,6 +1656,8 @@
     <Content Include="Views\Shared\_RaagamLayout.cshtml" />
     <Content Include="Views\Merchandiser\Order.cshtml" />
     <Content Include="Views\Merchandiser\Style.cshtml" />
+    <Content Include="Views\Merchandiser\StyleColor.cshtml" />
+    <Content Include="Views\Merchandiser\StyleSize.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

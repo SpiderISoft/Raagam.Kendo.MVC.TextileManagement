@@ -1,0 +1,150 @@
+﻿@model Raagam.TextileManagement.Model.StyleModel
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("#ComboColorSelected").chosen();
+
+        $("#ComboColorSelected").chosen().on("change", function (evt, params) {
+            debugger;
+
+            if (params.selected == null) {
+                return true;
+            }
+            var selectedValue = params.selected;
+            var selectedText = $("#ComboColorSelected option[value='" + selectedValue + "']").text();
+
+            var rowData = {
+                SequenceNumber: 0,
+                StyleSequenceNumber: 0,
+                ColorSequenceNumber: selectedValue,
+                ColorName: selectedText,
+                ColorPantone: "",
+                IsDeleted: false,
+                State: 'New'
+            };
+
+            jQuery("#grdStyleColor").addRowData(guid(), rowData);
+
+        });
+
+        $('#grdStyleColor').jqGrid({
+            url: '@(Url.Action("GetStyleColor", "Style"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            caption: 'Style Color',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'StyleSequenceNumber', 'ColorSequenceNumber', 'ColorName', 'ColorPantone', 'IsDeleted', 'State'],
+            colModel: [
+                            {
+                                name: 'SequenceNumber',
+                                index: 'SequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'StyleSequenceNumber',
+                                index: 'StyleSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ColorSequenceNumber',
+                                index: 'ColorSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ColorName',
+                                index: 'ColorName',
+                                width: 150
+                            },
+                            {
+                                name: 'ColorPantone',
+                                index: 'ColorPantone',
+                                width: 200,
+                                editable: true
+                            },
+                            {
+                                name: 'IsDeleted',
+                                index: 'IsDeleted',
+                                hidden: true
+                            },
+                            {
+                                name: 'State',
+                                index: 'State',
+                                hidden: true
+                            }
+                            ],
+            jsonReader: {
+                root: 'rows',
+                total: 'total',
+                page: 'page',
+                records: 'records',
+                cell: 'cell',
+                id: 'id',
+                repeatitems: false
+            },
+            cellsubmit: 'clientArray',
+            onSelectCell: function (currentSelectedRow) {
+                debugger;
+                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                    $('#grdStyleColor').jqGrid('saveRow', $.lastSelectedRow, false);
+                    $.lastSelectedRow = currentSelectedRow;
+                }
+                $('#grdStyleColor').jqGrid('editRow', $.lastSelectedRow, true);
+            },
+            cellEdit: true,
+            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                debugger;
+                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+                inputControl.bind("keydown", function (e) {
+                    if (e.keyCode === 13) {
+                        debugger;
+                        var increment = e.shiftKey ? -1 : 1;
+                        var colModel = $("#grdStyleColor")[0].p.colModel;
+                        var lastRowInd = jQuery("#grdStyleColor").jqGrid("getGridParam", "reccount");
+                        var columnNames = $("#grdStyleColor").jqGrid('getGridParam', 'colModel');
+                        var iRCnt = 0;
+
+                        $('#grdStyleColor').jqGrid('nextCell', iRow, iCol);
+
+                        if (colModel.length - 3 == iCol) {
+
+                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                return;
+                            else {
+                                jQuery("#grdStyleColor").jqGrid("editCell", iRow + increment, 4, true);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span>Combo Color</span>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.Label("Color", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                    <div class="col-lg-9">
+                        @Html.ListBox("ComboColor" ,Model.ColorDropDownList, new { id = "ComboColorSelected", name = "ComboColorSelected", @class = "form-control", data_placeholder = "Choose  Color...", multiple = "multiple", style = "height:35px;width:400px;" })
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <table id="grdStyleColor">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

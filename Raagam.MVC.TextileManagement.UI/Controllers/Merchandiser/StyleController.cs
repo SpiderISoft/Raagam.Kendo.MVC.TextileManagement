@@ -26,5 +26,36 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             return View(url, styleModel);
         }
 
+        public JsonResult GetStyleColor(int page = 1, int rows = 10, string sord = "asc", string sidx = "Id")
+        {
+            StyleModel styleModel = new StyleModel();
+
+            styleModel = (StyleModel) TempData["styleModel"];
+
+            var recordCount = styleModel.StyleColorModelList.Count;
+            IEnumerable<object> final;
+
+            final = styleModel.StyleColorModelList.Select(e => new
+            {
+                SequenceNumber = e.SequenceNumber,
+                StyleSequenceNumber = e.StyleSequenceNumber,
+                ColorSequenceNumber = e.ColorSequenceNumber,
+                ColorName = e.ColorName.ToString(),
+                ColorPantone = e.ColorPantone,
+                IsDeleted = e.IsDeleted.ToString(),
+                State = e.State.ToString()
+            }).ToArray();
+
+            TempData["styleModel"] = styleModel;
+
+            return Json(new
+            {
+                total = Math.Ceiling((Decimal)recordCount / (Decimal)rows),
+                page = page,
+                records = recordCount,
+                rows = final
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

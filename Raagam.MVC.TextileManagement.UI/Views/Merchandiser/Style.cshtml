@@ -1,4 +1,4 @@
-﻿@model Raagam.TextileManagement.Model.StyleModel 
+﻿@model Raagam.TextileManagement.Model.StyleModel
 
 @{
     ViewBag.Title = "Style";
@@ -32,11 +32,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>
-                        <span>Order</span>
+                        <span>Style</span>
                     </h4>
                 </div>
                 <div class="panel-body">
-                 <div class="form-group">
+                    <div class="form-group">
                         <div class="col-lg-offset-8">
                             <label class="checkbox-inline">
                             @Html.CheckBoxFor(m => m.IsCompleted)&nbsp;&nbsp;Completed
@@ -47,6 +47,7 @@
                             <button class="btn btn-danger" id="CancelButton">Cancel</button>
                           </div>
                     </div>
+
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleName, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
@@ -54,6 +55,7 @@
                             @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList, "Select Style", new { @class = "form-control", style = "height:35px;width:200px;display: none" })
                         </div>
                     </div>
+
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleDescription, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
@@ -67,12 +69,10 @@
                             @Html.DropDownListFor(m => m.StyleTypeSequenceNumber, Model.StyleTypeDropDownList, "Select Style Type", new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
-                     
-                    <!-- End .form-group  -->
                 </div>
             </div>
-            <!-- End .panel -->
         </div>
-        <!-- End .span6 -->
     </div>
+    @Html.Partial("~/Views/Merchandiser/StyleColor.cshtml", Model);
+    @Html.Partial("~/Views/Merchandiser/StyleSize.cshtml", Model);
 }

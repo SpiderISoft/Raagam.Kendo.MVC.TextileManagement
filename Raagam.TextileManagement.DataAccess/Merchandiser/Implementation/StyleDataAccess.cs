@@ -26,12 +26,28 @@ namespace Raagam.TextileManagement.DataAccess
 
          public StyleModel PopulateDropDown(StyleModel styleModel)
         {
-            styleModel.StyleTypeDropDownList = new List<SelectListItem>();
-
+           
             using (DbCommand getDropDownCommand = _dbHelper.GetStoredProcCommand("rx_lst_style"))
             {
                 using (DataSet DropDownDataSet = _dbHelper.ExecuteDataSet(getDropDownCommand))
                 {
+                    foreach (DataRow colorDataRow in DropDownDataSet.Tables[3].Rows)
+                    {
+                        SelectListItem dropDown = new SelectListItem();
+                        dropDown.Value = colorDataRow["color_id"].ToString();
+                        dropDown.Text = colorDataRow["color_name"].ToString();
+                        dropDown.Selected = false;
+                        styleModel.ColorDropDownList.Add(dropDown);
+                    }
+
+                    foreach (DataRow colorDataRow in DropDownDataSet.Tables[4].Rows)
+                    {
+                        SelectListItem dropDown = new SelectListItem();
+                        dropDown.Value = colorDataRow["size_id"].ToString();
+                        dropDown.Text = colorDataRow["size_name"].ToString();
+                        dropDown.Selected = false;
+                        styleModel.SizeDropDownList.Add(dropDown);
+                    }
 
                     foreach (DataRow styleDataRow in DropDownDataSet.Tables[6].Rows)
                     {
@@ -54,6 +70,7 @@ namespace Raagam.TextileManagement.DataAccess
  
                 }
             }
+
             return styleModel;
         }
  

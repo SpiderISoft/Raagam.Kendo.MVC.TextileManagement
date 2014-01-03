@@ -8,13 +8,13 @@ using System.Web.Mvc;
 namespace Raagam.TextileManagement.Model 
 {
     [DataContract]
-    public class StyleColorModel
+    public class StyleSizeModel
     {
 
-        public StyleColorModel()
+        public StyleSizeModel()
         {
-            ColorPantone = "";
             IsDeleted = false;
+
         }
 
         [DataMember]
@@ -23,14 +23,13 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public long StyleSequenceNumber { get; set; }
 
-        [DataMember]
-        public long ColorSequenceNumber { get; set; }
 
         [DataMember]
-        public string ColorName { get; set; }
+        public long SizeSequenceNumber { get; set; }
 
         [DataMember]
-        public string ColorPantone { get; set; }
+        public string SizeName { get; set; }
+
 
         [DataMember]
         public bool IsDeleted { get; set; }

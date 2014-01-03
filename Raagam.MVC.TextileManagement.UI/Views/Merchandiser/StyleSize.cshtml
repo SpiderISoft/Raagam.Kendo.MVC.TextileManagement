@@ -1,0 +1,27 @@
+﻿@model Raagam.TextileManagement.Model.StyleModel
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("#ComboSizeSelected").chosen();
+    });
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span>Combo Size</span>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.Label("Size", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                    <div class="col-lg-9">
+                        @Html.ListBoxFor(m => m.SelectedComboSizeList, Model.SizeDropDownList, new { id = "ComboSizeSelected", name = "ComboSizeSelected", @class = "form-control", data_placeholder = "Choose  Color...", multiple = "multiple", style = "height:35px;width:400px;" })
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
