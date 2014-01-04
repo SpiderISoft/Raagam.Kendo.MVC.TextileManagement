@@ -25,6 +25,9 @@ namespace Raagam.TextileManagement.Model
             StyleSizeModelList = new List<StyleSizeModel>();
             SizeDropDownList = new List<SelectListItem>();
             SelectedComboSizeList = new List<long>();
+            
+            StylePanelModelList = new List<StylePanelModel>();
+            PanelModel = new StylePanelModel();
         }
 
         [DataMember]
@@ -52,7 +55,7 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public List<SelectListItem> SizeDropDownList { get; set; }
 
-
+        
         [DataMember]
         public List<long> SelectedComboSizeList { get; set; }
 
@@ -62,6 +65,12 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<StyleSizeModel> StyleSizeModelList { get; set; }
+
+        [DataMember]
+        public List<StylePanelModel> StylePanelModelList { get; set; }
+
+        [DataMember]
+        public StylePanelModel PanelModel  { get; set; }
 
         [DataMember]
         public List<SelectListItem> StyleTypeDropDownList { get; set; }

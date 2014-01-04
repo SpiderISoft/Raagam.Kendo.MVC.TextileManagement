@@ -8,34 +8,42 @@ using System.Web.Mvc;
 namespace Raagam.TextileManagement.Model 
 {
     [DataContract]
-    public class StyleColorModel
+    public class StylePanelColorModel
     {
 
-        public StyleColorModel()
+        public StylePanelColorModel()
         {
             ColorPantone = "";
             IsDeleted = false;
+            ColorDropDownList = new List<SelectListItem>();
         }
+
+
+
+        [DataMember]
+        public List<SelectListItem> ColorDropDownList { get; set; }
 
         [DataMember]
         public long SequenceNumber { get; set; }
 
         [DataMember]
-        public long StyleSequenceNumber { get; set; }
+        public long StylePanelSequenceNumber { get; set; }
 
         [DataMember]
-        public long ColorSequenceNumber { get; set; }
+        public long StyleColorSequenceNumber { get; set; }
 
         [DataMember]
-        public string ColorName { get; set; }
+        public string ColorSequenceNumber { get; set; }
 
         [DataMember]
         public string ColorPantone { get; set; }
 
         [DataMember]
+        public string TempGuid { get; set; }
+
+        [DataMember]
         public bool IsDeleted { get; set; }
  
-
         [DataMember]
         public Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState State { get; set; }
     }

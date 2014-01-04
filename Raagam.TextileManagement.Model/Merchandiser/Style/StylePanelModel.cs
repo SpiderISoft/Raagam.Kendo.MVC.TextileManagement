@@ -8,13 +8,17 @@ using System.Web.Mvc;
 namespace Raagam.TextileManagement.Model 
 {
     [DataContract]
-    public class StyleColorModel
+    public class StylePanelModel
     {
 
-        public StyleColorModel()
+        public StylePanelModel()
         {
-            ColorPantone = "";
+            PanelName = "";
+            PanelDescription = "";
+            TempGuid = Guid.NewGuid().ToString();
             IsDeleted = false;
+            StylePanelColorModelList = new List<StylePanelColorModel>();
+            PanelColorModel = new StylePanelColorModel();
         }
 
         [DataMember]
@@ -24,16 +28,23 @@ namespace Raagam.TextileManagement.Model
         public long StyleSequenceNumber { get; set; }
 
         [DataMember]
-        public long ColorSequenceNumber { get; set; }
+        public string PanelName { get; set; }
 
         [DataMember]
-        public string ColorName { get; set; }
+        public string PanelDescription { get; set; }
 
         [DataMember]
-        public string ColorPantone { get; set; }
+        public string TempGuid { get; set; }
 
         [DataMember]
         public bool IsDeleted { get; set; }
+
+
+        [DataMember]
+        public StylePanelColorModel PanelColorModel { get; set; }
+
+        [DataMember]
+        public List<StylePanelColorModel> StylePanelColorModelList { get; set; }
  
 
         [DataMember]

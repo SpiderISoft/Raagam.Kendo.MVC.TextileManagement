@@ -56,6 +56,9 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 rows = final
             }, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult SaveStyle(StyleModel styleModel, List<StyleColorModel> styleColorModel)
+        {
+            return null;
+        }
     }
 }

@@ -1658,6 +1658,8 @@
     <Content Include="Views\Merchandiser\Style.cshtml" />
     <Content Include="Views\Merchandiser\StyleColor.cshtml" />
     <Content Include="Views\Merchandiser\StyleSize.cshtml" />
+    <Content Include="Views\Merchandiser\StylePanel.cshtml" />
+    <Content Include="Views\Merchandiser\StylePanelColor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
