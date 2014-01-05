@@ -58,8 +58,21 @@
                     TempGuid: ""
                 };
 
+                var rowDataProcessSourcesColor = {
+                    SequenceNumber: 0,
+                    StyleProcessSourcesSequenceNumber: 0,
+                    StyleColorSequenceNumber: val,
+                    StyleColorName: textField,
+                    ColorSequenceNumber: 0,
+                    ColorPantone: "",
+                    IsDeleted: false,
+                    State: 'New',
+                    TempGuid: ""
+                };
+
                 jQuery("#grdStyleColor").addRowData(guid(), rowDataStyleColor);
                 jQuery("#grdStylePanelColor").addRowData(guid(), rowDataPanelColor);
+                jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataProcessSourcesColor);
             }
 
 

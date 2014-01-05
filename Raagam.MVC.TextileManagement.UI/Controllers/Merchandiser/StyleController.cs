@@ -29,6 +29,68 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             return View(url, styleModel);
         }
 
+        public JsonResult GetCascadeProduct(int? productGroupSequence)
+        {
+
+            StyleModel styleModel = new StyleModel();
+
+            styleModel = (StyleModel)TempData["styleModel"];
+
+
+
+            var productList = styleModel.ProductDropDownList.AsQueryable();
+
+
+
+            if (productGroupSequence != null)
+            {
+                productList = productList.Where(f => f.ForeignKey == productGroupSequence);
+                 
+            }
+
+            TempData["styleModel"] = styleModel;
+
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    ProductLinkDropDownList = productList 
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCascadeLotType(int? product)
+        {
+
+            StyleModel styleModel = new StyleModel();
+
+            styleModel = (StyleModel)TempData["styleModel"];
+
+
+
+            var lotTypeList = styleModel.LotTypeDropDownList.AsQueryable();
+
+
+
+            if (product != null)
+            {
+                lotTypeList = lotTypeList.Where(f => f.ForeignKey == product);
+
+            }
+
+            TempData["styleModel"] = styleModel;
+
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    LotTypeLinkDropDownList = lotTypeList
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetColors()
         {
              
@@ -151,6 +213,34 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult SaveProcessSources(StyleProcessSourcesModel processSourcesModel, List<StyleProccessSourcesColorModel> processSourcesColorModel)
+        {
+            StyleModel styleModel = new StyleModel();
+
+            styleModel = (StyleModel)TempData["styleModel"];
+
+            if (styleModel.StyleProcessSourcesModelList.Where(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid).Count() > 0)
+            {
+                styleModel.StyleProcessSourcesModelList.RemoveAll(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid);
+            }
+
+
+            if (processSourcesColorModel != null)
+                processSourcesModel.StyleProccessSourcesColorModelList.AddRange(processSourcesColorModel);
+
+            styleModel.StyleProcessSourcesModelList.Add(processSourcesModel);
+
+            TempData["styleModel"] = styleModel;
+
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    styleProcessSourcesModel = styleModel.StyleProcessSourcesModelList
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult EditPanel(string TempGuid)
         {
@@ -177,6 +267,34 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                     stylePanelModel = stylePanelModel,
                     SelectedPanelProcessList = stylePanelModel.SelectedPanelProcessList,
                     StylePanelColorModelList = stylePanelModel.StylePanelColorModelList
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditProcessSources(string processSourcesTempGuid)
+        {
+            StyleModel styleModel = new StyleModel();
+
+            styleModel = (StyleModel)TempData["styleModel"];
+
+            var styleProcessSourcesList = styleModel.StyleProcessSourcesModelList.AsQueryable();
+
+            StyleProcessSourcesModel styleProcessSourcesModel = new StyleProcessSourcesModel();
+
+            if ((processSourcesTempGuid != null) && (processSourcesTempGuid != ""))
+            {
+                styleProcessSourcesModel = styleProcessSourcesList.Where(f => f.ProcessSourcesTempGuid == processSourcesTempGuid).FirstOrDefault();
+            }
+
+            TempData["styleModel"] = styleModel;
+
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    styleProcessSourcesModel = styleProcessSourcesModel,
+                    styleProccessSourcesColorModelList = styleProcessSourcesModel.StyleProccessSourcesColorModelList 
                 }
             }, JsonRequestBehavior.AllowGet);
         }

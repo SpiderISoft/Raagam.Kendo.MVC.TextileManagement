@@ -26,6 +26,7 @@ namespace Raagam.TextileManagement.Model
             ProcessDropDownList = new List<SelectListItem>();
             ProductGroupDropDownList = new List<SelectListItem>();
             ProductDropDownList = new List<LinkDropDownModel>();
+            LotTypeDropDownList = new List<LinkDropDownModel>();
 
             StyleColorModelList = new List<StyleColorModel>();
             StyleSizeModelList = new List<StyleSizeModel>();
@@ -81,7 +82,9 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public List<LinkDropDownModel> ProductDropDownList { get; set; }
 
-        
+        [DataMember]
+        public List<LinkDropDownModel> LotTypeDropDownList { get; set; }
+
         [DataMember]
         public List<long> SelectedComboSizeList { get; set; }
 

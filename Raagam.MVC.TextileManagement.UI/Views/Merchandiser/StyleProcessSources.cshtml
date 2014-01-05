@@ -1,4 +1,419 @@
 ﻿@model Raagam.TextileManagement.Model.StyleProcessSourcesModel
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function (e) {
+
+        $('#grdStyleProcessSources').jqGrid({
+            url: '@(Url.Action("GetStylePanel", "Style"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            caption: 'Style Process Sources',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'StyleSequenceNumber', 'ProductGroupSequenceNumber', 'SourcesSequenceNumber', 'ProcessSequenceNumber', 'LotSequenceNumber', 'Process', 'Sources', 'Quantity', 'UOM', 'IsDeleted', 'State', 'ProcessSourcesTempGuid', 'IsSizeApplicable'],
+            colModel: [
+                            {
+                                name: 'SequenceNumber',
+                                index: 'SequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'StyleSequenceNumber',
+                                index: 'StyleSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductGroupSequenceNumber',
+                                index: 'ProductGroupSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'SourcesSequenceNumber',
+                                index: 'SourcesSequenceNumber',
+                                hidden: true
+                            },
+
+                            {
+                                name: 'ProcessSequenceNumber',
+                                index: 'ProcessSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'LotSequenceNumber',
+                                index: 'LotSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'Process',
+                                index: 'Process',
+                                width: 300
+                            },
+                            {
+                                name: 'Sources',
+                                index: 'Sources',
+                                width: 300
+                            },
+                            {
+                                name: 'Quantity',
+                                index: 'Quantity',
+                                width: 200
+                            },
+                            {
+                                name: 'UOM',
+                                index: 'UOM',
+                                width: 200
+                            },
+                            {
+                                name: 'IsDeleted',
+                                index: 'IsDeleted',
+                                hidden: true
+                            },
+                            {
+                                name: 'State',
+                                index: 'State',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProcessSourcesTempGuid',
+                                index: 'ProcessSourcesTempGuid',
+                                hidden: true
+                            },
+                            {
+                                name: 'IsSizeApplicable',
+                                index: 'IsSizeApplicable',
+                                hidden: true
+                            }
+                            ],
+            jsonReader: {
+                root: 'rows',
+                total: 'total',
+                page: 'page',
+                records: 'records',
+                cell: 'cell',
+                id: 'id',
+                repeatitems: false
+            },
+            ondblClickRow: function (rowId) {
+                debugger;
+                if (confirm("Do You want to Edit this Row") == true) {
+                    var rowData = jQuery(this).getRowData(rowId);
+                    var sProcessSourcesTempGuid = rowData['ProcessSourcesTempGuid'];
+                    $.ajax({
+                        url: '@Url.Content("/Style/EditProcessSources")',
+                        dataType: "json",
+                        data: {
+                            processSourcesTempGuid: sProcessSourcesTempGuid
+                        },
+                        type: 'POST',
+                        success: function (result) {
+                            if (result.success) {
+                                debugger;
+
+                                $('#SequenceNumber').val(result.data.styleProcessSourcesModel.SequenceNumber);
+                                $('#StyleSequenceNumber').val(result.data.styleProcessSourcesModel.StyleSequenceNumber);
+                                $('#ProductGroupSequenceNumber').val(result.data.styleProcessSourcesModel.ProductGroupSequenceNumber);
+                                $('#SourcesSequenceNumber').val(result.data.styleProcessSourcesModel.SourcesSequenceNumber);
+                                $('#ProcessSequenceNumber').val(result.data.styleProcessSourcesModel.ProcessSequenceNumber);
+                                $('#LotSequenceNumber').val(result.data.styleProcessSourcesModel.LotSequenceNumber);
+                                $('#Quantity').val(result.data.styleProcessSourcesModel.Quantity);
+                                $("#IsSizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
+                                $("#SizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
+                                $('#ProcessSourcesTempGuid').val(result.data.styleProcessSourcesModel.ProcessSourcesTempGuid);
+                                $('#IsDeleted').val(result.data.styleProcessSourcesModel.IsDeleted);
+                                $('#State').val(result.data.styleProcessSourcesModel.State);
+
+
+                                jQuery('#grdStyleProcessSourcesColor').clearGridData();
+
+                                var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+
+                                for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                                    debugger;
+                                    var rowId = ids[iRow];
+
+                                    var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+
+                                    var val = rowData["ColorSequenceNumber"];
+                                    var textField = rowData["ColorName"];
+                                    var SourcesColorName = "";
+                                    var ColorSequenceNumber = 0;
+                                    var ColorPantone = "";
+                                    var rowid = 0;
+                                    var SequenceNumber = 0;
+                                    var StylePanelSequenceNumber = 0;
+                                    $.each(result.data.styleProccessSourcesColorModelList, function (key, data) {
+                                        debugger;
+                                        if (val == data["StyleColorSequenceNumber"]) {
+
+                                            SourcesColorName = $("#ComboColorSelected option[value='" + data["ColorSequenceNumber"] + "']").text();
+                                            ColorSequenceNumber = data["ColorSequenceNumber"];
+                                            ColorPantone = data["ColorPantone"];
+                                            TempGuid = data["TempGuid"];
+                                            SequenceNumber = data["SequenceNumber"];
+                                            StyleProcessSourcesSequenceNumber = data["StyleProcessSourcesSequenceNumber"];
+
+
+                                            return false;
+                                        }
+                                        rowid = rowid + 1;
+                                    });
+
+
+                                    var rowDataSourcesColor = {
+                                        SequenceNumber: SequenceNumber,
+                                        StyleProcessSourcesSequenceNumber: StyleProcessSourcesSequenceNumber,
+                                        StyleColorSequenceNumber: val,
+                                        StyleColorName: textField,
+                                        SourcesColorName: SourcesColorName,
+                                        ColorSequenceNumber: ColorSequenceNumber,
+                                        ColorPantone: ColorPantone,
+                                        IsDeleted: false,
+                                        State: 'New',
+                                        TempGuid: TempGuid
+                                    };
+
+                                    jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataSourcesColor);
+                                }
+
+
+
+
+                            }
+                            else {
+                                alert(result.data);
+                            }
+                        },
+                        error: function (e) {
+
+                            alert(e.responseText);
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+
+        $('#Quantity').inputmask('999999', { placeholder: " " });
+
+        $('#ProductGroupSequenceNumber').change(function (event) {
+
+            var productGroupSequence = $('#ProductGroupSequenceNumber').val();
+
+            if (productGroupSequence != 0) {
+                $.ajax({
+                    url: '@Url.Content("/Style/GetCascadeProduct")',
+                    type: 'POST',
+                    data:
+                        {
+                            productGroupSequence: productGroupSequence
+                        },
+                    success: function (result) {
+                        debugger;
+
+
+                        $("#SourcesSequenceNumber").empty();
+                        $("#SourcesSequenceNumber").append($("<option></option>").val(0).html('Select Trims'));
+                        $.each(result.data.ProductLinkDropDownList, function (key, data) {
+                            debugger;
+                            $("#SourcesSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
+                        });
+                        $('#SourcesSequenceNumber').val(0).change();
+
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+            }
+            else {
+                $("#SourcesSequenceNumber").empty();
+                $("#SourcesSequenceNumber").append($("<option></option>").val(0).html('Select Trims'));
+                $('#SourcesSequenceNumber').val(0).change();
+
+                $("#LotSequenceNumber").empty();
+                $("#LotSequenceNumber").append($("<option></option>").val(0).html('Select UOM'));
+                $('#LotSequenceNumber').val(0).change();
+            }
+        });
+
+
+        $('#SourcesSequenceNumber').change(function (event) {
+
+            var productSequence = $('#SourcesSequenceNumber').val();
+
+            if (productSequence != 0) {
+                $.ajax({
+                    url: '@Url.Content("/Style/GetCascadeLotType")',
+                    type: 'POST',
+                    data:
+                        {
+                            product: productSequence
+                        },
+                    success: function (result) {
+                        debugger;
+
+
+                        $("#LotSequenceNumber").empty();
+                        $("#LotSequenceNumber").append($("<option></option>").val(0).html('Select UOM'));
+                        $.each(result.data.LotTypeLinkDropDownList, function (key, data) {
+                            debugger;
+                            $("#LotSequenceNumber").append($("<option></option>").val(data.Key).html(data.Value));
+                        });
+                        $('#LotSequenceNumber').val(0).change();
+
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+            }
+            else {
+                $("#LotSequenceNumber").empty();
+                $("#LotSequenceNumber").append($("<option></option>").val(0).html('Select UOM'));
+                $('#LotSequenceNumber').val(0).change();
+            }
+        });
+
+        function formProcessSourcesColor() {
+
+            var styleProcessSourcesColorDetail = new Array();
+
+            var cRows = jQuery("#grdStyleProcessSourcesColor").jqGrid("getGridParam", "reccount");
+
+
+            var ids = jQuery("#grdStyleProcessSourcesColor").jqGrid('getDataIDs');
+
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+                var rowData = jQuery('#grdStyleProcessSourcesColor').jqGrid('getRowData', rowId);
+                rowData["TempGuid"] = $('#ProcessSourcesTempGuid').val();
+
+                if (rowData["ColorSequenceNumber"] > 0)
+                    styleProcessSourcesColorDetail.push(rowData);
+
+            }
+
+
+
+            return styleProcessSourcesColorDetail;
+        }
+
+        function AddNewProcessSources() {
+
+            $('#SequenceNumber').val(0);
+            $('#StyleSequenceNumber').val(0);
+            $('#ProductGroupSequenceNumber').val(0);
+            $('#SourcesSequenceNumber').val(0);
+            $('#ProcessSequenceNumber').val(0);
+            $('#LotSequenceNumber').val(0);
+            $('#Quantity').val(0);
+            $("#IsSizeApplicable").attr('checked', false);
+            $("#SizeApplicable").attr('checked', false);
+            $('#ProcessSourcesTempGuid').val(guid());
+            $('#IsDeleted').val(false);
+            $('#State').val('Added');
+
+            var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+            jQuery('#grdStyleProcessSourcesColor').clearGridData();
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+
+                var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+
+                var val = rowData["ColorSequenceNumber"];
+                var textField = rowData["ColorName"];
+
+                var rowDataProcessSourcesColor = {
+                    SequenceNumber: 0,
+                    StyleProcessSourcesSequenceNumber: 0,
+                    StyleColorSequenceNumber: val,
+                    StyleColorName: textField,
+                    ColorSequenceNumber: 0,
+                    ColorPantone: "",
+                    IsDeleted: false,
+                    State: 'New',
+                    TempGuid: ""
+                };
+
+                jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataProcessSourcesColor);
+
+            }
+
+        }
+
+        $('#ProcessSourcesNewButton').click(function (e) {
+            AddNewProcessSources();
+        });
+
+        $('#ProcessSourcesSaveButton').click(function (e) {
+            debugger;
+            $('#Process').val($("#ProcessSequenceNumber option:selected").text());
+            $('#Sources').val($("#SourcesSequenceNumber option:selected").text());
+            $('#UOM').val($("#LotSequenceNumber option:selected").text());
+            $('#IsSizeApplicable').val($('#SizeApplicable').is(":checked"));
+            var panelData = JSON.stringify({ 'processSourcesModel': $('#frmProcessSources').jsonify(), 'processSourcesColorModel': formProcessSourcesColor() });
+            $.ajax({
+                url: '@Url.Content("/Style/SaveProcessSources")',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: panelData,
+                type: 'POST',
+                success: function (result) {
+                    if (result.success) {
+
+
+                        jQuery('#grdStyleProcessSources').clearGridData();
+
+                        $.each(result.data.styleProcessSourcesModel, function (key, data) {
+
+                            var rowDataStyleProcessSources = {
+                                SequenceNumber: data["SequenceNumber"],
+                                StyleSequenceNumber: data["StyleSequenceNumber"],
+                                ProductGroupSequenceNumber: data["ProductGroupSequenceNumber"],
+                                SourcesSequenceNumber: data["SourcesSequenceNumber"],
+                                ProcessSequenceNumber: data["ProcessSequenceNumber"],
+                                LotSequenceNumber: data["LotSequenceNumber"],
+                                Process: data["Process"],
+                                Sources: data["Sources"],
+                                Quantity: data["Quantity"],
+                                UOM: data["UOM"],
+                                ProcessSourcesTempGuid: data["ProcessSourcesTempGuid"],
+                                IsDeleted: data["IsDeleted"],
+                                State: data["State"],
+                                IsSizeApplicable: data["IsSizeApplicable"]
+                            };
+
+                            jQuery("#grdStyleProcessSources").addRowData(guid(), rowDataStyleProcessSources);
+                        });
+
+                        AddNewProcessSources();
+
+                        alert("Saved Successfully");
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+    });
+</script>
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmProcessSources", role = "form", @class = "form-horizontal" }))
 {
     <div class="row">
@@ -17,9 +432,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.SourcesSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        @Html.LabelFor(m => m.ProcessSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                        @Html.DropDownListFor(m => m.SourcesSequenceNumber, (List<SelectListItem>)@ViewBag.ProcessDropDownList, "Select Process", new { @class = "form-control", style = "height:35px;width:200px;" })
+                        @Html.DropDownListFor(m => m.ProcessSequenceNumber, (List<SelectListItem>)@ViewBag.ProcessDropDownList, "Select Process", new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -35,13 +450,35 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.Label("Quantity", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                        @Html.TextBoxFor(m => m.Quantity,new { @class = "form-control", style = "height:35px;width:200px;" })     
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("UOM", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                        @Html.DropDownListFor(m => m.LotSequenceNumber, Enumerable.Empty<SelectListItem>(), "Select UOM", new { @class = "form-control", style = "height:35px;width:200px;" })     
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-9">
+                          @Html.CheckBox("Size Applicable", new { @class = "form-control", style = "height:35px;width:200px;",id ="SizeApplicable" })  &nbsp;&nbsp;Size Applicable
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="col-lg-4">
                             <table id="grdStyleProcessSources">
                             </table>
                         </div>
                     </div>
+                    @Html.HiddenFor(m => m.IsSizeApplicable)
+                    @Html.HiddenFor(m => m.Process)
+                    @Html.HiddenFor(m => m.Sources)
+                    @Html.HiddenFor(m => m.UOM)
                     @Html.HiddenFor(m => m.SequenceNumber)
-                    @Html.HiddenFor(m => m.TempGuid)
+                    @Html.HiddenFor(m => m.ProcessSourcesTempGuid  )
                     @Html.HiddenFor(m => m.StyleSequenceNumber)
                     @Html.HiddenFor(m => m.State)
                     @Html.HiddenFor(m => m.IsDeleted)
@@ -49,4 +486,5 @@
             </div>
         </div>
     </div>
+        @Html.Partial("~/Views/Merchandiser/StyleProcessSourcesColor.cshtml", Model.ProccessSourcesColorModel)
 }

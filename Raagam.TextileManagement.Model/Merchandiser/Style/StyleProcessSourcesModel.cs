@@ -16,6 +16,10 @@ namespace Raagam.TextileManagement.Model
             IsDeleted = false;
             IsSizeApplicable = false;
             State = CommonUtility.EnumConstants.ModelCurrentState.Added;
+            ProccessSourcesColorModel = new StyleProccessSourcesColorModel();
+            StyleProccessSourcesColorModelList = new List<StyleProccessSourcesColorModel>();
+
+            ProcessSourcesTempGuid = Guid.NewGuid().ToString();
         }
 
 
@@ -41,13 +45,28 @@ namespace Raagam.TextileManagement.Model
         public decimal Quantity { get; set; }
 
         [DataMember]
-        public string TempGuid { get; set; }
+        public string ProcessSourcesTempGuid { get; set; }
 
         [DataMember]
         public bool IsDeleted { get; set; }
 
         [DataMember]
         public bool IsSizeApplicable { get; set; }
+
+        [DataMember]
+        public string Process { get; set; }
+
+        [DataMember]
+        public string Sources { get; set; } 
+
+        [DataMember]
+        public string UOM { get; set; } 
+                                
+        [DataMember]
+        public StyleProccessSourcesColorModel ProccessSourcesColorModel { get; set; }
+
+        [DataMember]
+        public List<StyleProccessSourcesColorModel> StyleProccessSourcesColorModelList { get; set; }
 
         [DataMember]
         public Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState State { get; set; }

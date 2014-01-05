@@ -1,0 +1,179 @@
+﻿@model Raagam.TextileManagement.Model.StyleProccessSourcesColorModel
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('#grdStyleProcessSourcesColor').jqGrid({
+            url: '@(Url.Action("GetStylePanelColor", "Style"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            caption: 'Style Panel Color',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'StyleProcessSourcesSequenceNumber', 'StyleColorSequenceNumber', 'StyleColorName', 'ColorSequenceNumber', 'SourcesColorName', 'ColorPantone', 'IsDeleted', 'State', 'TempGuid'],
+            colModel: [
+                            {
+                                name: 'SequenceNumber',
+                                index: 'SequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'StyleProcessSourcesSequenceNumber',
+                                index: 'StyleProcessSourcesSequenceNumber',
+                                hidden: true
+                            },
+                             {
+                                 name: 'StyleColorSequenceNumber',
+                                 index: 'StyleColorSequenceNumber',
+                                 hidden: true
+                             },
+
+                            {
+                                name: 'StyleColorName',
+                                index: 'StyleColorName',
+                                width: 150
+                            },
+
+                            {
+                                name: 'ColorSequenceNumber',
+                                index: 'ColorSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'SourcesColorName',
+                                index: 'SourcesColorName',
+                                editable: true,
+                                edittype: 'select',
+                                editoptions: {
+
+                                    dataUrl: '@Url.Action("GetColors","Style")',
+                                    buildSelect: function (result) {
+
+                                        var response = jQuery.parseJSON(result);
+                                        debugger;
+
+                                        var s = '<select>';
+                                        s += '<option value="0">Select Color</option>';
+                                        $.each(response.data.ColorDropDownList, function (key, data) {
+                                            s += '<option value="' + data.Value + '">' + data.Text + '</option>';
+                                        });
+
+                                        return s + "</select>";
+
+                                    },
+                                    dataEvents: [{
+                                        type: 'change', fn: function (e) {
+                                            var rowid = $("#grdStyleProcessSourcesColor").jqGrid('getGridParam', 'selrow');
+                                            $('#grdStyleProcessSourcesColor').jqGrid("setCell", rowid, "ColorSequenceNumber", $(e.target).val());
+                                        }
+                                    }]
+                                }
+                            },
+                            {
+                                name: 'ColorPantone',
+                                index: 'ColorPantone',
+                                width: 200,
+                                editable: true
+                            },
+                            {
+                                name: 'IsDeleted',
+                                index: 'IsDeleted',
+                                hidden: true
+                            },
+                            {
+                                name: 'State',
+                                index: 'State',
+                                hidden: true
+                            },
+                            {
+                                name: 'TempGuid',
+                                index: 'TempGuid',
+                                hidden: true
+                            }
+                            ],
+            jsonReader: {
+                root: 'rows',
+                total: 'total',
+                page: 'page',
+                records: 'records',
+                cell: 'cell',
+                id: 'id',
+                repeatitems: false
+            },
+            cellsubmit: 'clientArray',
+            onSelectCell: function (currentSelectedRow) {
+                debugger;
+                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                    $('#grdStyleProcessSourcesColor').jqGrid('saveRow', $.lastSelectedRow, false);
+                    $.lastSelectedRow = currentSelectedRow;
+                }
+                $('#grdStyleProcessSourcesColor').jqGrid('editRow', $.lastSelectedRow, true);
+            },
+            cellEdit: true,
+            afterEditCell: function (rowid, cellname, value, iRow, iCol) {
+                debugger;
+                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
+                inputControl.bind("keydown", function (e) {
+                    if (e.keyCode === 13) {
+                        debugger;
+                        var increment = e.shiftKey ? -1 : 1;
+                        var colModel = $("#grdStyleProcessSourcesColor")[0].p.colModel;
+                        var lastRowInd = jQuery("#grdStyleProcessSourcesColor").jqGrid("getGridParam", "reccount");
+                        var columnNames = $("#grdStyleProcessSourcesColor").jqGrid('getGridParam', 'colModel');
+                        var iRCnt = 0;
+
+                        $('#grdStyleProcessSourcesColor').jqGrid('nextCell', iRow, iCol);
+
+                        if (colModel.length - 4 == iCol) {
+
+                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                return;
+                            else {
+                                jQuery("#grdStyleProcessSourcesColor").jqGrid("editCell", iRow + increment, 5, true);
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+
+    });
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span>Process Sources Color</span>
+                </h4>
+            </div>
+            <div class="panel-body">
+                @*<div class="form-group">
+                    @Html.LabelFor(m => m.StyleColorSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(m => m.StyleColorSequenceNumber, Enumerable.Empty<SelectListItem>(), new { @class = "form-control", style = "height:35px;width:200px" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ColorSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                    <div class="col-lg-9">
+                        @Html.DropDownListFor(m => m.ColorSequenceNumber, (List<SelectListItem>)@ViewBag.ColorDropDownList, new { @class = "form-control", style = "height:35px;width:200px" })
+                        @Html.TextBoxFor(m => m.ColorPantone, new { @class = "form-control", style = "height:35px;width:200px;" })
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        <table id="grdStyleProcessSourcesColor">
+                        </table>
+                    </div>
+                </div>
+                @*@Html.HiddenFor(m => m.SequenceNumber)
+                @Html.HiddenFor(m => m.StylePanelSequenceNumber)
+                @Html.HiddenFor(m => m.TempGuid)
+                @Html.HiddenFor(m => m.State)
+                @Html.HiddenFor(m => m.IsDeleted)*@
+            </div>
+        </div>
+    </div>
+</div>

@@ -91,7 +91,14 @@ namespace Raagam.TextileManagement.DataAccess
                         dropDown.Selected = false;
                         styleModel.StyleTypeDropDownList.Add(dropDown);
                     }
-
+                    foreach (DataRow lotTypeDataRow in DropDownDataSet.Tables[9].Rows)
+                    {
+                        LinkDropDownModel dropDown = new LinkDropDownModel();
+                        dropDown.Key = long.Parse(lotTypeDataRow["lottyp_seqno"].ToString());
+                        dropDown.Value = lotTypeDataRow["lottyp_name"].ToString();
+                        dropDown.ForeignKey = long.Parse(lotTypeDataRow["prod_seqno"].ToString());
+                        styleModel.LotTypeDropDownList.Add(dropDown);
+                    }
  
                 }
             }
