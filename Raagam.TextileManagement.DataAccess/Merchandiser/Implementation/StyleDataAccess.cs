@@ -31,6 +31,31 @@ namespace Raagam.TextileManagement.DataAccess
             {
                 using (DataSet DropDownDataSet = _dbHelper.ExecuteDataSet(getDropDownCommand))
                 {
+                    foreach (DataRow processDataRow in DropDownDataSet.Tables[0].Rows)
+                    {
+                        SelectListItem dropDown = new SelectListItem();
+                        dropDown.Value = processDataRow["process_id"].ToString();
+                        dropDown.Text = processDataRow["process_name"].ToString();
+                        dropDown.Selected = false;
+                        styleModel.ProcessDropDownList.Add(dropDown);
+                    }
+
+                    foreach (DataRow productGroupDataRow in DropDownDataSet.Tables[1].Rows)
+                    {
+                        SelectListItem dropDown = new SelectListItem();
+                        dropDown.Value = productGroupDataRow["prodgrp_seqno"].ToString();
+                        dropDown.Text = productGroupDataRow["prodgrp_name"].ToString();
+                        dropDown.Selected = false;
+                        styleModel.ProductGroupDropDownList.Add(dropDown);
+                    }
+                    foreach (DataRow productDataRow in DropDownDataSet.Tables[2].Rows)
+                    {
+                        LinkDropDownModel dropDown = new LinkDropDownModel();
+                        dropDown.Key = long.Parse(productDataRow["prod_seqno"].ToString());
+                        dropDown.Value = productDataRow["prod_name"].ToString();
+                        dropDown.ForeignKey = long.Parse(productDataRow["prod_productgroup"].ToString());
+                        styleModel.ProductDropDownList.Add(dropDown);
+                    }
                     foreach (DataRow colorDataRow in DropDownDataSet.Tables[3].Rows)
                     {
                         SelectListItem dropDown = new SelectListItem();

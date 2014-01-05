@@ -1,0 +1,26 @@
+﻿@model Raagam.TextileManagement.Model.StylePanelModel
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $("#ProcessSelected").chosen();
+        });
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <span>Style Panel Process</span>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.Label("Panel Process", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                    <div class="col-lg-9">
+                         @Html.ListBoxFor(m => m.SelectedPanelProcessList,  (List<SelectListItem>) @ViewBag.ProcessDropDownList, new { id = "ProcessSelected", name = "ProcessSelected", @class = "form-control", data_placeholder = "Choose  Process...", multiple = "multiple", style = "height:35px;width:400px;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

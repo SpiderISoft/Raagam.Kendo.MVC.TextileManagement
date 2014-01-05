@@ -1,31 +1,359 @@
 ﻿@model Raagam.TextileManagement.Model.StylePanelModel
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>
-                    <span>Style Panel</span>
-                </h4>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PanelName, new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                    <div class="col-lg-9">
-                        @Html.TextBoxFor(m => m.PanelName, new { @class = "form-control", style = "height:35px;width:200px;" })
-                    </div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('#grdStylePanel').jqGrid({
+            url: '@(Url.Action("GetStylePanel", "Style"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            caption: 'Style Panel',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'StyleSequenceNumber', 'PanelName', 'PanelDescription', 'IsDeleted', 'State', 'TempGuid'],
+            colModel: [
+                            {
+                                name: 'SequenceNumber',
+                                index: 'SequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'StyleSequenceNumber',
+                                index: 'StyleSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'PanelName',
+                                index: 'PanelName',
+                                width: 150
+                            },
+                            {
+                                name: 'PanelDescription',
+                                index: 'PanelDescription',
+                                width: 200
+                            },
+                            {
+                                name: 'IsDeleted',
+                                index: 'IsDeleted',
+                                hidden: true
+                            },
+                            {
+                                name: 'State',
+                                index: 'State',
+                                hidden: true
+                            },
+                            {
+                                name: 'TempGuid',
+                                index: 'TempGuid',
+                                hidden: true
+                            }
+                            ],
+            jsonReader: {
+                root: 'rows',
+                total: 'total',
+                page: 'page',
+                records: 'records',
+                cell: 'cell',
+                id: 'id',
+                repeatitems: false
+            },
+            ondblClickRow: function (rowId) {
+                debugger;
+                if (confirm("Do You want to Edit this Row") == true) {
+                    var rowData = jQuery(this).getRowData(rowId);
+                    var sTempGuid = rowData['TempGuid'];
+                    $.ajax({
+                        url: '@Url.Content("/Style/EditPanel")',
+                        dataType: "json",
+                        data: {
+                            TempGuid: sTempGuid
+                        },
+                        type: 'POST',
+                        success: function (result) {
+                            if (result.success) {
+                                debugger;
+                                $('#SequenceNumber').val(result.data.stylePanelModel.SequenceNumber);
+                                $('#StyleSequenceNumber').val(result.data.stylePanelModel.StyleSequenceNumber);
+                                $('#PanelName').val(result.data.stylePanelModel.PanelName);
+                                $('#PanelDescription').val(result.data.stylePanelModel.PanelDescription);
+                                $('#TempGuid').val(result.data.stylePanelModel.TempGuid);
+                                $('#IsDeleted').val(result.data.stylePanelModel.IsDeleted);
+                                $('#State').val(result.data.stylePanelModel.State);
+
+                                $("#ProcessSelected").val(result.data.SelectedPanelProcessList);
+                                $("#ProcessSelected").trigger("chosen:updated");
+
+                                jQuery('#grdStylePanelColor').clearGridData();
+
+                                var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+
+                                for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                                    debugger;
+                                    var rowId = ids[iRow];
+
+                                    var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+
+                                    var val = rowData["ColorSequenceNumber"];
+                                    var textField = rowData["ColorName"];
+                                    var PanelColorName = "";
+                                    var ColorSequenceNumber = 0;
+                                    var ColorPantone = "";
+                                    var TempGuid = "";
+                                    var rowid = 0;
+                                    var SequenceNumber = 0;
+                                    var StylePanelSequenceNumber = 0;
+                                    $.each(result.data.StylePanelColorModelList, function (key, data) {
+                                        debugger;
+                                        if (val == data["StyleColorSequenceNumber"]) {
+
+                                            PanelColorName = $("#ComboColorSelected option[value='" + data["ColorSequenceNumber"] + "']").text();
+                                            ColorSequenceNumber = data["ColorSequenceNumber"];
+                                            ColorPantone = data["ColorPantone"];
+                                            TempGuid = data["TempGuid"];
+                                            SequenceNumber = data["SequenceNumber"];
+                                            StylePanelSequenceNumber = data["StylePanelSequenceNumber"];
+
+
+                                            return false;
+                                        }
+                                        rowid = rowid + 1;
+                                    });
+
+
+                                    var rowDataPanelColor = {
+                                        SequenceNumber: SequenceNumber,
+                                        StylePanelSequenceNumber: StylePanelSequenceNumber,
+                                        StyleColorSequenceNumber: val,
+                                        StyleColorName: textField,
+                                        PanelColorName: PanelColorName,
+                                        ColorSequenceNumber: ColorSequenceNumber,
+                                        ColorPantone: ColorPantone,
+                                        IsDeleted: false,
+                                        State: 'New',
+                                        TempGuid: TempGuid
+                                    };
+
+                                    jQuery("#grdStylePanelColor").addRowData(guid(), rowDataPanelColor);
+                                }
+
+
+
+
+                            }
+                            else {
+                                alert(result.data);
+                            }
+                        },
+                        error: function (e) {
+
+                            alert(e.responseText);
+                        }
+                    });
+
+                }
+
+            }
+
+        });
+
+        
+
+        function formPanelColor() {
+
+            var stylePanelColorDetail = new Array();
+
+            var cRows = jQuery("#grdStylePanelColor").jqGrid("getGridParam", "reccount");
+
+
+            var ids = jQuery("#grdStylePanelColor").jqGrid('getDataIDs');
+
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+                var rowData = jQuery('#grdStylePanelColor').jqGrid('getRowData', rowId);
+                rowData["TempGuid"] = $('#TempGuid').val();
+
+                if (rowData["ColorSequenceNumber"] > 0)
+                    stylePanelColorDetail.push(rowData);
+
+            }
+
+
+
+            return stylePanelColorDetail;
+        }
+
+        function formPanelProcess() {
+
+            debugger;
+            var stylePanelProcessDetail = new Array();
+            var ids = $("#ProcessSelected").val();
+
+            if (ids == null)
+                return stylePanelProcessDetail;
+
+            $.each(ids, function (iRow, id) {
+
+                stylePanelProcessDetail.push({
+                    SequenceNumber: 0,
+                    StylePanelSequenceNumber: 0,
+                    ProcessSequenceNumber: id,
+                    TempGuid: $('#TempGuid').val(),
+                    IsDeleted: false,
+                    State: 'Added'
+                });
+
+            });
+
+            return stylePanelProcessDetail;
+        }
+
+        function AddNewPanel() {
+
+            $('#SequenceNumber').val(0);
+            $('#StyleSequenceNumber').val(0);
+            $('#PanelName').val('');
+            $('#PanelDescription').val('');
+            $('#TempGuid').val(guid());
+            $('#IsDeleted').val(false);
+            $('#State').val('Added');
+
+            var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+            jQuery('#grdStylePanelColor').clearGridData();
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+
+                var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+
+                var val = rowData["ColorSequenceNumber"];
+                var textField = rowData["ColorName"];
+
+                var rowDataPanelColor = {
+                    SequenceNumber: 0,
+                    StylePanelSequenceNumber: 0,
+                    StyleColorSequenceNumber: val,
+                    StyleColorName: textField,
+                    ColorSequenceNumber: 0,
+                    ColorPantone: "",
+                    IsDeleted: false,
+                    State: 'New',
+                    TempGuid: ""
+                };
+
+                jQuery("#grdStylePanelColor").addRowData(guid(), rowDataPanelColor);
+
+            }
+
+            $('#ProcessSelected').chosen_reset({ width: '400px' });
+        }
+
+        $('#PanelNewButton').click(function (e) {
+            AddNewPanel();
+        });
+
+        $('#PanelSaveButton').click(function (e) {
+            var panelData = JSON.stringify({ 'panelModel': $('#frmPanel').jsonify(), 'stylePanelColorModel': formPanelColor(), 'stylePanelProcessModel': formPanelProcess() });
+            $.ajax({
+                url: '@Url.Content("/Style/SavePanel")',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: panelData,
+                type: 'POST',
+                success: function (result) {
+                    if (result.success) {
+                         
+
+                        jQuery('#grdStylePanel').clearGridData();
+
+                        $.each(result.data.stylePanelModel, function (key, data) {
+
+                            var rowDataStylePanel = {
+                                SequenceNumber: data["SequenceNumber"],
+                                StyleSequenceNumber: data["StyleSequenceNumber"],
+                                PanelName: data["PanelName"],
+                                PanelDescription: data["PanelDescription"],
+                                TempGuid: data["TempGuid"],
+                                IsDeleted: data["IsDeleted"],
+                                State: data["State"]
+                            };
+
+                            jQuery("#grdStylePanel").addRowData(guid(), rowDataStylePanel);
+                        });
+
+                                          
+
+                        AddNewPanel();
+
+                        alert("Saved Successfully");
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+
+        jQuery.fn.chosen_reset = function (n) {
+            //$(this).empty();
+            $(this).chosen('destroy');
+            $(this).prop('selectedIndex', -1);
+            $(this).chosen(n)
+        }
+    });
+</script>
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmPanel", role = "form", @class = "form-horizontal" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <span>Style Panel</span>
+                    </h4>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PanelDescription, new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                    <div class="col-lg-9">
-                        @Html.TextAreaFor(m => m.PanelDescription, 5, 400, new { @class = "form-control" })
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-lg-offset-8">
+                            <input type="button" value="New" id="PanelNewButton" class="btn marginR10" />
+                            <input type="button" value="Save" id="PanelSaveButton" class="btn marginR10" />
+                        </div>
                     </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PanelName, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.PanelName, new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PanelDescription, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextAreaFor(m => m.PanelDescription, 5, 400, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <table id="grdStylePanel">
+                            </table>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.SequenceNumber)
+                    @Html.HiddenFor(m => m.TempGuid)
+                    @Html.HiddenFor(m => m.StyleSequenceNumber)
+                    @Html.HiddenFor(m => m.State)
+                    @Html.HiddenFor(m => m.IsDeleted)
                 </div>
-                @Html.HiddenFor(m => m.TempGuid)
-                @Html.HiddenFor(m => m.StyleSequenceNumber)
-                @Html.HiddenFor(m => m.State)
-                @Html.HiddenFor(m => m.IsDeleted)
             </div>
         </div>
     </div>
-</div>
-@Html.Partial("~/Views/Merchandiser/StylePanelColor.cshtml", Model.PanelColorModel)
+    @Html.Partial("~/Views/Merchandiser/StylePanelColor.cshtml", Model.PanelColorModel)
+    @Html.Partial("~/Views/Merchandiser/StylePanelProcess.cshtml", Model)
+}

@@ -16,9 +16,13 @@ namespace Raagam.TextileManagement.Model
             PanelName = "";
             PanelDescription = "";
             TempGuid = Guid.NewGuid().ToString();
+            State = CommonUtility.EnumConstants.ModelCurrentState.Added;
             IsDeleted = false;
             StylePanelColorModelList = new List<StylePanelColorModel>();
             PanelColorModel = new StylePanelColorModel();
+
+            StylePanelProcessModelList = new List<StylePanelProcessModel>();
+            SelectedPanelProcessList = new List<long>();
         }
 
         [DataMember]
@@ -45,6 +49,18 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<StylePanelColorModel> StylePanelColorModelList { get; set; }
+
+ 
+
+        [DataMember]
+        public List<StylePanelProcessModel> StylePanelProcessModelList { get; set; }
+
+
+
+
+        [DataMember]
+        public List<long> SelectedPanelProcessList { get; set; }
+ 
  
 
         [DataMember]

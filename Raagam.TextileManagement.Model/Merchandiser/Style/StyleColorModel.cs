@@ -15,6 +15,7 @@ namespace Raagam.TextileManagement.Model
         {
             ColorPantone = "";
             IsDeleted = false;
+            State = CommonUtility.EnumConstants.ModelCurrentState.Added;
         }
 
         [DataMember]

@@ -3,26 +3,67 @@
     $(document).ready(function () {
         $("#ComboColorSelected").chosen();
 
+
+
         $("#ComboColorSelected").chosen().on("change", function (evt, params) {
-            debugger;
+
 
             if (params.selected == null) {
                 return true;
             }
-            var selectedValue = params.selected;
-            var selectedText = $("#ComboColorSelected option[value='" + selectedValue + "']").text();
 
-            var rowData = {
-                SequenceNumber: 0,
-                StyleSequenceNumber: 0,
-                ColorSequenceNumber: selectedValue,
-                ColorName: selectedText,
-                ColorPantone: "",
-                IsDeleted: false,
-                State: 'New'
-            };
+            var val = params.selected;
 
-            jQuery("#grdStyleColor").addRowData(guid(), rowData);
+ 
+
+            var bExists = 0;
+
+            var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+                var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+                if (rowData['ColorSequenceNumber'] == val) {
+                    bExists = 1;
+                }
+
+            }
+
+
+            if (bExists == 0) {
+
+                var textField = $("#ComboColorSelected option[value='" + val + "']").text();
+
+                var rowDataStyleColor = {
+                    SequenceNumber: 0,
+                    StyleSequenceNumber: 0,
+                    ColorSequenceNumber: val,
+                    ColorName: textField,
+                    ColorPantone: "",
+                    IsDeleted: false,
+                    State: 'New'
+                };
+
+                var rowDataPanelColor = {
+                    SequenceNumber: 0,
+                    StylePanelSequenceNumber: 0,
+                    StyleColorSequenceNumber: val,
+                    StyleColorName: textField,
+                    ColorSequenceNumber: 0,
+                    ColorPantone: "",
+                    IsDeleted: false,
+                    State: 'New',
+                    TempGuid: ""
+                };
+
+                jQuery("#grdStyleColor").addRowData(guid(), rowDataStyleColor);
+                jQuery("#grdStylePanelColor").addRowData(guid(), rowDataPanelColor);
+            }
+
+
+
 
         });
 

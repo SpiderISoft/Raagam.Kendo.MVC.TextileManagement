@@ -8,41 +8,47 @@ using System.Web.Mvc;
 namespace Raagam.TextileManagement.Model 
 {
     [DataContract]
-    public class StylePanelColorModel
+    public class StyleProcessSourcesModel
     {
 
-        public StylePanelColorModel()
+        public StyleProcessSourcesModel()
         {
-            StyleColorName = "";
-            ColorPantone = "";
             IsDeleted = false;
+            IsSizeApplicable = false;
             State = CommonUtility.EnumConstants.ModelCurrentState.Added;
         }
- 
+
 
         [DataMember]
         public long SequenceNumber { get; set; }
 
         [DataMember]
-        public long StylePanelSequenceNumber { get; set; }
+        public long StyleSequenceNumber { get; set; }
 
         [DataMember]
-        public long StyleColorSequenceNumber { get; set; }
-        [DataMember]
-        public string StyleColorName { get; set; }
+        public long ProductGroupSequenceNumber { get; set; }
 
         [DataMember]
-        public string ColorSequenceNumber { get; set; }
+        public long SourcesSequenceNumber { get; set; }
 
         [DataMember]
-        public string ColorPantone { get; set; }
+        public long ProcessSequenceNumber { get; set; }
+
+        [DataMember]
+        public long LotSequenceNumber { get; set; }
+        
+        [DataMember]
+        public decimal Quantity { get; set; }
 
         [DataMember]
         public string TempGuid { get; set; }
 
         [DataMember]
         public bool IsDeleted { get; set; }
- 
+
+        [DataMember]
+        public bool IsSizeApplicable { get; set; }
+
         [DataMember]
         public Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState State { get; set; }
     }

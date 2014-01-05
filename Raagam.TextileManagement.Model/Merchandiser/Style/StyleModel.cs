@@ -18,16 +18,26 @@ namespace Raagam.TextileManagement.Model
             StyleDescription = "";
             IsCompleted = false;
             Mode = EnumConstants.ScreenMode.New;
+            
             StyleTypeDropDownList = new List<SelectListItem>();
             StyleDropDownList = new List<SelectListItem>();
-            StyleColorModelList = new List<StyleColorModel>();
-            ColorDropDownList = new List<SelectListItem>();
-            StyleSizeModelList = new List<StyleSizeModel>();
             SizeDropDownList = new List<SelectListItem>();
+            ColorDropDownList = new List<SelectListItem>();
+            ProcessDropDownList = new List<SelectListItem>();
+            ProductGroupDropDownList = new List<SelectListItem>();
+            ProductDropDownList = new List<LinkDropDownModel>();
+
+            StyleColorModelList = new List<StyleColorModel>();
+            StyleSizeModelList = new List<StyleSizeModel>();
+
             SelectedComboSizeList = new List<long>();
             
             StylePanelModelList = new List<StylePanelModel>();
+
             PanelModel = new StylePanelModel();
+
+            ProcessSourcesModel = new StyleProcessSourcesModel();
+            StyleProcessSourcesModelList = new List<StyleProcessSourcesModel>();
         }
 
         [DataMember]
@@ -55,6 +65,22 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public List<SelectListItem> SizeDropDownList { get; set; }
 
+        [DataMember]
+        public List<SelectListItem> ProcessDropDownList { get; set; }
+
+        [DataMember]
+        public List<SelectListItem> StyleTypeDropDownList { get; set; }
+
+        [DataMember]
+        public List<SelectListItem> StyleDropDownList { get; set; }
+
+
+        [DataMember]
+        public List<SelectListItem> ProductGroupDropDownList { get; set; }
+
+        [DataMember]
+        public List<LinkDropDownModel> ProductDropDownList { get; set; }
+
         
         [DataMember]
         public List<long> SelectedComboSizeList { get; set; }
@@ -73,10 +99,10 @@ namespace Raagam.TextileManagement.Model
         public StylePanelModel PanelModel  { get; set; }
 
         [DataMember]
-        public List<SelectListItem> StyleTypeDropDownList { get; set; }
+        public StyleProcessSourcesModel ProcessSourcesModel { get; set; }
 
         [DataMember]
-        public List<SelectListItem> StyleDropDownList { get; set; }
+        public List<StyleProcessSourcesModel> StyleProcessSourcesModelList { get; set; }
 
         [DataMember]
         public EnumConstants.ScreenMode Mode { get; set; }
