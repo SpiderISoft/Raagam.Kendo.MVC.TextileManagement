@@ -74,6 +74,15 @@ namespace Raagam.TextileManagement.DataAccess
                         styleModel.SizeDropDownList.Add(dropDown);
                     }
 
+                    foreach (DataRow fabricDataRow in DropDownDataSet.Tables[5].Rows)
+                    {
+                        SelectListItem dropDown = new SelectListItem();
+                        dropDown.Value = fabricDataRow["prod_seqno"].ToString();
+                        dropDown.Text = fabricDataRow["prod_name"].ToString();
+                        dropDown.Selected = false;
+                        styleModel.FabricDropDownList.Add(dropDown);
+                    }
+
                     foreach (DataRow styleDataRow in DropDownDataSet.Tables[6].Rows)
                     {
                         SelectListItem dropDown = new SelectListItem();

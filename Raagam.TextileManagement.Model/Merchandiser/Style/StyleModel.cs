@@ -39,6 +39,10 @@ namespace Raagam.TextileManagement.Model
 
             ProcessSourcesModel = new StyleProcessSourcesModel();
             StyleProcessSourcesModelList = new List<StyleProcessSourcesModel>();
+
+            StyleFabricModelList = new List<StyleFabricModel>();
+            SelectedFabricList = new List<long>();
+            FabricDropDownList = new List<SelectListItem>();
         }
 
         [DataMember]
@@ -90,6 +94,9 @@ namespace Raagam.TextileManagement.Model
 
 
         [DataMember]
+        public List<SelectListItem> FabricDropDownList { get; set; }
+
+        [DataMember]
         public List<StyleColorModel> StyleColorModelList { get; set; }
 
         [DataMember]
@@ -106,6 +113,17 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<StyleProcessSourcesModel> StyleProcessSourcesModelList { get; set; }
+
+
+
+        [DataMember]
+        public List<StyleFabricModel> StyleFabricModelList { get; set; }
+
+
+
+
+        [DataMember]
+        public List<long> SelectedFabricList { get; set; }
 
         [DataMember]
         public EnumConstants.ScreenMode Mode { get; set; }
