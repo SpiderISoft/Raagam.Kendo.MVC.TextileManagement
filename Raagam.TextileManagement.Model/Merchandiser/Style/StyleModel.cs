@@ -16,17 +16,11 @@ namespace Raagam.TextileManagement.Model
         {
             StyleName = "";
             StyleDescription = "";
+            StyleTypeName = "";
             IsCompleted = false;
             Mode = EnumConstants.ScreenMode.New;
             
-            StyleTypeDropDownList = new List<SelectListItem>();
-            StyleDropDownList = new List<SelectListItem>();
-            SizeDropDownList = new List<SelectListItem>();
-            ColorDropDownList = new List<SelectListItem>();
-            ProcessDropDownList = new List<SelectListItem>();
-            ProductGroupDropDownList = new List<SelectListItem>();
-            ProductDropDownList = new List<LinkDropDownModel>();
-            LotTypeDropDownList = new List<LinkDropDownModel>();
+            
 
             StyleColorModelList = new List<StyleColorModel>();
             StyleSizeModelList = new List<StyleSizeModel>();
@@ -42,7 +36,7 @@ namespace Raagam.TextileManagement.Model
 
             StyleFabricModelList = new List<StyleFabricModel>();
             SelectedFabricList = new List<long>();
-            FabricDropDownList = new List<SelectListItem>();
+            
         }
 
         [DataMember]
@@ -63,38 +57,10 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public bool IsCompleted { get; set; }
 
-      
-        [DataMember]
-        public List<SelectListItem> ColorDropDownList { get; set; }
-
-        [DataMember]
-        public List<SelectListItem> SizeDropDownList { get; set; }
-
-        [DataMember]
-        public List<SelectListItem> ProcessDropDownList { get; set; }
-
-        [DataMember]
-        public List<SelectListItem> StyleTypeDropDownList { get; set; }
-
-        [DataMember]
-        public List<SelectListItem> StyleDropDownList { get; set; }
-
-
-        [DataMember]
-        public List<SelectListItem> ProductGroupDropDownList { get; set; }
-
-        [DataMember]
-        public List<LinkDropDownModel> ProductDropDownList { get; set; }
-
-        [DataMember]
-        public List<LinkDropDownModel> LotTypeDropDownList { get; set; }
 
         [DataMember]
         public List<long> SelectedComboSizeList { get; set; }
-
-
-        [DataMember]
-        public List<SelectListItem> FabricDropDownList { get; set; }
+ 
 
         [DataMember]
         public List<StyleColorModel> StyleColorModelList { get; set; }
@@ -114,13 +80,11 @@ namespace Raagam.TextileManagement.Model
         [DataMember]
         public List<StyleProcessSourcesModel> StyleProcessSourcesModelList { get; set; }
 
-
-
         [DataMember]
         public List<StyleFabricModel> StyleFabricModelList { get; set; }
 
-
-
+        [DataMember]
+        public string StyleTypeName { get; set; }
 
         [DataMember]
         public List<long> SelectedFabricList { get; set; }

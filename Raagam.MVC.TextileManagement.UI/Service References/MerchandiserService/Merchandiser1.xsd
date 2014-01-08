@@ -2,6 +2,7 @@
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Web.Mvc" />
   <xs:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
+  <xs:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="OrderMainModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="AssortmentDetails" nillable="true" type="xs:string" />
@@ -72,17 +73,219 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="OrderStyleSizeModel" nillable="true" type="tns:OrderStyleSizeModel" />
+  <xs:complexType name="StyleListModel">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="ColorDropDownList" nillable="true" type="q5:ArrayOfSelectListItem" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="FabricDropDownList" nillable="true" type="q6:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="LotTypeDropDownList" nillable="true" type="tns:ArrayOfLinkDropDownModel" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="ProcessDropDownList" nillable="true" type="q7:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="ProductDropDownList" nillable="true" type="tns:ArrayOfLinkDropDownModel" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="ProductGroupDropDownList" nillable="true" type="q8:ArrayOfSelectListItem" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="SizeDropDownList" nillable="true" type="q9:ArrayOfSelectListItem" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleDropDownList" nillable="true" type="q10:ArrayOfSelectListItem" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleTypeDropDownList" nillable="true" type="q11:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="styleModel" nillable="true" type="tns:StyleModel" />
+      <xs:element minOccurs="0" name="styleModelList" nillable="true" type="tns:ArrayOfStyleModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleListModel" nillable="true" type="tns:StyleListModel" />
+  <xs:complexType name="ArrayOfLinkDropDownModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LinkDropDownModel" nillable="true" type="tns:LinkDropDownModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLinkDropDownModel" nillable="true" type="tns:ArrayOfLinkDropDownModel" />
+  <xs:complexType name="LinkDropDownModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ForeignKey" type="xs:long" />
+      <xs:element minOccurs="0" name="Key" type="xs:long" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LinkDropDownModel" nillable="true" type="tns:LinkDropDownModel" />
   <xs:complexType name="StyleModel">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsCompleted" type="xs:boolean" />
-      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q5:EnumConstants.ModelCurrentState" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="Mode" type="q12:EnumConstants.ScreenMode" />
+      <xs:element minOccurs="0" name="PanelModel" nillable="true" type="tns:StylePanelModel" />
+      <xs:element minOccurs="0" name="ProcessSourcesModel" nillable="true" type="tns:StyleProcessSourcesModel" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedComboSizeList" nillable="true" type="q13:ArrayOflong" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedFabricList" nillable="true" type="q14:ArrayOflong" />
+      <xs:element minOccurs="0" name="StyleColorModelList" nillable="true" type="tns:ArrayOfStyleColorModel" />
       <xs:element minOccurs="0" name="StyleDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleFabricModelList" nillable="true" type="tns:ArrayOfStyleFabricModel" />
       <xs:element minOccurs="0" name="StyleImage" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="StyleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StylePanelModelList" nillable="true" type="tns:ArrayOfStylePanelModel" />
+      <xs:element minOccurs="0" name="StyleProcessSourcesModelList" nillable="true" type="tns:ArrayOfStyleProcessSourcesModel" />
       <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="StyleTypeDropDownList" nillable="true" type="q6:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="StyleSizeModelList" nillable="true" type="tns:ArrayOfStyleSizeModel" />
+      <xs:element minOccurs="0" name="StyleTypeName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StyleTypeSequenceNumber" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="StyleModel" nillable="true" type="tns:StyleModel" />
+  <xs:complexType name="StylePanelModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PanelColorModel" nillable="true" type="tns:StylePanelColorModel" />
+      <xs:element minOccurs="0" name="PanelDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PanelName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedPanelProcessList" nillable="true" type="q15:ArrayOflong" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q16:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StylePanelColorModelList" nillable="true" type="tns:ArrayOfStylePanelColorModel" />
+      <xs:element minOccurs="0" name="StylePanelProcessModelList" nillable="true" type="tns:ArrayOfStylePanelProcessModel" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="TempGuid" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StylePanelModel" nillable="true" type="tns:StylePanelModel" />
+  <xs:complexType name="StylePanelColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColorPantone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q17:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleColorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleColorSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="StylePanelSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="TempGuid" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StylePanelColorModel" nillable="true" type="tns:StylePanelColorModel" />
+  <xs:complexType name="ArrayOfStylePanelColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StylePanelColorModel" nillable="true" type="tns:StylePanelColorModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStylePanelColorModel" nillable="true" type="tns:ArrayOfStylePanelColorModel" />
+  <xs:complexType name="ArrayOfStylePanelProcessModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StylePanelProcessModel" nillable="true" type="tns:StylePanelProcessModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStylePanelProcessModel" nillable="true" type="tns:ArrayOfStylePanelProcessModel" />
+  <xs:complexType name="StylePanelProcessModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProcessSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q18:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StylePanelSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="TempGuid" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StylePanelProcessModel" nillable="true" type="tns:StylePanelProcessModel" />
+  <xs:complexType name="StyleProcessSourcesModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSizeApplicable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LotSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProccessSourcesColorModel" nillable="true" type="tns:StyleProccessSourcesColorModel" />
+      <xs:element minOccurs="0" name="Process" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProcessSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProcessSourcesTempGuid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="Sources" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourcesSequenceNumber" type="xs:long" />
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q19:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleProccessSourcesColorModelList" nillable="true" type="tns:ArrayOfStyleProccessSourcesColorModel" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="UOM" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleProcessSourcesModel" nillable="true" type="tns:StyleProcessSourcesModel" />
+  <xs:complexType name="StyleProccessSourcesColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColorPantone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q20:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleColorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleColorSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="StyleProcessSourcesSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="TempGuid" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleProccessSourcesColorModel" nillable="true" type="tns:StyleProccessSourcesColorModel" />
+  <xs:complexType name="ArrayOfStyleProccessSourcesColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleProccessSourcesColorModel" nillable="true" type="tns:StyleProccessSourcesColorModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleProccessSourcesColorModel" nillable="true" type="tns:ArrayOfStyleProccessSourcesColorModel" />
+  <xs:complexType name="ArrayOfStyleColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleColorModel" nillable="true" type="tns:StyleColorModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleColorModel" nillable="true" type="tns:ArrayOfStyleColorModel" />
+  <xs:complexType name="StyleColorModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorPantone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ColorSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q21:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleColorModel" nillable="true" type="tns:StyleColorModel" />
+  <xs:complexType name="ArrayOfStyleFabricModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleFabricModel" nillable="true" type="tns:StyleFabricModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleFabricModel" nillable="true" type="tns:ArrayOfStyleFabricModel" />
+  <xs:complexType name="StyleFabricModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="SourcesSequenceNumber" type="xs:long" />
+      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q22:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleFabricModel" nillable="true" type="tns:StyleFabricModel" />
+  <xs:complexType name="ArrayOfStylePanelModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StylePanelModel" nillable="true" type="tns:StylePanelModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStylePanelModel" nillable="true" type="tns:ArrayOfStylePanelModel" />
+  <xs:complexType name="ArrayOfStyleProcessSourcesModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleProcessSourcesModel" nillable="true" type="tns:StyleProcessSourcesModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleProcessSourcesModel" nillable="true" type="tns:ArrayOfStyleProcessSourcesModel" />
+  <xs:complexType name="ArrayOfStyleSizeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleSizeModel" nillable="true" type="tns:StyleSizeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleSizeModel" nillable="true" type="tns:ArrayOfStyleSizeModel" />
+  <xs:complexType name="StyleSizeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="SizeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SizeSequenceNumber" type="xs:long" />
+      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q23:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="StyleSequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StyleSizeModel" nillable="true" type="tns:StyleSizeModel" />
+  <xs:complexType name="ArrayOfStyleModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StyleModel" nillable="true" type="tns:StyleModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStyleModel" nillable="true" type="tns:ArrayOfStyleModel" />
 </xs:schema>

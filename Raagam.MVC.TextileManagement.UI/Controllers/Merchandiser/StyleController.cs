@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Raagam.MVC.TextileManagement.UI.MerchandiserService;
 using Raagam.TextileManagement.Model;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 {
@@ -20,25 +21,29 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
         public ActionResult Style()
         {
             string url = "~/Views/Merchandiser/Style.cshtml";
-            StyleModel styleModel = new StyleModel();
-            styleModel = merchandiserServiceClient.StylePopulateDropDown(styleModel);
-            ViewBag.ColorDropDownList = styleModel.ColorDropDownList;
-            ViewBag.ProcessDropDownList = styleModel.ProcessDropDownList;
-            ViewBag.ProductGroupDropDownList = styleModel.ProductGroupDropDownList;
-            TempData["styleModel"] = styleModel;
-            return View(url, styleModel);
+            StyleListModel styleModelList = new StyleListModel();
+            styleModelList = merchandiserServiceClient.StylePopulateDropDown();
+            ViewBag.SizeDropDownList = styleModelList.SizeDropDownList;
+            ViewBag.ColorDropDownList = styleModelList.ColorDropDownList;
+            ViewBag.ProcessDropDownList = styleModelList.ProcessDropDownList;
+            ViewBag.ProductGroupDropDownList = styleModelList.ProductGroupDropDownList;
+            ViewBag.StyleTypeDropDownList = styleModelList.StyleTypeDropDownList;
+            ViewBag.FabricDropDownList = styleModelList.FabricDropDownList;
+ 
+            TempData["styleModelList"] = styleModelList;
+            return View(url, styleModelList.styleModel);
         }
 
         public JsonResult GetCascadeProduct(int? productGroupSequence)
         {
 
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = new StyleListModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            styleModelList = (StyleListModel)TempData["styleModelList"];
 
 
 
-            var productList = styleModel.ProductDropDownList.AsQueryable();
+            var productList = styleModelList.ProductDropDownList.AsQueryable();
 
 
 
@@ -48,7 +53,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                  
             }
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
@@ -63,15 +68,12 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
         public JsonResult GetCascadeLotType(int? product)
         {
 
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = new StyleListModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
-
-
-
-            var lotTypeList = styleModel.LotTypeDropDownList.AsQueryable();
+            styleModelList = (StyleListModel)TempData["styleModelList"];
 
 
+            var lotTypeList = styleModelList.LotTypeDropDownList.AsQueryable();
 
             if (product != null)
             {
@@ -79,7 +81,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
             }
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
@@ -93,12 +95,13 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
         public JsonResult GetColors()
         {
-             
-            StyleModel styleModel = new StyleModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            StyleListModel styleModelList = new StyleListModel();
 
-           TempData["styleModel"] = styleModel;
+            styleModelList = (StyleListModel)TempData["styleModelList"];
+
+            TempData["styleModelList"] = styleModelList;
+
 
 
            return Json(new
@@ -106,7 +109,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                success = true,
                data = new
                {
-                   ColorDropDownList = styleModel.ColorDropDownList,
+                   ColorDropDownList = styleModelList.ColorDropDownList,
  
                }
            }, JsonRequestBehavior.AllowGet);
@@ -115,14 +118,15 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
         public JsonResult GetStyleColor(int page = 1, int rows = 10, string sord = "asc", string sidx = "Id")
         {
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = (StyleListModel)TempData["styleModelList"];
 
-            styleModel = (StyleModel) TempData["styleModel"];
+            TempData["styleModelList"] = styleModelList;
 
-            var recordCount = styleModel.StyleColorModelList.Count;
+
+            var recordCount = styleModelList.styleModel.StyleColorModelList.Count;
             IEnumerable<object> final;
 
-            final = styleModel.StyleColorModelList.Select(e => new
+            final = styleModelList.styleModel.StyleColorModelList.Select(e => new
             {
                 SequenceNumber = e.SequenceNumber,
                 StyleSequenceNumber = e.StyleSequenceNumber,
@@ -133,7 +137,8 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 State = e.State.ToString()
             }).ToArray();
 
-            TempData["styleModel"] = styleModel;
+
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
@@ -146,14 +151,14 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
         public JsonResult GetStylePanel(int page = 1, int rows = 10, string sord = "asc", string sidx = "Id")
         {
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = (StyleListModel)TempData["styleModelList"];
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            TempData["styleModelList"] = styleModelList;
 
-            var recordCount = styleModel.StylePanelModelList.Count;
+            var recordCount = styleModelList.styleModel.StylePanelModelList.Count;
             IEnumerable<object> final;
 
-            final = styleModel.StylePanelModelList.Select(e => new
+            final = styleModelList.styleModel.StylePanelModelList.Select(e => new
             {
                 SequenceNumber = e.SequenceNumber,
                 StyleSequenceNumber = e.StyleSequenceNumber,
@@ -164,7 +169,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 TempGuid = e.TempGuid.ToString()
             }).ToArray();
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
@@ -175,21 +180,101 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetStyle(int page = 1, int rows = 10, string sord = "asc", string sidx = "Id")
+        {
+            StyleListModel styleModelList = new StyleListModel();
+
+            styleModelList = (StyleListModel)TempData["styleModelList"];
+
+            var recordCount = styleModelList.styleModelList.Count;
+            IEnumerable<object> final;
+
+            final = styleModelList.styleModelList.Select(e => new
+            {
+                StyleSequenceNumber = e.StyleSequenceNumber,
+                StyleName = e.StyleName,
+                StyleDescription = e.StyleDescription,
+                StyleType = e.StyleTypeName,
+                StyleTypeSequenceNumber = e.StyleTypeSequenceNumber,
+                IsCompleted = e.IsCompleted.ToString() 
+            }).ToArray();
+
+            TempData["styleModelList"] = styleModelList;
+
+            return Json(new
+            {
+                total = Math.Ceiling((Decimal)recordCount / (Decimal)rows),
+                page = page,
+                records = recordCount,
+                rows = final
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult SaveStyle(StyleModel styleModel, List<StyleColorModel> styleColorModel)
         {
-            return null;
+            StyleListModel styleModelList = new StyleListModel();
+
+            styleModelList = (StyleListModel)TempData["styleModelList"];
+
+            styleModelList.styleModel.StyleSequenceNumber = styleModel.StyleSequenceNumber;
+            styleModelList.styleModel.StyleName = styleModel.StyleName;
+            styleModelList.styleModel.StyleDescription = styleModel.StyleDescription;
+            styleModelList.styleModel.StyleTypeSequenceNumber = styleModel.StyleTypeSequenceNumber;
+            styleModelList.styleModel.IsCompleted = styleModel.IsCompleted;
+            styleModelList.styleModel.Mode = EnumConstants.ScreenMode.New;
+
+            styleModelList.styleModel.StyleColorModelList = styleColorModel;
+
+
+            foreach (long selectedSize in styleModel.SelectedComboSizeList)
+            {
+                StyleSizeModel styleSizeModel = new StyleSizeModel();
+                styleSizeModel.SequenceNumber = 0;
+                styleSizeModel.StyleSequenceNumber = 0;
+                styleSizeModel.SizeSequenceNumber = selectedSize;
+                styleSizeModel.SizeName = "";
+                styleSizeModel.IsDeleted = false;
+                styleSizeModel.State = EnumConstants.ModelCurrentState.Added;
+                styleModelList.styleModel.StyleSizeModelList.Add(styleSizeModel);
+            }
+
+            foreach (long selectedFabric in styleModel.SelectedFabricList)
+            {
+                StyleFabricModel styleFabricModel = new StyleFabricModel();
+                styleFabricModel.SequenceNumber = 0;
+                styleFabricModel.StyleSequenceNumber = 0;
+                styleFabricModel.SourcesSequenceNumber = selectedFabric;
+                styleFabricModel.IsDeleted = false;
+                styleFabricModel.State = EnumConstants.ModelCurrentState.Added;
+                styleModelList.styleModel.StyleFabricModelList.Add(styleFabricModel);
+            }
+ 
+            styleModelList = merchandiserServiceClient.SaveStyle(styleModelList.styleModel);
+            ViewBag.SizeDropDownList = styleModelList.SizeDropDownList;
+            ViewBag.ColorDropDownList = styleModelList.ColorDropDownList;
+            ViewBag.ProcessDropDownList = styleModelList.ProcessDropDownList;
+            ViewBag.ProductGroupDropDownList = styleModelList.ProductGroupDropDownList;
+            ViewBag.StyleTypeDropDownList = styleModelList.StyleTypeDropDownList;
+            ViewBag.FabricDropDownList = styleModelList.FabricDropDownList;
+
+            TempData["styleModelList"] = styleModelList;
+
+            return Json(new
+            {
+                success = true ,
+                data = "Saved Successfully" 
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SavePanel(StylePanelModel panelModel, List<StylePanelColorModel> stylePanelColorModel, List<StylePanelProcessModel> stylePanelProcessModel)
         {
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = new StyleListModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            styleModelList = (StyleListModel)TempData["styleModelList"];
 
-            if (styleModel.StylePanelModelList.Where(x => x.TempGuid == panelModel.TempGuid).Count() > 0)
+            if (styleModelList.styleModel.StylePanelModelList.Where(x => x.TempGuid == panelModel.TempGuid).Count() > 0)
             {
-                styleModel.StylePanelModelList.RemoveAll(x => x.TempGuid == panelModel.TempGuid);
+                styleModelList.styleModel.StylePanelModelList.RemoveAll(x => x.TempGuid == panelModel.TempGuid);
             }
 
 
@@ -199,56 +284,58 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             if (stylePanelProcessModel != null)
                 panelModel.StylePanelProcessModelList.AddRange(stylePanelProcessModel);
 
-            styleModel.StylePanelModelList.Add(panelModel);
+            styleModelList.styleModel.StylePanelModelList.Add(panelModel);
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
                 success =  true,
                  data = new
                 {
-                    stylePanelModel = styleModel.StylePanelModelList 
+                    stylePanelModel = styleModelList.styleModel.StylePanelModelList 
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveProcessSources(StyleProcessSourcesModel processSourcesModel, List<StyleProccessSourcesColorModel> processSourcesColorModel)
         {
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = new StyleListModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            styleModelList = (StyleListModel)TempData["styleModelList"];
 
-            if (styleModel.StyleProcessSourcesModelList.Where(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid).Count() > 0)
+            if (styleModelList.styleModel.StyleProcessSourcesModelList.Where(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid).Count() > 0)
             {
-                styleModel.StyleProcessSourcesModelList.RemoveAll(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid);
+                styleModelList.styleModel.StyleProcessSourcesModelList.RemoveAll(x => x.ProcessSourcesTempGuid == processSourcesModel.ProcessSourcesTempGuid);
             }
 
 
             if (processSourcesColorModel != null)
                 processSourcesModel.StyleProccessSourcesColorModelList.AddRange(processSourcesColorModel);
 
-            styleModel.StyleProcessSourcesModelList.Add(processSourcesModel);
+            styleModelList.styleModel.StyleProcessSourcesModelList.Add(processSourcesModel);
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
                 success = true,
                 data = new
                 {
-                    styleProcessSourcesModel = styleModel.StyleProcessSourcesModelList
+                    styleProcessSourcesModel = styleModelList.styleModel.StyleProcessSourcesModelList
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult EditPanel(string TempGuid)
         {
-            StyleModel styleModel = new StyleModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            StyleListModel styleModelList = new StyleListModel();
 
-            var stylePanelList = styleModel.StylePanelModelList.AsQueryable();
+            styleModelList = (StyleListModel)TempData["styleModelList"];
+
+ 
+            var stylePanelList = styleModelList.styleModel.StylePanelModelList.AsQueryable();
 
             StylePanelModel stylePanelModel = new StylePanelModel();
 
@@ -257,7 +344,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 stylePanelModel = stylePanelList.Where(f => f.TempGuid == TempGuid).FirstOrDefault();
             }
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {
@@ -271,13 +358,34 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult EditStyle(long styleSequenceNumber)
+        {
+            StyleListModel styleModelList = new StyleListModel();
+
+            styleModelList = (StyleListModel)TempData["styleModelList"];
+            
+            styleModelList.styleModel = merchandiserServiceClient.EditStyle(styleSequenceNumber);
+
+            TempData["styleModelList"] = styleModelList;
+            return Json(new
+            {
+                success = true,
+                data = new
+                {
+                    StyleModel = styleModelList.styleModel,
+                    StylePanelModelList = styleModelList.styleModel.StylePanelModelList,
+                    StyleProcessSourcesModelList = styleModelList.styleModel.StyleProcessSourcesModelList 
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult EditProcessSources(string processSourcesTempGuid)
         {
-            StyleModel styleModel = new StyleModel();
+            StyleListModel styleModelList = new StyleListModel();
 
-            styleModel = (StyleModel)TempData["styleModel"];
+            styleModelList = (StyleListModel)TempData["styleModelList"];
 
-            var styleProcessSourcesList = styleModel.StyleProcessSourcesModelList.AsQueryable();
+            var styleProcessSourcesList = styleModelList.styleModel.StyleProcessSourcesModelList.AsQueryable();
 
             StyleProcessSourcesModel styleProcessSourcesModel = new StyleProcessSourcesModel();
 
@@ -286,7 +394,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 styleProcessSourcesModel = styleProcessSourcesList.Where(f => f.ProcessSourcesTempGuid == processSourcesTempGuid).FirstOrDefault();
             }
 
-            TempData["styleModel"] = styleModel;
+            TempData["styleModelList"] = styleModelList;
 
             return Json(new
             {

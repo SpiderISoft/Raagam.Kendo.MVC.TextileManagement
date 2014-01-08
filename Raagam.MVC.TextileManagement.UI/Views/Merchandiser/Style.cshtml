@@ -6,15 +6,162 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function (e) {
 
-        $('#NewButton').click(function (event) {
+        $('#grdStyle').jqGrid({
+            url: '@(Url.Action("GetStyle", "Style"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            caption: 'Style',
+            viewrecords: true,
+            colNames: ['StyleSequenceNumber', 'StyleName', 'StyleDescription', 'StyleType', 'StyleTypeSequenceNumber', 'IsCompleted'],
+            colModel: [
+                            {
+                                name: 'StyleSequenceNumber',
+                                index: 'StyleSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'StyleName',
+                                index: 'StyleName',
+                                width: 150
+                            },
+                            {
+                                name: 'StyleDescription',
+                                index: 'StyleDescription',
+                                width: 200
+                            },
+                            {
+                                name: 'StyleType',
+                                index: 'StyleType',
+                                width: 100
+                            },
+                            {
+                                name: 'StyleTypeSequenceNumber',
+                                index: 'StyleTypeSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'IsCompleted',
+                                index: 'IsCompleted',
+                                hidden: true
+                            }
+                            ],
+            jsonReader: {
+                root: 'rows',
+                total: 'total',
+                page: 'page',
+                records: 'records',
+                cell: 'cell',
+                id: 'id',
+                repeatitems: false
+            },
+            ondblClickRow: function (rowId) {
+                debugger;
+                if (confirm("Do You want to Edit this Row") == true) {
+                    var rowData = jQuery(this).getRowData(rowId);
+                    var sStyleSequenceNumber = rowData['StyleSequenceNumber'];
+                    $.ajax({
+                        url: '@Url.Content("/Style/EditStyle")',
+                        dataType: "json",
+                        data: {
+                            styleSequenceNumber: sStyleSequenceNumber
+                        },
+                        type: 'POST',
+                        success: function (result) {
+                            if (result.success) {
+                                debugger;
 
-            $('#StyleName').css("display", "inline");
-            $('#StyleSequenceNumber').css("display", "none");
-        });
+                                AddNewStyle();
 
-        $('#EditButton').click(function (event) {
-            $('#StyleName').css("display", "none");
-            $('#StyleSequenceNumber').css("display", "inline");
+                                $('#StyleSequenceNumber').val(result.data.StyleModel.StyleSequenceNumber);
+                                $('#StyleName').val(result.data.StyleModel.StyleName);
+                                $('#StyleDescription').val(result.data.StyleModel.StyleDescription);
+                                $('#StyleTypeSequenceNumber').val(result.data.StyleModel.StyleTypeSequenceNumber);
+                                $('#Mode').val(result.data.StyleModel.Mode);
+                                $("#IsCompleted").attr('checked', result.data.StyleModel.IsCompleted);
+
+
+                                $("#ComboSizeSelected").val(result.data.StyleModel.SelectedComboSizeList);
+                                $("#ComboSizeSelected").trigger("liszt:updated");
+
+
+                                $("#FabricSelected").val(result.data.StyleModel.SelectedFabricList);
+                                $("#FabricSelected").trigger("liszt:updated");
+
+                                $.each(result.data.StyleModel.StyleColorModelList, function (key, data) {
+
+
+
+                                    jQuery("#grdStyleColor").addRowData(guid(), data);
+
+                                    var val = data["ColorSequenceNumber"];
+
+                                    var textField = data["ColorName"];
+
+
+                                    var rowDataPanelColor = {
+                                        SequenceNumber: 0,
+                                        StylePanelSequenceNumber: 0,
+                                        StyleColorSequenceNumber: val,
+                                        StyleColorName: textField,
+                                        ColorSequenceNumber: 0,
+                                        ColorPantone: "",
+                                        IsDeleted: false,
+                                        State: 'New',
+                                        TempGuid: ""
+                                    };
+
+
+                                    var rowDataProcessSourcesColor = {
+                                        SequenceNumber: 0,
+                                        StyleProcessSourcesSequenceNumber: 0,
+                                        StyleColorSequenceNumber: val,
+                                        StyleColorName: textField,
+                                        ColorSequenceNumber: 0,
+                                        ColorPantone: "",
+                                        IsDeleted: false,
+                                        State: 'New',
+                                        TempGuid: ""
+                                    };
+
+
+
+                                    jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataProcessSourcesColor);
+
+                                    jQuery("#grdStylePanelColor").addRowData(guid(), rowDataPanelColor);
+
+
+                                });
+
+
+                                $.each(result.data.StylePanelModelList, function (key, data) {
+
+                                    jQuery("#grdStylePanel").addRowData(guid(), data);
+                                });
+
+                                $.each(result.data.StyleProcessSourcesModelList, function (key, data) {
+
+                                    jQuery("#grdStyleProcessSources").addRowData(guid(), data);
+                                });
+
+
+
+                            }
+                            else {
+                                alert(result.data);
+                            }
+                        },
+                        error: function (e) {
+
+                            alert(e.responseText);
+                        }
+                    });
+
+                }
+
+            }
 
         });
 
@@ -39,8 +186,52 @@
 
         }
 
+        function AddNewStyle() {
+            jQuery('#grdStylePanel').clearGridData();
+            jQuery('#grdStyleColor').clearGridData();
+            jQuery('#grdStylePanelColor').clearGridData();
+            jQuery('#grdStyleProcessSources').clearGridData();
+            jQuery('#grdStyleProcessSourcesColor').clearGridData();
+            $('#SequenceNumber').val(0);
+            $('#StyleSequenceNumber').val(0);
+            $('#ProductGroupSequenceNumber').val(0);
+            $('#SourcesSequenceNumber').val(0);
+            $('#ProcessSequenceNumber').val(0);
+            $('#LotSequenceNumber').val(0);
+            $('#Quantity').val(0);
+            $("#IsSizeApplicable").attr('checked', false);
+            $("#SizeApplicable").attr('checked', false);
+            $('#ProcessSourcesTempGuid').val(guid());
+            $('#IsDeleted').val(false);
+            $('#State').val('Added');
+
+            $('#PanelName').val('');
+            $('#PanelDescription').val('');
+            $('#TempGuid').val(guid());
+            $('#IsDeleted').val(false);
+            $('#State').val('Added');
+
+            $('#ProcessSelected').chosen_reset({ width: '400px' });
+            $('#ComboColorSelected').chosen_reset({ width: '400px' });
+            $('#ComboSizeSelected').chosen_reset({ width: '400px' });
+            $('#FabricSelected').chosen_reset({ width: '400px' });
+            $("#IsCompleted").attr('checked', false);
+
+            $('#StyleName').val('');
+            $('#StyleDescription').val('');
+            $('#StyleSequenceNumber').val(0);
+            $('#StyleTypeSequenceNumber').val(0);
+            $('#Mode').val('New');
+
+            jQuery('#grdStyle').trigger("reloadGrid");
+        }
+
+        $('#NewButton').click(function (event) {
+            AddNewStyle();
+        });
 
         $('#SaveButton').click(function (event) {
+            debugger;
 
             var styleData = JSON.stringify({ 'styleModel': $('#frmStyle').jsonify(), 'styleColorModel': formComboColorDetailModel() });
             $.ajax({
@@ -51,7 +242,11 @@
                 type: 'POST',
                 success: function (result) {
                     if (result.success) {
+
+                        AddNewStyle();
+
                         alert(result.data);
+
                     }
                     else {
                         alert(result.data);
@@ -64,6 +259,13 @@
             });
 
         });
+
+        jQuery.fn.chosen_reset = function (n) {
+            //$(this).empty();
+            $(this).chosen('destroy');
+            $(this).prop('selectedIndex', -1);
+            $(this).chosen(n)
+        }
     });
 </script>
 <h2>
@@ -71,8 +273,9 @@
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmStyle", role = "form", @class = "form-horizontal" }))
 {
     
+    
     @Html.HiddenFor(m => m.Mode)
-
+    @Html.HiddenFor(m => m.StyleSequenceNumber)
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -88,7 +291,6 @@
                                 @Html.CheckBoxFor(m => m.IsCompleted)&nbsp;&nbsp;Completed
                             </label>
                             <input type="button" value="New" id="NewButton" class="btn marginR10" />
-                            <input type="button" value="Edit" id="EditButton" class="btn marginR10" />
                             <input type="button" value="Save" id="SaveButton" class="btn marginR10" />
                             <button class="btn btn-danger" id="CancelButton">
                                 Cancel</button>
@@ -98,7 +300,6 @@
                         @Html.LabelFor(m => m.StyleName, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
                             @Html.TextBoxFor(m => m.StyleName, new { @class = "form-control", style = "height:35px;width:200px;" })
-                            @Html.DropDownListFor(m => m.StyleSequenceNumber, Model.StyleDropDownList, "Select Style", new { @class = "form-control", style = "height:35px;width:200px;display: none" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -110,17 +311,37 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleTypeSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.StyleTypeSequenceNumber, Model.StyleTypeDropDownList, "Select Style Type", new { @class = "form-control", style = "height:35px;width:200px;" })
+                            @Html.DropDownListFor(m => m.StyleTypeSequenceNumber, (List<SelectListItem>) @ViewBag.StyleTypeDropDownList , "Select Style Type", new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                            <table id="grdStyle">
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    @Html.Partial("~/Views/Merchandiser/StyleColor.cshtml", Model)
-    @Html.Partial("~/Views/Merchandiser/StyleSize.cshtml", Model)
-     @Html.Partial("~/Views/Merchandiser/StyleFabric.cshtml", Model)
+    <div style="margin-bottom: 20px;">
+        <ul id="StyleTab" class="nav nav-tabs pattern">
+            <li class="active"><a href="#StyleColorTab" data-toggle="tab">Style Color</a></li>
+            <li><a href="#StyleSizeTab" data-toggle="tab">Style Size</a></li>
+            <li><a href="#StyleFabricTab" data-toggle="tab">Style Fabric</a></li>
+        </ul>
+        <div class="tab-content" style="overflow: visible;">
+            <div class="tab-pane fade in active" id="StyleColorTab">
+                @Html.Partial("~/Views/Merchandiser/StyleColor.cshtml", Model)
+            </div>
+            <div class="tab-pane fade" id="StyleSizeTab">
+                @Html.Partial("~/Views/Merchandiser/StyleSize.cshtml", Model)
+            </div>
+            <div class="tab-pane fade" id="StyleFabricTab">
+                @Html.Partial("~/Views/Merchandiser/StyleFabric.cshtml", Model)
+            </div>
+        </div>
+    </div>
 }
-    @Html.Partial("~/Views/Merchandiser/StylePanel.cshtml", Model.PanelModel)
-    @Html.Partial("~/Views/Merchandiser/StyleProcessSources.cshtml", Model.ProcessSourcesModel)
+@Html.Partial("~/Views/Merchandiser/StylePanel.cshtml", Model.PanelModel)
+@Html.Partial("~/Views/Merchandiser/StyleProcessSources.cshtml", Model.ProcessSourcesModel)

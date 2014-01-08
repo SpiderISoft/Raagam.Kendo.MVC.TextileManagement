@@ -1,5 +1,4 @@
 ﻿@model Raagam.TextileManagement.Model.StyleProcessSourcesModel
-
 <script language="javascript" type="text/javascript">
     $(document).ready(function (e) {
 
@@ -114,69 +113,92 @@
                                 $('#SequenceNumber').val(result.data.styleProcessSourcesModel.SequenceNumber);
                                 $('#StyleSequenceNumber').val(result.data.styleProcessSourcesModel.StyleSequenceNumber);
                                 $('#ProductGroupSequenceNumber').val(result.data.styleProcessSourcesModel.ProductGroupSequenceNumber);
-                                $('#SourcesSequenceNumber').val(result.data.styleProcessSourcesModel.SourcesSequenceNumber);
                                 $('#ProcessSequenceNumber').val(result.data.styleProcessSourcesModel.ProcessSequenceNumber);
-                                $('#LotSequenceNumber').val(result.data.styleProcessSourcesModel.LotSequenceNumber);
-                                $('#Quantity').val(result.data.styleProcessSourcesModel.Quantity);
-                                $("#IsSizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
-                                $("#SizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
-                                $('#ProcessSourcesTempGuid').val(result.data.styleProcessSourcesModel.ProcessSourcesTempGuid);
-                                $('#IsDeleted').val(result.data.styleProcessSourcesModel.IsDeleted);
-                                $('#State').val(result.data.styleProcessSourcesModel.State);
+
+                                $.when($('#ProductGroupSequenceNumber').trigger('change')).done(function () {
+
+                                    $('#SourcesSequenceNumber').val(result.data.styleProcessSourcesModel.SourcesSequenceNumber);
 
 
-                                jQuery('#grdStyleProcessSourcesColor').clearGridData();
+                                    $.when($('#SourcesSequenceNumber').trigger('change')).done(function () {
 
-                                var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+                                        $('#LotSequenceNumber').val(result.data.styleProcessSourcesModel.LotSequenceNumber);
+                                        $('#Quantity').val(result.data.styleProcessSourcesModel.Quantity);
+                                        $("#IsSizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
+                                        $("#SizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
+                                        $('#ProcessSourcesTempGuid').val(result.data.styleProcessSourcesModel.ProcessSourcesTempGuid);
+                                        $('#IsDeleted').val(result.data.styleProcessSourcesModel.IsDeleted);
+                                        $('#State').val(result.data.styleProcessSourcesModel.State);
 
-                                for (var iRow = 0; iRow < ids.length; iRow++) {
+                                        jQuery('#grdStyleProcessSourcesColor').clearGridData();
 
-                                    debugger;
-                                    var rowId = ids[iRow];
+                                        var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
 
-                                    var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+                                        for (var iRow = 0; iRow < ids.length; iRow++) {
 
-                                    var val = rowData["ColorSequenceNumber"];
-                                    var textField = rowData["ColorName"];
-                                    var SourcesColorName = "";
-                                    var ColorSequenceNumber = 0;
-                                    var ColorPantone = "";
-                                    var rowid = 0;
-                                    var SequenceNumber = 0;
-                                    var StylePanelSequenceNumber = 0;
-                                    $.each(result.data.styleProccessSourcesColorModelList, function (key, data) {
-                                        debugger;
-                                        if (val == data["StyleColorSequenceNumber"]) {
+                                            debugger;
+                                            var rowId = ids[iRow];
 
-                                            SourcesColorName = $("#ComboColorSelected option[value='" + data["ColorSequenceNumber"] + "']").text();
-                                            ColorSequenceNumber = data["ColorSequenceNumber"];
-                                            ColorPantone = data["ColorPantone"];
-                                            TempGuid = data["TempGuid"];
-                                            SequenceNumber = data["SequenceNumber"];
-                                            StyleProcessSourcesSequenceNumber = data["StyleProcessSourcesSequenceNumber"];
+                                            var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+
+                                            var val = rowData["ColorSequenceNumber"];
+                                            var textField = rowData["ColorName"];
+                                            var SourcesColorName = "";
+                                            var ColorSequenceNumber = 0;
+                                            var ColorPantone = "";
+                                            var rowid = 0;
+                                            var SequenceNumber = 0;
+                                            var StylePanelSequenceNumber = 0;
+                                            var StyleProcessSourcesSequenceNumber = 0;
+                                            $.each(result.data.styleProccessSourcesColorModelList, function (key, data) {
+                                                debugger;
+                                                if (val == data["StyleColorSequenceNumber"]) {
+
+                                                    SourcesColorName = $("#ComboColorSelected option[value='" + data["ColorSequenceNumber"] + "']").text();
+                                                    ColorSequenceNumber = data["ColorSequenceNumber"];
+                                                    ColorPantone = data["ColorPantone"];
+                                                    TempGuid = data["TempGuid"];
+                                                    SequenceNumber = data["SequenceNumber"];
+                                                    StyleProcessSourcesSequenceNumber = data["StyleProcessSourcesSequenceNumber"];
 
 
-                                            return false;
+                                                    return false;
+                                                }
+                                                rowid = rowid + 1;
+                                            });
+
+
+                                            var rowDataSourcesColor = {
+                                                SequenceNumber: SequenceNumber,
+                                                StyleProcessSourcesSequenceNumber: StyleProcessSourcesSequenceNumber,
+                                                StyleColorSequenceNumber: val,
+                                                StyleColorName: textField,
+                                                SourcesColorName: SourcesColorName,
+                                                ColorSequenceNumber: ColorSequenceNumber,
+                                                ColorPantone: ColorPantone,
+                                                IsDeleted: false,
+                                                State: 'New',
+                                                TempGuid: TempGuid
+                                            };
+
+                                            jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataSourcesColor);
                                         }
-                                        rowid = rowid + 1;
+
+
                                     });
 
+                                    
 
-                                    var rowDataSourcesColor = {
-                                        SequenceNumber: SequenceNumber,
-                                        StyleProcessSourcesSequenceNumber: StyleProcessSourcesSequenceNumber,
-                                        StyleColorSequenceNumber: val,
-                                        StyleColorName: textField,
-                                        SourcesColorName: SourcesColorName,
-                                        ColorSequenceNumber: ColorSequenceNumber,
-                                        ColorPantone: ColorPantone,
-                                        IsDeleted: false,
-                                        State: 'New',
-                                        TempGuid: TempGuid
-                                    };
 
-                                    jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataSourcesColor);
-                                }
+                                   
+                                    
+
+                                });
+
+
+
+
+
 
 
 
@@ -208,6 +230,7 @@
                 $.ajax({
                     url: '@Url.Content("/Style/GetCascadeProduct")',
                     type: 'POST',
+                    async: false,
                     data:
                         {
                             productGroupSequence: productGroupSequence
@@ -251,6 +274,7 @@
                 $.ajax({
                     url: '@Url.Content("/Style/GetCascadeLotType")',
                     type: 'POST',
+                    async: false,
                     data:
                         {
                             product: productSequence
@@ -415,76 +439,89 @@
     });
 </script>
 @using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmProcessSources", role = "form", @class = "form-horizontal" }))
-{
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>
-                        <span>Style Process Sources</span>
-                    </h4>
+{ 
+    <div style="margin-bottom: 20px;">
+        <ul id="ProcessSourcesTab" class="nav nav-tabs pattern">
+            <li class="active"><a href="#StyleProcessSourcesTab" data-toggle="tab">Process Sources</a></li>
+            <li><a href="#StyleProcessSourcesColorTab" data-toggle="tab">Process Sources Color</a></li>
+        </ul>
+        <div class="tab-content" style="overflow: visible;">
+            <div class="tab-pane fade in active" id="StyleProcessSourcesTab">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>
+                                    <span>Style Process Sources</span>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-lg-offset-8">
+                                        <input type="button" value="New" id="ProcessSourcesNewButton" class="btn marginR10" />
+                                        <input type="button" value="Save" id="ProcessSourcesSaveButton" class="btn marginR10" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.ProcessSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                                    <div class="col-lg-9">
+                                        @Html.DropDownListFor(m => m.ProcessSequenceNumber, (List<SelectListItem>)@ViewBag.ProcessDropDownList, "Select Process", new { @class = "form-control", style = "height:35px;width:200px;" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Product Group", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                                    <div class="col-lg-9">
+                                        @Html.DropDownListFor(m => m.ProductGroupSequenceNumber, (List<SelectListItem>)@ViewBag.ProductGroupDropDownList, "Select Product Group", new { @class = "form-control", style = "height:35px;width:200px;" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Trims", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                                    <div class="col-lg-9">
+                                        @Html.DropDownListFor(m => m.SourcesSequenceNumber, Enumerable.Empty<SelectListItem>(), "Select Trims", new { @class = "form-control", style = "height:35px;width:200px;" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Quantity", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                                    <div class="col-lg-9">
+                                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", style = "height:35px;width:200px;" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("UOM", new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                                    <div class="col-lg-9">
+                                        @Html.DropDownListFor(m => m.LotSequenceNumber, Enumerable.Empty<SelectListItem>(), "Select UOM", new { @class = "form-control", style = "height:35px;width:200px;" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-9">
+                                        @Html.CheckBox("Size Applicable", new { @class = "form-control", style = "height:35px;width:200px;", id = "SizeApplicable" })
+                                        &nbsp;&nbsp;Size Applicable
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-4">
+                                        <table id="grdStyleProcessSources">
+                                        </table>
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(m => m.IsSizeApplicable)
+                                @Html.HiddenFor(m => m.Process)
+                                @Html.HiddenFor(m => m.Sources)
+                                @Html.HiddenFor(m => m.UOM)
+                                @Html.HiddenFor(m => m.SequenceNumber)
+                                @Html.HiddenFor(m => m.ProcessSourcesTempGuid)
+                                @Html.HiddenFor(m => m.StyleSequenceNumber)
+                                @Html.HiddenFor(m => m.State)
+                                @Html.HiddenFor(m => m.IsDeleted)
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-lg-offset-8">
-                            <input type="button" value="New" id="ProcessSourcesNewButton" class="btn marginR10" />
-                            <input type="button" value="Save" id="ProcessSourcesSaveButton" class="btn marginR10" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ProcessSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                        <div class="col-lg-9">
-                        @Html.DropDownListFor(m => m.ProcessSequenceNumber, (List<SelectListItem>)@ViewBag.ProcessDropDownList, "Select Process", new { @class = "form-control", style = "height:35px;width:200px;" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Product Group", new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                        <div class="col-lg-9">
-                        @Html.DropDownListFor(m => m.ProductGroupSequenceNumber, (List<SelectListItem>)@ViewBag.ProductGroupDropDownList, "Select Product Group", new { @class = "form-control", style = "height:35px;width:200px;" })     
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Trims", new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                        <div class="col-lg-9">
-                        @Html.DropDownListFor(m => m.SourcesSequenceNumber, Enumerable.Empty<SelectListItem>(), "Select Trims", new { @class = "form-control", style = "height:35px;width:200px;" })     
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Quantity", new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                        <div class="col-lg-9">
-                        @Html.TextBoxFor(m => m.Quantity,new { @class = "form-control", style = "height:35px;width:200px;" })     
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("UOM", new { @class = "col-lg-3 control-label", @for = "normalInput" })
-                        <div class="col-lg-9">
-                        @Html.DropDownListFor(m => m.LotSequenceNumber, Enumerable.Empty<SelectListItem>(), "Select UOM", new { @class = "form-control", style = "height:35px;width:200px;" })     
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-9">
-                          @Html.CheckBox("Size Applicable", new { @class = "form-control", style = "height:35px;width:200px;",id ="SizeApplicable" })  &nbsp;&nbsp;Size Applicable
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-4">
-                            <table id="grdStyleProcessSources">
-                            </table>
-                        </div>
-                    </div>
-                    @Html.HiddenFor(m => m.IsSizeApplicable)
-                    @Html.HiddenFor(m => m.Process)
-                    @Html.HiddenFor(m => m.Sources)
-                    @Html.HiddenFor(m => m.UOM)
-                    @Html.HiddenFor(m => m.SequenceNumber)
-                    @Html.HiddenFor(m => m.ProcessSourcesTempGuid  )
-                    @Html.HiddenFor(m => m.StyleSequenceNumber)
-                    @Html.HiddenFor(m => m.State)
-                    @Html.HiddenFor(m => m.IsDeleted)
-                </div>
+            </div>
+            <div class="tab-pane fade" id="StyleProcessSourcesColorTab">
+                @Html.Partial("~/Views/Merchandiser/StyleProcessSourcesColor.cshtml", Model.ProccessSourcesColorModel)
             </div>
         </div>
     </div>
-        @Html.Partial("~/Views/Merchandiser/StyleProcessSourcesColor.cshtml", Model.ProccessSourcesColorModel)
+        
 }

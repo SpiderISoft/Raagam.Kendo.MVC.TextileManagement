@@ -1544,6 +1544,7 @@
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.LoginModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderMainModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderStyleColorSizeModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.StyleListModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.StyleModel.datasource" />
     <None Include="Service References\CommonService\Common.wsdl" />
     <None Include="Service References\CommonService\Common.xsd">
@@ -1569,6 +1570,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MerchandiserService\Merchandiser4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MerchandiserService\Merchandiser5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ProductionService\Production.disco" />

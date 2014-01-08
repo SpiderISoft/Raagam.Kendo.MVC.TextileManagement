@@ -2,7 +2,7 @@
 
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
-        $("#FabricSelected").chosen();
+        $("#FabricSelected").chosen({ width: '400px' });
         });
 </script>
 <div class="row">
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     @Html.Label("Fabric", new { @class = "col-lg-3 control-label", @for = "normalInput" })
                     <div class="col-lg-9">
-                         @Html.ListBoxFor(m => m.SelectedFabricList, Model.FabricDropDownList, new { id = "FabricSelected", name = "FabricSelected", @class = "form-control", data_placeholder = "Choose  Process...", multiple = "multiple", style = "height:35px;width:400px;" })
+                         @Html.ListBoxFor(m => m.SelectedFabricList, (List<SelectListItem>)@ViewBag.FabricDropDownList, new { id = "FabricSelected", name = "FabricSelected", @class = "form-control", data_placeholder = "Choose  Process...", multiple = "multiple", style = "height:35px;width:400px;" })
                     </div>
                 </div>
             </div>

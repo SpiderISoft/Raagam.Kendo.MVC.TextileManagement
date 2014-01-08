@@ -33,7 +33,7 @@ namespace Raagam.TextileManagement.Model
         public string StyleColorName { get; set; }
 
         [DataMember]
-        public string ColorSequenceNumber { get; set; }
+        public long ColorSequenceNumber { get; set; }
 
         [DataMember]
         public string ColorPantone { get; set; }

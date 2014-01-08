@@ -24,6 +24,12 @@ namespace Raagam.TextileManagement.WCF.Service
         OrderMainModel GetOrderDetails(long OrderNumber);
 
         [OperationContract]
-        StyleModel StylePopulateDropDown(StyleModel styleModel);
+        StyleListModel StylePopulateDropDown();
+
+        [OperationContract]
+        StyleListModel SaveStyle(StyleModel styleModel);
+
+        [OperationContract]
+        StyleModel EditStyle(long styleSequenceNumber);
     }
 }

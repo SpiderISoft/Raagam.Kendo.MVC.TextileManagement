@@ -14,6 +14,7 @@ namespace Raagam.TextileManagement.Model
         public StyleSizeModel()
         {
             IsDeleted = false;
+            State = CommonUtility.EnumConstants.ModelCurrentState.Added;
 
         }
 

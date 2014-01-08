@@ -27,6 +27,7 @@
     <MetadataFile FileName="Merchandiser4.xsd" MetadataType="Schema" ID="799f18aa-686a-4993-ab58-0403e7d59f86" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd4" />
     <MetadataFile FileName="Merchandiser1.xsd" MetadataType="Schema" ID="5604ff95-2341-4668-bd66-a0ada8298d24" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd2" />
     <MetadataFile FileName="Merchandiser2.xsd" MetadataType="Schema" ID="d6ad8921-9670-48e0-b5a3-3c3530f9b1c7" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd0" />
+    <MetadataFile FileName="Merchandiser5.xsd" MetadataType="Schema" ID="98307581-6eed-49fc-b3db-ca290099872d" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd5" />
     <MetadataFile FileName="Merchandiser.disco" MetadataType="Disco" ID="f7b97543-1766-4887-8af9-b3a58aa3cdcb" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?disco" />
     <MetadataFile FileName="Merchandiser.wsdl" MetadataType="Wsdl" ID="9fcf9491-543e-4cd1-abce-56a2de20a79b" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?wsdl" />
     <MetadataFile FileName="Merchandiser3.xsd" MetadataType="Schema" ID="5abcef32-a9f4-43be-a38f-45b5633836a4" SourceId="1" SourceUrl="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd3" />

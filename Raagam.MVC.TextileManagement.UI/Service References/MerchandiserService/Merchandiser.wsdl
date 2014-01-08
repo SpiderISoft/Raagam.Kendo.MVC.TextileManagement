@@ -7,6 +7,7 @@
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" />
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Web.Mvc" />
       <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
+      <xsd:import schemaLocation="http://localhost:26976/Merchandiser/Implementation/Merchandiser.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMerchandiser_PopulateDropDown_InputMessage">
@@ -39,6 +40,18 @@
   <wsdl:message name="IMerchandiser_StylePopulateDropDown_OutputMessage">
     <wsdl:part name="parameters" element="tns:StylePopulateDropDownResponse" />
   </wsdl:message>
+  <wsdl:message name="IMerchandiser_SaveStyle_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveStyle" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_SaveStyle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveStyleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_EditStyle_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditStyle" />
+  </wsdl:message>
+  <wsdl:message name="IMerchandiser_EditStyle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditStyleResponse" />
+  </wsdl:message>
   <wsdl:portType name="IMerchandiser">
     <wsdl:operation name="PopulateDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/PopulateDropDown" message="tns:IMerchandiser_PopulateDropDown_InputMessage" />
@@ -59,6 +72,14 @@
     <wsdl:operation name="StylePopulateDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/StylePopulateDropDown" message="tns:IMerchandiser_StylePopulateDropDown_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/StylePopulateDropDownResponse" message="tns:IMerchandiser_StylePopulateDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveStyle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/SaveStyle" message="tns:IMerchandiser_SaveStyle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/SaveStyleResponse" message="tns:IMerchandiser_SaveStyle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditStyle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMerchandiser/EditStyle" message="tns:IMerchandiser_EditStyle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMerchandiser/EditStyleResponse" message="tns:IMerchandiser_EditStyle_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IMerchandiser" type="tns:IMerchandiser">
@@ -101,6 +122,24 @@
     </wsdl:operation>
     <wsdl:operation name="StylePopulateDropDown">
       <soap:operation soapAction="http://tempuri.org/IMerchandiser/StylePopulateDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveStyle">
+      <soap:operation soapAction="http://tempuri.org/IMerchandiser/SaveStyle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditStyle">
+      <soap:operation soapAction="http://tempuri.org/IMerchandiser/EditStyle" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -10,8 +10,10 @@ namespace Raagam.TextileManagement.DataAccess
     public interface IStyleDataAccess
     {
 
-        StyleModel PopulateDropDown(StyleModel styleModel);
- 
-        
+        StyleListModel PopulateDropDown();
+
+        StyleListModel SaveStyle(StyleModel styleModel);
+
+        StyleModel EditStyle(long styleSequenceNumber);
     }
 }

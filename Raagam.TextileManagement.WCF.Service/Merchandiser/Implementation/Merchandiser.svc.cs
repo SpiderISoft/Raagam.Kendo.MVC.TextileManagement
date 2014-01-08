@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Raagam.TextileManagement.BusinessAccess;
 using Raagam.TextileManagement.Model;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.WCF.Service
 {
@@ -43,12 +44,23 @@ namespace Raagam.TextileManagement.WCF.Service
             return _orderBusiness.GetOrderDetails(OrderNumber);
         }
 
-        public StyleModel StylePopulateDropDown(StyleModel styleModel)
+        public StyleListModel StylePopulateDropDown()
         {
             _styleBusiness = new StyleBusiness();
-            return _styleBusiness.PopulateDropDown(styleModel);
+            return _styleBusiness.PopulateDropDown();
         }
 
+        public StyleListModel SaveStyle(StyleModel styleModel)
+        {
+            _styleBusiness = new StyleBusiness();
+            return _styleBusiness.SaveStyle(styleModel);
+        }
+
+        public StyleModel EditStyle(long styleSequenceNumber)
+        {
+            _styleBusiness = new StyleBusiness();
+            return _styleBusiness.EditStyle(styleSequenceNumber);
+        }
         #endregion
     }
 }

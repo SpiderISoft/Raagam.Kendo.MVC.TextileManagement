@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Raagam.TextileManagement.Model;
 using Raagam.TextileManagement.DataAccess;
+using Raagam.TextileManagement.CommonUtility;
 
 namespace Raagam.TextileManagement.BusinessAccess 
 {
@@ -16,11 +17,19 @@ namespace Raagam.TextileManagement.BusinessAccess
             _styleDataAccess = new StyleDataAccess();
         }
 
-         public StyleModel PopulateDropDown(StyleModel styleModel)
+         public StyleListModel PopulateDropDown()
         {
-            return _styleDataAccess.PopulateDropDown(styleModel);
+            return _styleDataAccess.PopulateDropDown();
         }
 
- 
+         public StyleListModel SaveStyle(StyleModel styleModel)
+         {
+             return _styleDataAccess.SaveStyle(styleModel);
+         }
+
+         public StyleModel EditStyle(long styleSequenceNumber)
+         {
+             return _styleDataAccess.EditStyle(styleSequenceNumber);
+         }
     }
 }

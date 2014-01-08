@@ -1,12 +1,13 @@
 ﻿@model Raagam.TextileManagement.Model.StyleModel
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
-        $("#ComboColorSelected").chosen();
+        $("#ComboColorSelected").chosen({ width: '400px' });
 
 
 
         $("#ComboColorSelected").chosen().on("change", function (evt, params) {
 
+            debugger;
 
             if (params.selected == null) {
                 return true;
@@ -14,7 +15,7 @@
 
             var val = params.selected;
 
- 
+
 
             var bExists = 0;
 
@@ -43,7 +44,7 @@
                     ColorName: textField,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: 'New'
+                    State: "2"
                 };
 
                 var rowDataPanelColor = {
@@ -54,7 +55,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: 'New',
+                    State: "2",
                     TempGuid: ""
                 };
 
@@ -66,7 +67,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: 'New',
+                    State: "2",
                     TempGuid: ""
                 };
 
@@ -115,7 +116,15 @@
                                 name: 'ColorPantone',
                                 index: 'ColorPantone',
                                 width: 200,
-                                editable: true
+                                editable: true,
+                                editoptions: {
+                                    dataEvents: [{
+                                        type: 'change', fn: function (e) {
+                                            var rowid = $("#grdStyleColor").jqGrid('getGridParam', 'selrow');
+                                            $('#grdStyleColor').jqGrid("setCell", rowid, "State", 1);
+                                        }
+                                    }]
+                                }
                             },
                             {
                                 name: 'IsDeleted',
@@ -158,6 +167,17 @@
                         var lastRowInd = jQuery("#grdStyleColor").jqGrid("getGridParam", "reccount");
                         var columnNames = $("#grdStyleColor").jqGrid('getGridParam', 'colModel');
                         var iRCnt = 0;
+                        
+
+                        var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+                        var rowId = ids[iRow-1];
+                        var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+                       
+
+                        if (rowData["State"] == 0)
+                            rowData["State"] = 1;
+
+                        $('#grdStyleColor').jqGrid('setRowData', rowId, rowData);
 
                         $('#grdStyleColor').jqGrid('nextCell', iRow, iCol);
 
@@ -188,7 +208,7 @@
                 <div class="form-group">
                     @Html.Label("Color", new { @class = "col-lg-3 control-label", @for = "normalInput" })
                     <div class="col-lg-9">
-                        @Html.ListBox("ComboColor", Model.ColorDropDownList, new { id = "ComboColorSelected", name = "ComboColorSelected", @class = "form-control", data_placeholder = "Choose  Color...", multiple = "multiple", style = "height:35px;width:400px;" })
+                        @Html.ListBox("ComboColor", (List<SelectListItem>) @ViewBag.ColorDropDownList, new { id = "ComboColorSelected", name = "ComboColorSelected", @class = "form-control", data_placeholder = "Choose  Color...", multiple = "multiple", style = "height:35px;width:400px;" })
                     </div>
                     <div class="form-group">
                         <div class="col-lg-4">
