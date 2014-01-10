@@ -36,6 +36,8 @@ namespace Raagam.TextileManagement.Model
 
             StyleFabricModelList = new List<StyleFabricModel>();
             SelectedFabricList = new List<long>();
+
+            SelectedComboColorList = new List<long>();
             
         }
 
@@ -60,6 +62,9 @@ namespace Raagam.TextileManagement.Model
 
         [DataMember]
         public List<long> SelectedComboSizeList { get; set; }
+
+        [DataMember]
+        public List<long> SelectedComboColorList { get; set; }
  
 
         [DataMember]

@@ -128,7 +128,7 @@
                                         $("#SizeApplicable").attr('checked', result.data.styleProcessSourcesModel.IsSizeApplicable);
                                         $('#ProcessSourcesTempGuid').val(result.data.styleProcessSourcesModel.ProcessSourcesTempGuid);
                                         $('#IsDeleted').val(result.data.styleProcessSourcesModel.IsDeleted);
-                                        $('#State').val(result.data.styleProcessSourcesModel.State);
+                                        $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Updated');
 
                                         jQuery('#grdStyleProcessSourcesColor').clearGridData();
 
@@ -177,31 +177,15 @@
                                                 ColorSequenceNumber: ColorSequenceNumber,
                                                 ColorPantone: ColorPantone,
                                                 IsDeleted: false,
-                                                State: 'New',
+                                                State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.UnChanged',
                                                 TempGuid: TempGuid
                                             };
 
                                             jQuery("#grdStyleProcessSourcesColor").addRowData(guid(), rowDataSourcesColor);
                                         }
 
-
                                     });
-
-                                    
-
-
-                                   
-                                    
-
                                 });
-
-
-
-
-
-
-
-
 
                             }
                             else {
@@ -344,7 +328,7 @@
             $("#SizeApplicable").attr('checked', false);
             $('#ProcessSourcesTempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('Added');
+            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
 
             var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
             jQuery('#grdStyleProcessSourcesColor').clearGridData();
@@ -366,7 +350,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: 'New',
+                    State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
                     TempGuid: ""
                 };
 

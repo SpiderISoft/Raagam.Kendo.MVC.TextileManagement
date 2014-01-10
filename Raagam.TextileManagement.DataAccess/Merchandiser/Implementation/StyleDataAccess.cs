@@ -236,6 +236,7 @@ namespace Raagam.TextileManagement.DataAccess
                          styleColorModel.ColorPantone  = colorDataRow["style_color_pantone"].ToString();
                          styleColorModel.ColorName = colorDataRow["color_name"].ToString();
                          styleColorModel.State = EnumConstants.ModelCurrentState.UnChanged;
+                         styleModel.SelectedComboColorList.Add(styleColorModel.SequenceNumber);
                          styleModel.StyleColorModelList.Add(styleColorModel);
                      }
 

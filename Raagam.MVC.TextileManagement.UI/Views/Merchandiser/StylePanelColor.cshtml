@@ -122,6 +122,17 @@
                         var columnNames = $("#grdStylePanelColor").jqGrid('getGridParam', 'colModel');
                         var iRCnt = 0;
 
+
+                        var ids = jQuery("#grdStylePanelColor").jqGrid('getDataIDs');
+                        var rowId = ids[iRow - 1];
+                        var rowData = jQuery('#grdStylePanelColor').jqGrid('getRowData', rowId);
+
+
+                        if (rowData["State"] == '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.UnChanged')
+                            rowData["State"] = '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Updated';
+
+                        $('#grdStylePanelColor').jqGrid('setRowData', rowId, rowData);
+
                         $('#grdStylePanelColor').jqGrid('nextCell', iRow, iCol);
 
                         if (colModel.length - 4 == iCol) {

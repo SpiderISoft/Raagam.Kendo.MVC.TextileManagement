@@ -90,6 +90,10 @@
                                 $("#FabricSelected").val(result.data.StyleModel.SelectedFabricList);
                                 $("#FabricSelected").trigger("liszt:updated");
 
+                                $("#ComboColorSelected").val(result.data.StyleModel.SelectedComboColorList);
+                                $("#ComboColorSelected").trigger("liszt:updated");
+
+
                                 $.each(result.data.StyleModel.StyleColorModelList, function (key, data) {
 
 
@@ -109,7 +113,7 @@
                                         ColorSequenceNumber: 0,
                                         ColorPantone: "",
                                         IsDeleted: false,
-                                        State: 'New',
+                                        State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
                                         TempGuid: ""
                                     };
 
@@ -122,7 +126,7 @@
                                         ColorSequenceNumber: 0,
                                         ColorPantone: "",
                                         IsDeleted: false,
-                                        State: 'New',
+                                        State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
                                         TempGuid: ""
                                     };
 
@@ -203,13 +207,13 @@
             $("#SizeApplicable").attr('checked', false);
             $('#ProcessSourcesTempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('Added');
+            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
 
             $('#PanelName').val('');
             $('#PanelDescription').val('');
             $('#TempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('Added');
+            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
 
             $('#ProcessSelected').chosen_reset({ width: '400px' });
             $('#ComboColorSelected').chosen_reset({ width: '400px' });
@@ -221,7 +225,7 @@
             $('#StyleDescription').val('');
             $('#StyleSequenceNumber').val(0);
             $('#StyleTypeSequenceNumber').val(0);
-            $('#Mode').val('New');
+            $('#Mode').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ScreenMode.New');
 
             jQuery('#grdStyle').trigger("reloadGrid");
         }

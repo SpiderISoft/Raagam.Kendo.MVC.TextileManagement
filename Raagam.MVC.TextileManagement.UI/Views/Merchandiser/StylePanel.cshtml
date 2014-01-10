@@ -131,7 +131,7 @@
                                         ColorSequenceNumber: ColorSequenceNumber,
                                         ColorPantone: ColorPantone,
                                         IsDeleted: false,
-                                        State: 'New',
+                                        State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
                                         TempGuid: TempGuid
                                     };
 
@@ -203,7 +203,7 @@
                     ProcessSequenceNumber: id,
                     TempGuid: $('#TempGuid').val(),
                     IsDeleted: false,
-                    State: 'Added'
+                    State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added'
                 });
 
             });
@@ -219,7 +219,7 @@
             $('#PanelDescription').val('');
             $('#TempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('Added');
+            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
 
             var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
             jQuery('#grdStylePanelColor').clearGridData();
@@ -241,7 +241,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: 'New',
+                    State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
                     TempGuid: ""
                 };
 
