@@ -64,6 +64,12 @@
                                     dataEvents: [{
                                         type: 'change', fn: function (e) {
                                             var rowid = $("#grdStyleProcessSourcesColor").jqGrid('getGridParam', 'selrow');
+                                            var rowData = jQuery('#grdStyleProcessSourcesColor').jqGrid('getRowData', rowid);
+
+
+                                            if (rowData["State"] == "0")
+                                                $('#grdStyleProcessSourcesColor').jqGrid("setCell", rowid, "State", "1");
+
                                             $('#grdStyleProcessSourcesColor').jqGrid("setCell", rowid, "ColorSequenceNumber", $(e.target).val());
                                         }
                                     }]
@@ -128,8 +134,8 @@
                         var rowData = jQuery('#grdStyleProcessSourcesColor').jqGrid('getRowData', rowId);
 
 
-                        if (rowData["State"] == '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.UnChanged')
-                            rowData["State"] = '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Updated';
+                        if (rowData["State"] == "0")
+                            rowData["State"] = "1";
 
                         $('#grdStyleProcessSourcesColor').jqGrid('setRowData', rowId, rowData);
 

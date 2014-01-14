@@ -221,13 +221,17 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
             styleModelList.styleModel.StyleDescription = styleModel.StyleDescription;
             styleModelList.styleModel.StyleTypeSequenceNumber = styleModel.StyleTypeSequenceNumber;
             styleModelList.styleModel.IsCompleted = styleModel.IsCompleted;
-            styleModelList.styleModel.Mode = EnumConstants.ScreenMode.New;
+            styleModelList.styleModel.Mode = styleModel.Mode;
 
             styleModelList.styleModel.StyleColorModelList = styleColorModel;
 
 
             foreach (long selectedSize in styleModel.SelectedComboSizeList)
             {
+                if (styleModelList.styleModel.StyleSizeModelList.Where(x => x.SizeSequenceNumber == selectedSize).Count() > 0)
+                {
+                    continue;
+                }
                 StyleSizeModel styleSizeModel = new StyleSizeModel();
                 styleSizeModel.SequenceNumber = 0;
                 styleSizeModel.StyleSequenceNumber = 0;
@@ -240,6 +244,10 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
             foreach (long selectedFabric in styleModel.SelectedFabricList)
             {
+                if (styleModelList.styleModel.StyleFabricModelList.Where(x => x.SourcesSequenceNumber == selectedFabric).Count() > 0)
+                {
+                    continue;
+                }
                 StyleFabricModel styleFabricModel = new StyleFabricModel();
                 styleFabricModel.SequenceNumber = 0;
                 styleFabricModel.StyleSequenceNumber = 0;

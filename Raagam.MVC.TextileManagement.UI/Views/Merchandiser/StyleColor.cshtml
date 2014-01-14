@@ -1,7 +1,7 @@
 ﻿@model Raagam.TextileManagement.Model.StyleModel
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
-        $("#ComboColorSelected").chosen({ width: '400px' });
+        $("#ComboColorSelected").chosen({ width: '400px'});
 
 
 
@@ -12,6 +12,8 @@
             if (params.selected == null) {
                 return true;
             }
+
+
 
             var val = params.selected;
 
@@ -44,7 +46,7 @@
                     ColorName: textField,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: "@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added"
+                    State: "2"
                 };
 
                 var rowDataPanelColor = {
@@ -55,7 +57,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: "@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added",
+                    State: "2",
                     TempGuid: ""
                 };
 
@@ -67,7 +69,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: "@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added",
+                    State: "2",
                     TempGuid: ""
                 };
 
@@ -122,6 +124,12 @@
                                         type: 'change', fn: function (e) {
                                             var rowid = $("#grdStyleColor").jqGrid('getGridParam', 'selrow');
                                             $('#grdStyleColor').jqGrid("setCell", rowid, "State", 1);
+
+                                            var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowid);
+
+
+                                            if (rowData["State"] == "0")
+                                                $('#grdStyleColor').jqGrid("setCell", rowid, "State", "1");
                                         }
                                     }]
                                 }
@@ -158,39 +166,47 @@
             cellEdit: true,
             afterEditCell: function (rowid, cellname, value, iRow, iCol) {
                 debugger;
-                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
-                inputControl.bind("keydown", function (e) {
-                    if (e.keyCode === 13) {
-                        debugger;
-                        var increment = e.shiftKey ? -1 : 1;
-                        var colModel = $("#grdStyleColor")[0].p.colModel;
-                        var lastRowInd = jQuery("#grdStyleColor").jqGrid("getGridParam", "reccount");
-                        var columnNames = $("#grdStyleColor").jqGrid('getGridParam', 'colModel');
-                        var iRCnt = 0;
-                        
+                 var $editControl = $("#" + rowid).find("input, select, textarea"),
+                                    events = $._data($editControl[0], "events"),
+                                    originalKeydown;
 
-                        var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
-                        var rowId = ids[iRow-1];
-                        var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
+                 if (events && events.keydown && events.keydown.length === 1) {
+                     originalKeydown = events.keydown[0].handler; // save old
+
+                     $editControl.bind("keydown", function (e) {
+                         if (e.keyCode === 13) {
+                             debugger;
+                             var increment = e.shiftKey ? -1 : 1;
+                             var colModel = $("#grdStyleColor")[0].p.colModel;
+                             var lastRowInd = jQuery("#grdStyleColor").jqGrid("getGridParam", "reccount");
+                             var columnNames = $("#grdStyleColor").jqGrid('getGridParam', 'colModel');
+                             var iRCnt = 0;
 
 
-                        if (rowData["State"] == '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.UnChanged')
-                            rowData["State"] = '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Updated';
+                             var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
+                             var rowId = ids[iRow - 1];
+                             var rowData = jQuery('#grdStyleColor').jqGrid('getRowData', rowId);
 
-                        $('#grdStyleColor').jqGrid('setRowData', rowId, rowData);
 
-                        $('#grdStyleColor').jqGrid('nextCell', iRow, iCol);
+                             if (rowData["State"] == "0")
+                                 rowData["State"] = "1";
 
-                        if (colModel.length - 3 == iCol) {
+                             $('#grdStyleColor').jqGrid('setRowData', rowId, rowData);
 
-                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
-                                return;
-                            else {
-                                jQuery("#grdStyleColor").jqGrid("editCell", iRow + increment, 4, true);
-                            }
-                        }
-                    }
-                });
+                             $('#grdStyleColor').jqGrid('nextCell', iRow, iCol);
+
+                             if (colModel.length - 3 == iCol) {
+
+                                 if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                     return;
+                                 else {
+                                     jQuery("#grdStyleColor").jqGrid("editCell", iRow + increment, 4, true);
+                                 }
+                             }
+                         }
+                     });
+                 }
+            
             }
         });
     });

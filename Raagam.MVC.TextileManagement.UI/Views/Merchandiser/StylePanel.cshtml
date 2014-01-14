@@ -2,6 +2,8 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
 
+
+
         $('#grdStylePanel').jqGrid({
             url: '@(Url.Action("GetStylePanel", "Style"))',
             datatype: 'json',
@@ -74,15 +76,15 @@
                             if (result.success) {
                                 debugger;
                                 $('#SequenceNumber').val(result.data.stylePanelModel.SequenceNumber);
-                                $('#StyleSequenceNumber').val(result.data.stylePanelModel.StyleSequenceNumber);
+                                $('#PanelStyleSequenceNumber').val(result.data.stylePanelModel.StyleSequenceNumber);
                                 $('#PanelName').val(result.data.stylePanelModel.PanelName);
                                 $('#PanelDescription').val(result.data.stylePanelModel.PanelDescription);
                                 $('#TempGuid').val(result.data.stylePanelModel.TempGuid);
                                 $('#IsDeleted').val(result.data.stylePanelModel.IsDeleted);
-                                $('#State').val(result.data.stylePanelModel.State);
+                                $('#StylePanelState').val(result.data.stylePanelModel.State);
 
                                 $("#ProcessSelected").val(result.data.SelectedPanelProcessList);
-                                $("#ProcessSelected").trigger("chosen:updated");
+                                $("#ProcessSelected").trigger("liszt:updated");
 
                                 jQuery('#grdStylePanelColor').clearGridData();
 
@@ -214,12 +216,12 @@
         function AddNewPanel() {
 
             $('#SequenceNumber').val(0);
-            $('#StyleSequenceNumber').val(0);
+            $('#PanelStyleSequenceNumber').val(sStyleSequenceNumber);
             $('#PanelName').val('');
             $('#PanelDescription').val('');
             $('#TempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
+            $('#StylePanelState').val('2');
 
             var ids = jQuery("#grdStyleColor").jqGrid('getDataIDs');
             jQuery('#grdStylePanelColor').clearGridData();
@@ -241,7 +243,7 @@
                     ColorSequenceNumber: 0,
                     ColorPantone: "",
                     IsDeleted: false,
-                    State: '@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added',
+                    State: '2',
                     TempGuid: ""
                 };
 
@@ -257,6 +259,12 @@
         });
 
         $('#PanelSaveButton').click(function (e) {
+            debugger;
+            $('#PanelStyleSequenceNumber').val(sStyleSequenceNumber);
+
+            if ($('#StylePanelState').val() == "0")
+                $('#StylePanelState').val("1");
+
             var panelData = JSON.stringify({ 'panelModel': $('#frmPanel').jsonify(), 'stylePanelColorModel': formPanelColor(), 'stylePanelProcessModel': formPanelProcess() });
             $.ajax({
                 url: '@Url.Content("/Style/SavePanel")',
@@ -358,8 +366,8 @@
                                 </div>
                                 @Html.HiddenFor(m => m.SequenceNumber)
                                 @Html.HiddenFor(m => m.TempGuid)
-                                @Html.HiddenFor(m => m.StyleSequenceNumber)
-                                @Html.HiddenFor(m => m.State)
+                                @Html.HiddenFor(m => m.StyleSequenceNumber, new { id = "PanelStyleSequenceNumber" })
+                                @Html.HiddenFor(m => m.State, new { id ="StylePanelState"})
                                 @Html.HiddenFor(m => m.IsDeleted)
                             </div>
                         </div>
