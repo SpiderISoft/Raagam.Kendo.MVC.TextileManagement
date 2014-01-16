@@ -172,6 +172,7 @@
     <Compile Include="Controllers\Merchandiser\OrderController.cs" />
     <Compile Include="Controllers\Merchandiser\StyleController.cs" />
     <Compile Include="Controllers\Production\FabricCuttingChartController.cs" />
+    <Compile Include="Controllers\Upload\UploadController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -261,6 +262,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Content\ui.jqgrid.css" />
+    <Content Include="Content\uploadify.css" />
+    <Content Include="Content\uploadify.swf" />
     <Content Include="css\bootstrap\bootstrap-theme.css" />
     <Content Include="css\bootstrap\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap\bootstrap.css" />
@@ -1484,6 +1487,8 @@
     <Content Include="Scripts\jquery.msgbox.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.uploadify.js" />
+    <Content Include="Scripts\jquery.uploadify.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1668,6 +1673,7 @@
     <Content Include="Views\Merchandiser\StyleProcessSources.cshtml" />
     <Content Include="Views\Merchandiser\StyleProcessSourcesColor.cshtml" />
     <Content Include="Views\Merchandiser\StyleFabric.cshtml" />
+    <Content Include="Views\Merchandiser\StyleUploadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

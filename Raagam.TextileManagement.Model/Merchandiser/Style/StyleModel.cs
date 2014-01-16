@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 using Raagam.TextileManagement.CommonUtility;
+using System.Web;
 
 namespace Raagam.TextileManagement.Model 
 {
@@ -38,7 +39,8 @@ namespace Raagam.TextileManagement.Model
             SelectedFabricList = new List<long>();
 
             SelectedComboColorList = new List<long>();
-            
+
+            StyleImage = new byte[0];
         }
 
         [DataMember]

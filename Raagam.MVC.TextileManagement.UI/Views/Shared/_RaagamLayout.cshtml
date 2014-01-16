@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/plugin")
+    @Styles.Render("~/Content/upload")
     <link rel="stylesheet" type="text/css" media="screen" href="../../Content/ui.jqgrid.css" />
 
 
@@ -418,6 +419,8 @@
                 <div id="bodyContent">
                    @RenderBody()
                 </div>
+                <div id="PopupDialog">
+                </div>
             </div>
             <!-- End contentwrapper -->
         </div>
@@ -430,7 +433,7 @@
     @Scripts.Render("~/bundles/themes")
     @Scripts.Render("~/bundles/mask")
     @Scripts.Render("~/bundles/grid")
-    
+    @Scripts.Render("~/bundles/upload")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -82,7 +82,8 @@
                                 $('#StyleTypeSequenceNumber').val(result.data.StyleModel.StyleTypeSequenceNumber);
                                 $('#Mode').val(result.data.StyleModel.Mode);
                                 $("#IsCompleted").attr('checked', result.data.StyleModel.IsCompleted);
-
+                                $('#styleImageFileName').text('Show Image');
+                                $('#StyleImage').attr('src', 'data:image;base64,' + result.data.StyleImage);
 
                                 $("#ComboSizeSelected").val(result.data.StyleModel.SelectedComboSizeList);
                                 $("#ComboSizeSelected").trigger("liszt:updated");
@@ -208,13 +209,13 @@
             $("#SizeApplicable").attr('checked', false);
             $('#ProcessSourcesTempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
-
+            $('#State').val('2');
+            $('#styleImageFileName').text('');
             $('#PanelName').val('');
             $('#PanelDescription').val('');
             $('#TempGuid').val(guid());
             $('#IsDeleted').val(false);
-            $('#State').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ModelCurrentState.Added');
+            $('#State').val('2');
 
             $('#ProcessSelected').chosen_reset({ width: '400px' });
             $('#ComboColorSelected').chosen_reset({ width: '400px' });
@@ -226,7 +227,7 @@
             $('#StyleDescription').val('');
             $('#StyleSequenceNumber').val(0);
             $('#StyleTypeSequenceNumber').val(0);
-            $('#Mode').val('@Raagam.TextileManagement.CommonUtility.EnumConstants.ScreenMode.New');
+            $('#Mode').val('0');
 
             jQuery('#grdStyle').trigger("reloadGrid");
         }
@@ -265,6 +266,29 @@
 
         });
 
+        $('#file_upload').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify.swf")',
+            'uploader': '@Url.Action("Upload", "Style")',
+            'onUploadSuccess': function (file, data, response) {
+                debugger;
+                $('#styleImageFileName').text('Show Image');
+            }
+        });
+
+        $('#imgPopup').dialog({
+            autoOpen: false,
+            modal: true,
+            open: function (event, ui) {
+                //alert("test");
+               // $(this).load("/Controller/Action");
+            }
+        });
+
+        $('#styleImageFileName').click(function () {
+            $('#imgPopup').dialog('open');
+            return false;
+        });
+
         jQuery.fn.chosen_reset = function (n) {
             //$(this).empty();
             $(this).chosen('destroy');
@@ -275,7 +299,7 @@
 </script>
 <h2>
     Style</h2>
-@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmStyle", role = "form", @class = "form-horizontal" }))
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmStyle", role = "form", @class = "form-horizontal", enctype = "multipart/form-data" }))
 {
     
     
@@ -316,14 +340,25 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.StyleTypeSequenceNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
                         <div class="col-lg-9">
-                            @Html.DropDownListFor(m => m.StyleTypeSequenceNumber, (List<SelectListItem>) @ViewBag.StyleTypeDropDownList , "Select Style Type", new { @class = "form-control", style = "height:35px;width:200px;" })
+                            @Html.DropDownListFor(m => m.StyleTypeSequenceNumber, (List<SelectListItem>)@ViewBag.StyleTypeDropDownList, "Select Style Type", new { @class = "form-control", style = "height:35px;width:200px;" })
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-4">
+                             <input type="file" name="file_upload" id="file_upload" />
+                             <a href="#" id="styleImageFileName"></a>
+                        </div>
+                        <div id="uploaded"></div>
+                    </div>
+                    <div id="imgPopup">
+                            <img src="" id="StyleImage" alt=""/>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-4">
                             <table id="grdStyle">
                             </table>
-                            <div id="grdStylePager" class="scroll" style="text-align:center;"></div> 
+                            <div id="grdStylePager" class="scroll" style="text-align: center;">
+                            </div>
                         </div>
                     </div>
                 </div>

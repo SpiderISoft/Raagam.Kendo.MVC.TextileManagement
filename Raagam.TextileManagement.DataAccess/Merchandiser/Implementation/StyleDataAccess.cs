@@ -146,6 +146,8 @@ namespace Raagam.TextileManagement.DataAccess
                          styleModel.StyleDescription = styleDataRow["style_description"].ToString();
                          styleModel.StyleTypeSequenceNumber = long.Parse(styleDataRow["style_style_type_id"].ToString());
                          styleModel.IsCompleted = bool.Parse(styleDataRow["style_completed"].ToString());
+
+                         styleModel.StyleImage = ((styleDataRow["style_image"] is DBNull) ? null : (byte[]) styleDataRow["style_image"]);
                          styleModel.Mode = EnumConstants.ScreenMode.Edit;
                      }
 
@@ -429,6 +431,7 @@ namespace Raagam.TextileManagement.DataAccess
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_description", DbType.String, styleModel.StyleDescription);
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_style_type_id", DbType.Int64, styleModel.StyleTypeSequenceNumber);
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_completed", DbType.Boolean, styleModel.IsCompleted);
+                     _dbHelper.AddInParameter(saveStyleMainCommand, "@style_image", DbType.Binary, styleModel.StyleImage);
                      IDataReader dbReader = _dbHelper.ExecuteReader(saveStyleMainCommand);
                      dbReader.Read();
                      styleModel.StyleSequenceNumber = long.Parse(dbReader["style_id"].ToString());
@@ -446,6 +449,7 @@ namespace Raagam.TextileManagement.DataAccess
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_description", DbType.String, styleModel.StyleDescription);
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_style_type_id", DbType.Int64, styleModel.StyleTypeSequenceNumber);
                      _dbHelper.AddInParameter(saveStyleMainCommand, "@style_completed", DbType.Boolean, styleModel.IsCompleted);
+                     _dbHelper.AddInParameter(saveStyleMainCommand, "@style_image", DbType.Binary , styleModel.StyleImage);
                      _dbHelper.ExecuteNonQuery(saveStyleMainCommand);
                  }
              }

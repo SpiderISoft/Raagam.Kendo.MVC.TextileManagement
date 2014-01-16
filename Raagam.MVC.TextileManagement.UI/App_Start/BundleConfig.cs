@@ -22,70 +22,69 @@ namespace Raagam.MVC.TextileManagement.UI
 
 
             bundles.Add(new ScriptBundle("~/bundles/themes").Include(
-              "~/js/bootstrap/bootstrap.js",
-              "~/plugins/forms/uniform/jquery.uniform.js" 
-              ));
+                "~/js/bootstrap/bootstrap.js",
+                "~/plugins/forms/uniform/jquery.uniform.js" 
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryplugin").Include(
-  "~/js/jquery.mousewheel.js",
-  "~/js/libs/jRespond.min.js"
-  ));
+                "~/js/jquery.mousewheel.js",
+                "~/js/libs/jRespond.min.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/charts").Include(
-  "~/plugins/charts/sparkline/jquery.sparkline.min.js" 
-  ));
+                "~/plugins/charts/sparkline/jquery.sparkline.min.js" 
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/misc").Include(
-"~/plugins/misc/qtip/jquery.qtip.min.js",
-"~/plugins/misc/totop/jquery.ui.totop.min.js"
-));
+                "~/plugins/misc/qtip/jquery.qtip.min.js",
+                "~/plugins/misc/totop/jquery.ui.totop.min.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/search").Include(
-"~/plugins/misc/search/tipuesearch_set.js",
-"~/plugins/misc/search/tipuesearch_data.js",
-"~/plugins/misc/search/tipuesearch.js"
-));
+                "~/plugins/misc/search/tipuesearch_set.js",
+                "~/plugins/misc/search/tipuesearch_data.js",
+                "~/plugins/misc/search/tipuesearch.js"
+            ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/grid").Include(
                 "~/scripts/i18n/grid.locale-en.js",
-"~/scripts/jquery.jqGrid.src.js" ,
-"~/Scripts/CommonScripts.js"
-));
+                "~/scripts/jquery.jqGrid.src.js" ,
+                "~/Scripts/CommonScripts.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/mask").Include(
-
- "~/plugins/forms/maskedinput/jquery.inputmask.js",
- "~/plugins/forms/maskedinput/jquery.inputmask.date.extensions.js",
- "~/plugins/forms/maskedinput/jquery.inputmask.extensions.js",
- "~/plugins/forms/maskedinput/jquery.inputmask.numeric.extensions.js",
- "~/plugins/forms/maskedinput/jquery.inputmask.phone.extensions.js",
- "~/plugins/forms/maskedinput/jquery.inputmask.regex.extensions.js",
- "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
- "~/Scripts/chosen.jquery.js",
-  "~/Scripts/prism.js",
-    "~/Scripts/jsonify.js" 
-
-));
+                "~/plugins/forms/maskedinput/jquery.inputmask.js",
+                "~/plugins/forms/maskedinput/jquery.inputmask.date.extensions.js",
+                "~/plugins/forms/maskedinput/jquery.inputmask.extensions.js",
+                "~/plugins/forms/maskedinput/jquery.inputmask.numeric.extensions.js",
+                "~/plugins/forms/maskedinput/jquery.inputmask.phone.extensions.js",
+                "~/plugins/forms/maskedinput/jquery.inputmask.regex.extensions.js",
+                "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
+                "~/Scripts/chosen.jquery.js",
+                "~/Scripts/prism.js",
+                "~/Scripts/jsonify.js" 
+            ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
-"~/plugins/forms/elastic/jquery.elastic.js",
-    "~/plugins/forms/elastic/jquery.elastic.js",
-    "~/plugins/forms/inputlimiter/jquery.inputlimiter.1.3.min.js",
-    "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
-    "~/plugins/forms/uniform/jquery.uniform.min.js",
-    "~/plugins/forms/globalize/globalize.js",
-    "~/plugins/forms/color-picker/colorpicker.js",
-    "~/plugins/forms/timeentry/jquery.timeentry.min.js",
-    "~/plugins/forms/select/select2.min.js",
-    "~/plugins/forms/dualselect/jquery.dualListBox-1.3.min.js",
-    "~/plugins/forms/tiny_mce/tinymce.min.js",
-    "~/js/supr-theme/jquery-ui-sliderAccess.js" 
-
-));
-
+                "~/plugins/forms/elastic/jquery.elastic.js",
+                "~/plugins/forms/elastic/jquery.elastic.js",
+                "~/plugins/forms/inputlimiter/jquery.inputlimiter.1.3.min.js",
+                "~/plugins/forms/togglebutton/jquery.toggle.buttons.js",
+                "~/plugins/forms/uniform/jquery.uniform.min.js",
+                "~/plugins/forms/globalize/globalize.js",
+                "~/plugins/forms/color-picker/colorpicker.js",
+                "~/plugins/forms/timeentry/jquery.timeentry.min.js",
+                "~/plugins/forms/select/select2.min.js",
+                "~/plugins/forms/dualselect/jquery.dualListBox-1.3.min.js",
+                "~/plugins/forms/tiny_mce/tinymce.min.js",
+                "~/js/supr-theme/jquery-ui-sliderAccess.js" 
+            ));
 
 
+            bundles.Add(new ScriptBundle("~/bundles/upload").Include(
+              "~/scripts/jquery.uploadify.js"
+          ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -100,7 +99,8 @@ namespace Raagam.MVC.TextileManagement.UI
                         "~/css/supr-theme/jquery.ui.supr.css",
                         "~/css/icons.css",
                         "~/css/main.css",
-                        "~/css/custom.css"));
+                        "~/css/custom.css"  
+                        ));
 
         
 
@@ -115,6 +115,11 @@ namespace Raagam.MVC.TextileManagement.UI
                        "~/Content/chosen.css",
                        "~/Content/prism.css",
                        "~/plugins/forms/smartWizzard/smart_wizard.css"));
+
+            bundles.Add(new StyleBundle("~/Content/upload").Include(
+                        "~/Content/uploadify.css"
+                        ));
+ 
         }
     }
 }

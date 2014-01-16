@@ -6,6 +6,7 @@
             datatype: 'json',
             mtype: 'GET',
             height: 'auto',
+            autowidth: true,
             rowNum: 10,
             rowList: [10, 20, 30],
             caption: 'Style Panel Color',
@@ -117,40 +118,48 @@
             },
             cellEdit: true,
             afterEditCell: function (rowid, cellname, value, iRow, iCol) {
-                debugger;
-                var inputControl = jQuery('#' + (iRow) + '_' + cellname);
-                inputControl.bind("keydown", function (e) {
-                    if (e.keyCode === 13) {
-                        debugger;
-                        var increment = e.shiftKey ? -1 : 1;
-                        var colModel = $("#grdStyleProcessSourcesColor")[0].p.colModel;
-                        var lastRowInd = jQuery("#grdStyleProcessSourcesColor").jqGrid("getGridParam", "reccount");
-                        var columnNames = $("#grdStyleProcessSourcesColor").jqGrid('getGridParam', 'colModel');
-                        var iRCnt = 0;
+
+                var $editControl = $("#" + rowid).find("input, select, textarea"),
+                                    events = $._data($editControl[0], "events"),
+                                    originalKeydown;
+
+                if (events && events.keydown && events.keydown.length === 1) {
+                    originalKeydown = events.keydown[0].handler; // save old
+
+                    $editControl.bind("keydown", function (e) {
+                        if (e.keyCode === 13) {
+                            debugger;
+                            var increment = e.shiftKey ? -1 : 1;
+                            var colModel = $("#grdStyleProcessSourcesColor")[0].p.colModel;
+                            var lastRowInd = jQuery("#grdStyleProcessSourcesColor").jqGrid("getGridParam", "reccount");
+                            var columnNames = $("#grdStyleProcessSourcesColor").jqGrid('getGridParam', 'colModel');
+                            var iRCnt = 0;
+
+                            var ids = jQuery("#grdStyleProcessSourcesColor").jqGrid('getDataIDs');
+                            var rowId = ids[iRow - 1];
+                            var rowData = jQuery('#grdStyleProcessSourcesColor').jqGrid('getRowData', rowId);
 
 
-                        var ids = jQuery("#grdStyleProcessSourcesColor").jqGrid('getDataIDs');
-                        var rowId = ids[iRow - 1];
-                        var rowData = jQuery('#grdStyleProcessSourcesColor').jqGrid('getRowData', rowId);
+                            if (rowData["State"] == "0")
+                                rowData["State"] = "1";
 
 
-                        if (rowData["State"] == "0")
-                            rowData["State"] = "1";
+                            $('#grdStyleProcessSourcesColor').jqGrid('setRowData', rowId, rowData);
 
-                        $('#grdStyleProcessSourcesColor').jqGrid('setRowData', rowId, rowData);
+                            $('#grdStyleProcessSourcesColor').jqGrid('nextCell', iRow, iCol);
 
-                        $('#grdStyleProcessSourcesColor').jqGrid('nextCell', iRow, iCol);
+                            if (colModel.length - 4 == iCol) {
 
-                        if (colModel.length - 4 == iCol) {
-
-                            if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
-                                return;
-                            else {
-                                jQuery("#grdStyleProcessSourcesColor").jqGrid("editCell", iRow + increment, 5, true);
+                                if (iRow + increment == 0 || iRow + increment == lastRowInd + 1)
+                                    return;
+                                else {
+                                    jQuery("#grdStyleProcessSourcesColor").jqGrid("editCell", iRow + increment, 5, true);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
+
             }
 
         });

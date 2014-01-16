@@ -6,10 +6,13 @@ using System.Web.Mvc;
 using Raagam.MVC.TextileManagement.UI.MerchandiserService;
 using Raagam.TextileManagement.Model;
 using Raagam.TextileManagement.CommonUtility;
+using System.Net.Http;
+using System.Net;
+using System.IO;
 
 namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 {
-    public class StyleController : Controller
+    public class StyleController : Controller 
     {
        MerchandiserClient merchandiserServiceClient;
 
@@ -116,6 +119,72 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
  
         }
 
+        public JsonResult Upload()
+        {
+
+             StyleListModel styleModelList = (StyleListModel)TempData["styleModelList"];
+
+            var file = Request.Files["Filedata"];
+            string savePath = Server.MapPath(@"~\Content\" + file.FileName);
+            MemoryStream target = new MemoryStream();
+            file.InputStream.CopyTo(target);
+            byte[] binData = target.ToArray();
+            styleModelList.styleModel.StyleImage = binData;
+            TempData["styleModelList"] = styleModelList;
+
+            return Json(new
+           {
+               success = true,
+               data = new
+               {
+                   FileName = file.FileName
+ 
+               }
+           }, JsonRequestBehavior.AllowGet);  
+        }
+
+        //[HttpPost]
+        //public ActionResult FileUpload(StyleModel styleModel)
+        //{
+         
+        //    StyleListModel styleModelList = (StyleListModel)TempData["styleModelList"];
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (styleModel.StyleImage.ContentLength > 0)
+        //        {
+        //            int MaxContentLength = 1024 * 1024 * 3; //3 MB
+        //            string[] AllowedFileExtensions = new string[] { ".jpg", ".gif", ".png", ".pdf" };
+
+        //            if (!AllowedFileExtensions.Contains(styleModel.StyleImage.FileName.Substring(styleModel.StyleImage.FileName.LastIndexOf('.'))))
+        //            {
+        //                TempData["styleModelList"] = styleModelList;
+        //                return Json(null);
+        //            }
+
+        //            else if (styleModel.StyleImage.ContentLength > MaxContentLength)
+        //            {
+        //                TempData["styleModelList"] = styleModelList;
+        //                return Json(null);
+        //            }
+        //            else
+        //            {
+        //                //var fileName = Path.GetFileName(file.FileName);
+        //                //var path = Path.Combine(Server.MapPath("~/Content/Upload"), fileName);
+
+        //                MemoryStream target = new MemoryStream();
+        //                styleModel.StyleImage.InputStream.CopyTo(target);
+        //                byte[] binData = target.ToArray();
+
+        //                styleModelList.styleModel.StyleImage = styleModel.StyleImage;
+        //                ViewBag.Message = "File uploaded successfully";
+        //            }
+        //        }
+        //    }
+        //    TempData["styleModelList"] = styleModelList;
+        //    return Json(null);
+        //}
+
         public JsonResult GetStyleColor(int page = 1, int rows = 10, string sord = "asc", string sidx = "Id")
         {
             StyleListModel styleModelList = (StyleListModel)TempData["styleModelList"];
@@ -188,8 +257,9 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
 
             var recordCount = styleModelList.styleModelList.Count;
             IEnumerable<object> final;
-
-            final = styleModelList.styleModelList.Select(e => new
+            int startIndex = ((page > 0 ? page - 1 : 0) * rows);
+                      
+            final = styleModelList.styleModelList.Skip(startIndex).Take(rows).Select(e => new
             {
                 StyleSequenceNumber = e.StyleSequenceNumber,
                 StyleName = e.StyleName,
@@ -381,6 +451,7 @@ namespace Raagam.MVC.TextileManagement.UI.Controllers.Merchandiser
                 data = new
                 {
                     StyleModel = styleModelList.styleModel,
+                    StyleImage = (styleModelList.styleModel.StyleImage == null)  ? null :  Convert.ToBase64String(styleModelList.styleModel.StyleImage),
                     StylePanelModelList = styleModelList.styleModel.StylePanelModelList,
                     StyleProcessSourcesModelList = styleModelList.styleModel.StyleProcessSourcesModelList 
                 }
