@@ -173,12 +173,7 @@ namespace Raagam.TextileManagement.DataAccess
 
     
 
-
-        #endregion
-
-
-
-        #region IFabricCuttingChartDataAccess Members
+         
 
        
 
@@ -232,5 +227,8 @@ namespace Raagam.TextileManagement.DataAccess
         }
 
         #endregion
+
+
+
     }
 }

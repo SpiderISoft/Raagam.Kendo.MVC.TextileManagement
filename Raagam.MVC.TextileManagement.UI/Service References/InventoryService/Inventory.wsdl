@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Inventory" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:26976/Inventory/Implementation/Inventory.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:26976/Inventory/Implementation/Inventory.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:26976/Inventory/Implementation/Inventory.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" />
+      <xsd:import schemaLocation="http://localhost:26976/Inventory/Implementation/Inventory.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" />
+      <xsd:import schemaLocation="http://localhost:26976/Inventory/Implementation/Inventory.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Web.Mvc" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IInventory_PurReqPopulateDropDown_InputMessage">
+    <wsdl:part name="parameters" element="tns:PurReqPopulateDropDown" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_PurReqPopulateDropDown_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PurReqPopulateDropDownResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_SavePurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SavePurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_SavePurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SavePurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_SelectPurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectPurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_SelectPurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectPurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IInventory">
+    <wsdl:operation name="PurReqPopulateDropDown">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInventory/PurReqPopulateDropDown" message="tns:IInventory_PurReqPopulateDropDown_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInventory/PurReqPopulateDropDownResponse" message="tns:IInventory_PurReqPopulateDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInventory/SavePurchaseRequisition" message="tns:IInventory_SavePurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInventory/SavePurchaseRequisitionResponse" message="tns:IInventory_SavePurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectPurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInventory/SelectPurchaseRequisition" message="tns:IInventory_SelectPurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInventory/SelectPurchaseRequisitionResponse" message="tns:IInventory_SelectPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IInventory" type="tns:IInventory">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PurReqPopulateDropDown">
+      <soap:operation soapAction="http://tempuri.org/IInventory/PurReqPopulateDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IInventory/SavePurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectPurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IInventory/SelectPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Inventory">
+    <wsdl:port name="BasicHttpBinding_IInventory" binding="tns:BasicHttpBinding_IInventory">
+      <soap:address location="http://localhost:26976/Inventory/Implementation/Inventory.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

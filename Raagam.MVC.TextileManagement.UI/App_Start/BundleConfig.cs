@@ -12,7 +12,7 @@ namespace Raagam.MVC.TextileManagement.UI
                         "~/Scripts/jquery-1.9.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-1.8.20.custom.js",
+                        "~/Scripts/jquery-ui.js",
                         "~/Scripts/jquery-migrate-1.2.1.js"
                         ));
 
@@ -117,7 +117,8 @@ namespace Raagam.MVC.TextileManagement.UI
                        "~/plugins/forms/smartWizzard/smart_wizard.css"));
 
             bundles.Add(new StyleBundle("~/Content/upload").Include(
-                        "~/Content/uploadify.css"
+                        "~/Content/uploadify.css",
+                        "~/Content/ui.jqgrid.css"
                         ));
  
         }

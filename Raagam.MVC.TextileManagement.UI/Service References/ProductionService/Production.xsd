@@ -128,4 +128,186 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FabricCuttingChartPanelColorModel" nillable="true" type="tns:FabricCuttingChartPanelColorModel" />
+  <xs:complexType name="DepartmentPurchaseRequisitionHeaderModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionTrailerModelList" nillable="true" type="tns:ArrayOfDepartmentPurchaseRequisitionTrailerModel" />
+      <xs:element minOccurs="0" name="LotTypeModelList" nillable="true" type="tns:ArrayOfLotTypeModel" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="Mode" type="q7:EnumConstants.ScreenMode" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="OrderDropDownList" nillable="true" type="q8:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="OrderNumber" type="xs:long" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="ProcessDropDownList" nillable="true" type="q9:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="ProcessSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProcessedStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductGroupModelList" nillable="true" type="tns:ArrayOfProductGroupModel" />
+      <xs:element minOccurs="0" name="ProductModelList" nillable="true" type="tns:ArrayOfProductModel" />
+      <xs:element minOccurs="0" name="RejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DepartmentPurchaseRequisitionHeaderModel" nillable="true" type="tns:DepartmentPurchaseRequisitionHeaderModel" />
+  <xs:complexType name="ArrayOfDepartmentPurchaseRequisitionTrailerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:DepartmentPurchaseRequisitionTrailerModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:ArrayOfDepartmentPurchaseRequisitionTrailerModel" />
+  <xs:complexType name="DepartmentPurchaseRequisitionTrailerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ApprovalStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ApprovedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionHeaderSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="LotQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LotType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LotTypeSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ManagerApprovalStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ManagerApprovedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ManagerRejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReceivedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SizeSpec" nillable="true" type="xs:string" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q10:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="TransitBefore" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:DepartmentPurchaseRequisitionTrailerModel" />
+  <xs:complexType name="ArrayOfLotTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LotTypeModel" nillable="true" type="tns:LotTypeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLotTypeModel" nillable="true" type="tns:ArrayOfLotTypeModel" />
+  <xs:complexType name="LotTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LotTypeLinkSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="LotTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LotTypeQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LotTypeSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="UnitCategorySequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LotTypeModel" nillable="true" type="tns:LotTypeModel" />
+  <xs:complexType name="ArrayOfProductGroupModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductGroupModel" nillable="true" type="tns:ProductGroupModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductGroupModel" nillable="true" type="tns:ArrayOfProductGroupModel" />
+  <xs:complexType name="ProductGroupModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductGroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductSupplierSequenceNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductGroupModel" nillable="true" type="tns:ProductGroupModel" />
+  <xs:complexType name="ArrayOfProductModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductModel" nillable="true" type="tns:ProductModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductModel" nillable="true" type="tns:ArrayOfProductModel" />
+  <xs:complexType name="ProductModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ProductCategorySequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductSupplierSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductTax" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductModel" nillable="true" type="tns:ProductModel" />
+  <xs:complexType name="GeneralDepartmentPurchaseRequisitionHeaderModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionTrailerModelList" nillable="true" type="tns:ArrayOfGeneralDepartmentPurchaseRequisitionTrailerModel" />
+      <xs:element minOccurs="0" name="LotTypeModelList" nillable="true" type="tns:ArrayOfLotTypeModel" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="Mode" type="q11:EnumConstants.ScreenMode" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="OrderDropDownList" nillable="true" type="q12:ArrayOfSelectListItem" />
+      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/System.Web.Mvc" minOccurs="0" name="ProcessDropDownList" nillable="true" type="q13:ArrayOfSelectListItem" />
+      <xs:element minOccurs="0" name="ProcessSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProcessedStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductGroupModelList" nillable="true" type="tns:ArrayOfProductGroupModel" />
+      <xs:element minOccurs="0" name="ProductModelList" nillable="true" type="tns:ArrayOfProductModel" />
+      <xs:element minOccurs="0" name="RejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedDateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GeneralDepartmentPurchaseRequisitionHeaderModel" nillable="true" type="tns:GeneralDepartmentPurchaseRequisitionHeaderModel" />
+  <xs:complexType name="ArrayOfGeneralDepartmentPurchaseRequisitionTrailerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GeneralDepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:GeneralDepartmentPurchaseRequisitionTrailerModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGeneralDepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:ArrayOfGeneralDepartmentPurchaseRequisitionTrailerModel" />
+  <xs:complexType name="GeneralDepartmentPurchaseRequisitionTrailerModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActiveStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ApprovalStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ApprovedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DepartmentPurchaseRequisitionHeaderSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="LotQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LotType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LotTypeSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ManagerApprovalStatus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ManagerApprovedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ManagerRejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReceivedQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RejectReason" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SequenceNumber" type="xs:long" />
+      <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q14:EnumConstants.ModelCurrentState" />
+      <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GeneralDepartmentPurchaseRequisitionTrailerModel" nillable="true" type="tns:GeneralDepartmentPurchaseRequisitionTrailerModel" />
+  <xs:complexType name="ArrayOfSelectProductGridModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SelectProductGridModel" nillable="true" type="tns:SelectProductGridModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSelectProductGridModel" nillable="true" type="tns:ArrayOfSelectProductGridModel" />
+  <xs:complexType name="SelectProductGridModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LotTypeSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ManufacturerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductGroupSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductReOrderQuantity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ProductSequenceNumber" type="xs:long" />
+      <xs:element minOccurs="0" name="ProductTax" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Select" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StockCurrentQuantity" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SelectProductGridModel" nillable="true" type="tns:SelectProductGridModel" />
 </xs:schema>

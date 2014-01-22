@@ -16,4 +16,11 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="EnumConstants.SaveStatus" nillable="true" type="tns:EnumConstants.SaveStatus" />
+  <xs:simpleType name="EnumConstants.ScreenMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New" />
+      <xs:enumeration value="Edit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EnumConstants.ScreenMode" nillable="true" type="tns:EnumConstants.ScreenMode" />
 </xs:schema>

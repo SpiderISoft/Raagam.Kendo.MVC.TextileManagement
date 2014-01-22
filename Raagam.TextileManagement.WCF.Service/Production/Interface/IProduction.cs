@@ -11,9 +11,35 @@ namespace Raagam.TextileManagement.WCF.Service
     [ServiceContract]
     interface IProduction
     {
+        #region IFabricCuttingChart Members
+            [OperationContract]
+            FabricCuttingChartModel GetOrderDetails(long OrderNumber);
+            [OperationContract]
+            EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+        #endregion
+
+        #region IDepartmentPurchaseRequisition Members
+            [OperationContract]
+            DepartmentPurchaseRequisitionHeaderModel DeptPurReqPopulateDropDown();
+            [OperationContract]
+            DepartmentPurchaseRequisitionHeaderModel SaveDepartmentPurchaseRequisition(DepartmentPurchaseRequisitionHeaderModel departmentPurchaseRequisitionHeaderModel);
+            [OperationContract]
+            DepartmentPurchaseRequisitionHeaderModel SelectDepartmentPurchaseRequisition(long departmentPurchaseRequisitionNumber);
+        #endregion
+
+        #region IGeneralDepartmentPurchaseRequisition Members
+            [OperationContract]
+            GeneralDepartmentPurchaseRequisitionHeaderModel GeneralDepartmentPurReqPopulateDropDown();
+            [OperationContract]
+            GeneralDepartmentPurchaseRequisitionHeaderModel SaveGeneralDepartmentPurchaseRequisition(GeneralDepartmentPurchaseRequisitionHeaderModel departmentPurchaseRequisitionHeaderModel);
+            [OperationContract]
+            GeneralDepartmentPurchaseRequisitionHeaderModel SelectGeneralDepartmentPurchaseRequisition(long departmentPurchaseRequisitionNumber);
+        #endregion
+
+        #region ISelectProductGrid  Members
         [OperationContract]
-        FabricCuttingChartModel GetOrderDetails(long OrderNumber);
-        [OperationContract]
-        EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+        List<SelectProductGridModel> SelectProductGrid(long SupplierSequenceNumber, string ProductName);
+
+        #endregion
     }
 }

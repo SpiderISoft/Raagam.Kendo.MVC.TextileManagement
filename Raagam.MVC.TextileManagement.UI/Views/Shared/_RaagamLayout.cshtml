@@ -14,7 +14,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/plugin")
     @Styles.Render("~/Content/upload")
-    <link rel="stylesheet" type="text/css" media="screen" href="../../Content/ui.jqgrid.css" />
+  
 
 
     <link rel="shortcut icon" href="../../images/favicon.ico" />
@@ -51,7 +51,41 @@
             });
             return false;
         }
+        function DepartmentPurchaseRequisitionMenu_Click() {
+            debugger;
+            $.ajax({
+                url: '@Url.Content("/DepartmentPurchaseRequisition/DepartmentPurchaseRequisition")',
+                type: 'POST',
+                success: function (result) {
+                    debugger;
+                    $('#bodyContent').empty();
+                    $('#bodyContent').html(result);
+                },
+                error: function (e) {
+                    debugger;
+                    alert(e.responseText);
+                }
+            });
+            return false;
+        }
 
+        function GeneralDepartmentPurchaseRequisitionMenu_Click() {
+            debugger;
+            $.ajax({
+                url: '@Url.Content("/GeneralDepartmentPurchaseRequisition/GeneralDepartmentPurchaseRequisition")',
+                type: 'POST',
+                success: function (result) {
+                    debugger;
+                    $('#bodyContent').empty();
+                    $('#bodyContent').html(result);
+                },
+                error: function (e) {
+                    debugger;
+                    alert(e.responseText);
+                }
+            });
+            return false;
+        }
         function OrderMenu_Click() {
             debugger;
             $.ajax({
@@ -240,18 +274,13 @@
                 <!-- End .sidenav-widget -->
                 <div class="mainnav">
                     <ul>
-                        <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChartMenu_Click();"><span
-                            class="icon16 icomoon-icon-stats-up"></span>Fabric Cutting Chart</a></li>
-                        <li><a id="OrderMenu" href="#" onclick="OrderMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Order</a>
-                         <li><a id="StyleMenu" href="#" onclick="StyleMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Style</a>
-                        </li>
-                        <li><a href="#"><span class="icon16 icomoon-icon-table-2"></span>Tables</a>
-                            <ul class="sub">
-                                <li><a href="tables.html"><span class="icon16 icomoon-icon-arrow-right-3"></span>Static</a></li>
-                                <li><a href="data-table.html"><span class="icon16 icomoon-icon-arrow-right-3"></span>
-                                    Data table</a></li>
-                            </ul>
-                        </li>
+                        <li><a id="OrderMenu" href="#" onclick="OrderMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Order</a></li>
+                         <li><a id="StyleMenu" href="#" onclick="StyleMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Style</a></li>
+                         <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChartMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Fabric Cutting Chart</a></li>
+                         <li><a id="DepartmentPurchaseRequisitionMenu" href="#" onclick="DepartmentPurchaseRequisitionMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Dept Pur Req</a></li>
+                         <li><a id="GeneralDepartmentPurchaseRequisitionMenu" href="#" onclick="GeneralDepartmentPurchaseRequisitionMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Gen Pur Req</a></li>
+
+       
                         <li><a href="#"><span class="icon16 icomoon-icon-equalizer-2"></span>UI Elements</a>
                             <ul class="sub">
                                 <li><a href="icons.html"><span class="icon16 icomoon-icon-rocket"></span>Icons</a></li>

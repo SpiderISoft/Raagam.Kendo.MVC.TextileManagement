@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "SelectProduct";
+    Layout = null; 
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('#grdSelectProduct').jqGrid({
+            url: '@(Url.Action("GetProduct", "DepartmentPurchaseRequisition"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            sortname: 'ProductName',
+            sortorder: "asc",
+            pager: jQuery('#pagerSelectProduct'),
+            caption: 'Select Product',
+            viewrecords: true,
+            colNames: ['Select', 'ProductGroupSequenceNumber', 'ProductSequenceNumber', 'ProductName', 'ManufacturerName', 'StockCurrentQuantity', 'ProductReOrderQuantity', 'LotTypeSequenceNumber', 'ProductTax'],
+            colModel: [
+                            {
+                                name: 'Select',
+                                index: 'Select',
+                                width: 30, align: 'center', formatter: 'checkbox',
+                                editable: true,
+                                edittype: 'checkbox', editoptions: { value: 'true:false', defaultValue: 'false' }, formatoptions: { disabled: false }
+                            },
+                            {
+                                name: 'ProductGroupSequenceNumber',
+                                index: 'ProductGroupSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductSequenceNumber',
+                                index: 'ProductSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductName',
+                                index: 'ProductName',
+                                width: 200,
+                                searchoptions: { sopt: ['eq'] }
+                            },
+                            {
+                                name: 'ManufacturerName',
+                                index: 'ManufacturerName',
+                                width: 150
+                            },
+                            {
+                                name: 'StockCurrentQuantity',
+                                index: 'StockCurrentQuantity',
+                                width: 200
+                            },
+                            {
+                                name: 'ProductReOrderQuantity',
+                                index: 'ProductReOrderQuantity',
+                                width: 150
+                            },
+                            {
+                                name: 'LotTypeSequenceNumber',
+                                index: 'LotTypeSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductTax',
+                                index: 'ProductTax',
+                                width: 50
+                            }
+                   ],
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                userdata: "userdata"
+            },
+            onSelectRow: function (id) {
+                var row = $('#grdSelectProduct').getRowData(id);
+            },
+            cellsubmit: 'clientArray',
+            cellEdit: true
+        });
+
+        function formSelectedProductModel() {
+
+            var SelectedProductDetail = new Array();
+            var cRows = jQuery("#grdSelectProduct").jqGrid("getGridParam", "reccount");
+
+
+            var ids = jQuery("#grdSelectProduct").jqGrid('getDataIDs');
+
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+                var rowData = jQuery('#grdSelectProduct').jqGrid('getRowData', rowId);
+                SelectedProductDetail.push(rowData);
+
+            }
+
+            return SelectedProductDetail;
+
+        }
+
+        $('#AcceptButton').click(function () {
+            debugger;
+            var selectProductGridData = JSON.stringify({ 'selectProductGridModelList': formSelectedProductModel() });
+            $.ajax({
+                url: '@Url.Content("/DepartmentPurchaseRequisition/GetSelectedProduct")',
+                type: 'POST',
+                dataType: "json",
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: selectProductGridData,
+                success: function (result) {
+                    debugger;
+                    $.each(result.rows, function (key, data) {
+
+                        jQuery("#grdDepartmentPurchaseRequisition").addRowData(guid(), data);
+                    });
+
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+            $('#SelectProductPopup').dialog("close");
+            return false;
+        });
+    });
+</script>
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmSelectProduct", role = "form", @class = "form-horizontal" }))
+{    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-lg-offset-8">
+                            <input type="button" value="Accept" id="AcceptButton" class="btn marginR10" />
+                            <button class="btn btn-danger" id="CancelButton">
+                                Cancel</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1">
+                            <table id="grdSelectProduct" class="scroll" cellpadding="0" cellspacing="0">
+                            </table>
+                            <div id="pagerSelectProduct" class="scroll" style="text-align: center;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+            </div>
+            <!-- End .panel -->
+        </div>
+        <!-- End .span6 -->
+    </div>
+ 
+
+}

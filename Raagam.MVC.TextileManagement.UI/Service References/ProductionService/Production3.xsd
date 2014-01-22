@@ -30,4 +30,99 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeptPurReqPopulateDropDown">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeptPurReqPopulateDropDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="DeptPurReqPopulateDropDownResult" nillable="true" type="q4:DepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveDepartmentPurchaseRequisition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="departmentPurchaseRequisitionHeaderModel" nillable="true" type="q5:DepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveDepartmentPurchaseRequisitionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SaveDepartmentPurchaseRequisitionResult" nillable="true" type="q6:DepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectDepartmentPurchaseRequisition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="departmentPurchaseRequisitionNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectDepartmentPurchaseRequisitionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SelectDepartmentPurchaseRequisitionResult" nillable="true" type="q7:DepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneralDepartmentPurReqPopulateDropDown">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneralDepartmentPurReqPopulateDropDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="GeneralDepartmentPurReqPopulateDropDownResult" nillable="true" type="q8:GeneralDepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveGeneralDepartmentPurchaseRequisition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="departmentPurchaseRequisitionHeaderModel" nillable="true" type="q9:GeneralDepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveGeneralDepartmentPurchaseRequisitionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SaveGeneralDepartmentPurchaseRequisitionResult" nillable="true" type="q10:GeneralDepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectGeneralDepartmentPurchaseRequisition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="departmentPurchaseRequisitionNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectGeneralDepartmentPurchaseRequisitionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SelectGeneralDepartmentPurchaseRequisitionResult" nillable="true" type="q11:GeneralDepartmentPurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectProductGrid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SupplierSequenceNumber" type="xs:long" />
+        <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectProductGridResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SelectProductGridResult" nillable="true" type="q12:ArrayOfSelectProductGridModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

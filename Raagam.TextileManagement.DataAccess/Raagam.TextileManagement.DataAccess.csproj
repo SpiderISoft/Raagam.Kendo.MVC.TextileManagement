@@ -58,12 +58,20 @@
   <ItemGroup>
     <Compile Include="Common\Implementation\LoginDataAccess.cs" />
     <Compile Include="Common\Interface\ILoginDataAccess.cs" />
+    <Compile Include="Inventory\Implementation\PurchaseRequisitionDataAccess.cs" />
+    <Compile Include="Inventory\Interface\IPurchaseRequisitionDataAccess.cs" />
     <Compile Include="Merchandiser\Implementation\StyleDataAccess.cs" />
     <Compile Include="Merchandiser\Implementation\OrderDataAccess.cs" />
     <Compile Include="Merchandiser\Interface\IStyleDataAccess.cs" />
     <Compile Include="Merchandiser\Interface\IOrderDataAccess.cs" />
+    <Compile Include="Production\Implementation\GeneralDepartmentPurchaseRequisitionDataAccess.cs" />
+    <Compile Include="Production\Implementation\DepartmentPurchaseRequisitionDataAccess.cs" />
     <Compile Include="Production\Implementation\FabricCuttingChartDataAccess.cs" />
+    <Compile Include="Production\Implementation\SelectProductGridDataAccess.cs" />
+    <Compile Include="Production\Interface\IGeneralDepartmentPurchaseRequisitionDataAccess.cs" />
+    <Compile Include="Production\Interface\IDepartmentPurchaseRequisitionDataAccess.cs" />
     <Compile Include="Production\Interface\IFabricCuttingChartDataAccess.cs" />
+    <Compile Include="Production\Interface\ISelectProductGridDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="EnumConstants.ScreenMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="New" />
+      <xs:enumeration value="Edit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EnumConstants.ScreenMode" nillable="true" type="tns:EnumConstants.ScreenMode" />
+  <xs:simpleType name="EnumConstants.ModelCurrentState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UnChanged" />
+      <xs:enumeration value="Updated" />
+      <xs:enumeration value="Added" />
+      <xs:enumeration value="Deleted" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EnumConstants.ModelCurrentState" nillable="true" type="tns:EnumConstants.ModelCurrentState" />
+</xs:schema>

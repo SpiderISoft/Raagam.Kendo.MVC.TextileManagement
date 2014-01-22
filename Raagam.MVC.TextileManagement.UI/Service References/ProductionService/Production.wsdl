@@ -22,6 +22,48 @@
   <wsdl:message name="IProduction_SaveFabricCuttingChart_OutputMessage">
     <wsdl:part name="parameters" element="tns:SaveFabricCuttingChartResponse" />
   </wsdl:message>
+  <wsdl:message name="IProduction_DeptPurReqPopulateDropDown_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeptPurReqPopulateDropDown" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_DeptPurReqPopulateDropDown_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeptPurReqPopulateDropDownResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SaveDepartmentPurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDepartmentPurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SaveDepartmentPurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveDepartmentPurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectDepartmentPurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectDepartmentPurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectDepartmentPurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectDepartmentPurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_GeneralDepartmentPurReqPopulateDropDown_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeneralDepartmentPurReqPopulateDropDown" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_GeneralDepartmentPurReqPopulateDropDown_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeneralDepartmentPurReqPopulateDropDownResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SaveGeneralDepartmentPurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveGeneralDepartmentPurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SaveGeneralDepartmentPurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveGeneralDepartmentPurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectGeneralDepartmentPurchaseRequisition_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectGeneralDepartmentPurchaseRequisition" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectGeneralDepartmentPurchaseRequisition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectGeneralDepartmentPurchaseRequisitionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectProductGrid_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectProductGrid" />
+  </wsdl:message>
+  <wsdl:message name="IProduction_SelectProductGrid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectProductGridResponse" />
+  </wsdl:message>
   <wsdl:portType name="IProduction">
     <wsdl:operation name="GetOrderDetails">
       <wsdl:input wsaw:Action="http://tempuri.org/IProduction/GetOrderDetails" message="tns:IProduction_GetOrderDetails_InputMessage" />
@@ -30,6 +72,34 @@
     <wsdl:operation name="SaveFabricCuttingChart">
       <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SaveFabricCuttingChart" message="tns:IProduction_SaveFabricCuttingChart_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SaveFabricCuttingChartResponse" message="tns:IProduction_SaveFabricCuttingChart_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeptPurReqPopulateDropDown">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/DeptPurReqPopulateDropDown" message="tns:IProduction_DeptPurReqPopulateDropDown_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/DeptPurReqPopulateDropDownResponse" message="tns:IProduction_DeptPurReqPopulateDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartmentPurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SaveDepartmentPurchaseRequisition" message="tns:IProduction_SaveDepartmentPurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SaveDepartmentPurchaseRequisitionResponse" message="tns:IProduction_SaveDepartmentPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectDepartmentPurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SelectDepartmentPurchaseRequisition" message="tns:IProduction_SelectDepartmentPurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SelectDepartmentPurchaseRequisitionResponse" message="tns:IProduction_SelectDepartmentPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeneralDepartmentPurReqPopulateDropDown">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/GeneralDepartmentPurReqPopulateDropDown" message="tns:IProduction_GeneralDepartmentPurReqPopulateDropDown_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/GeneralDepartmentPurReqPopulateDropDownResponse" message="tns:IProduction_GeneralDepartmentPurReqPopulateDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveGeneralDepartmentPurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SaveGeneralDepartmentPurchaseRequisition" message="tns:IProduction_SaveGeneralDepartmentPurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SaveGeneralDepartmentPurchaseRequisitionResponse" message="tns:IProduction_SaveGeneralDepartmentPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectGeneralDepartmentPurchaseRequisition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SelectGeneralDepartmentPurchaseRequisition" message="tns:IProduction_SelectGeneralDepartmentPurchaseRequisition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SelectGeneralDepartmentPurchaseRequisitionResponse" message="tns:IProduction_SelectGeneralDepartmentPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectProductGrid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProduction/SelectProductGrid" message="tns:IProduction_SelectProductGrid_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProduction/SelectProductGridResponse" message="tns:IProduction_SelectProductGrid_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IProduction" type="tns:IProduction">
@@ -45,6 +115,69 @@
     </wsdl:operation>
     <wsdl:operation name="SaveFabricCuttingChart">
       <soap:operation soapAction="http://tempuri.org/IProduction/SaveFabricCuttingChart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeptPurReqPopulateDropDown">
+      <soap:operation soapAction="http://tempuri.org/IProduction/DeptPurReqPopulateDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveDepartmentPurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IProduction/SaveDepartmentPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectDepartmentPurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IProduction/SelectDepartmentPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeneralDepartmentPurReqPopulateDropDown">
+      <soap:operation soapAction="http://tempuri.org/IProduction/GeneralDepartmentPurReqPopulateDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveGeneralDepartmentPurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IProduction/SaveGeneralDepartmentPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectGeneralDepartmentPurchaseRequisition">
+      <soap:operation soapAction="http://tempuri.org/IProduction/SelectGeneralDepartmentPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectProductGrid">
+      <soap:operation soapAction="http://tempuri.org/IProduction/SelectProductGrid" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

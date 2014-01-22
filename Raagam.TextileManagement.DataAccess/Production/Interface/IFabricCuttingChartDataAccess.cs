@@ -9,9 +9,14 @@ namespace Raagam.TextileManagement.DataAccess
 {
     public interface IFabricCuttingChartDataAccess
     {
-        FabricCuttingChartModel GetOrderDetails(long OrderNumber);
 
-        EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+        #region IFabricCuttingChartDataAccess Members
 
+            FabricCuttingChartModel GetOrderDetails(long OrderNumber);
+
+            EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+
+        #endregion
+ 
     }
 }

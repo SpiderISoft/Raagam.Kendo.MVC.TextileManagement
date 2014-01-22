@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Grid\Filter.cs" />
+    <Compile Include="Common\Grid\GridModelBinder.cs" />
+    <Compile Include="Common\Grid\GridSettings.cs" />
+    <Compile Include="Common\Grid\JsonModelBinder.cs" />
+    <Compile Include="Common\Grid\Rule.cs" />
     <Compile Include="Common\JqGridData.cs" />
     <Compile Include="Common\DropDownModel.cs" />
     <Compile Include="Merchandiser\Order\OrderStyleColorModel.cs" />
@@ -74,10 +80,20 @@
     <Compile Include="Merchandiser\Style\StyleSizeModel.cs" />
     <Compile Include="Merchandiser\Style\StyleModel.cs" />
     <Compile Include="Merchandiser\Style\StyleColorModel.cs" />
+    <Compile Include="Production\GeneralDepartmentPurchaseRequisition\GeneralDepartmentPurchaseRequisitionHeaderModel.cs" />
+    <Compile Include="Production\GeneralDepartmentPurchaseRequisition\GeneralDepartmentPurchaseRequisitionTrailerModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\DepartmentPurchaseRequisitionHeaderModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\DepartmentPurchaseRequisitionTrailerModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\LotTypeModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\ProductModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\ProductGroupModel.cs" />
+    <Compile Include="Production\DepartmentPurchaseRequisition\SelectProductGridModel.cs" />
     <Compile Include="Production\FabricCuttingChart\FabricCuttingChartModel.cs" />
     <Compile Include="Common\LoginModel.cs" />
     <Compile Include="Merchandiser\Order\OrderDetailModel.cs" />
     <Compile Include="Merchandiser\Order\OrderMainModel.cs" />
+    <Compile Include="Inventory\PurchaseRequisition\PurchaseRequisitionHeaderModel.cs" />
+    <Compile Include="Inventory\PurchaseRequisition\PurchaseRequisitionTrailerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -171,8 +171,13 @@
     <Compile Include="Controllers\Common\LoginController.cs" />
     <Compile Include="Controllers\Merchandiser\OrderController.cs" />
     <Compile Include="Controllers\Merchandiser\StyleController.cs" />
+    <Compile Include="Controllers\Production\GeneralDepartmentPurchaseRequisitionController.cs" />
+    <Compile Include="Controllers\Production\DepartmentPurchaseRequisitionController.cs" />
     <Compile Include="Controllers\Production\FabricCuttingChartController.cs" />
     <Compile Include="Controllers\Upload\UploadController.cs" />
+    <Compile Include="Filters\Helpers\LinqExtensions.cs" />
+    <Compile Include="Filters\Helpers\StringEnum.cs" />
+    <Compile Include="Filters\Helpers\WhereOperation.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,6 +185,11 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\CommonService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\InventoryService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -1545,10 +1555,14 @@
     <None Include="plugins\tables\dataTables\images\psd\copy document.psd" />
     <None Include="plugins\tables\dataTables\images\psd\file_types.psd" />
     <None Include="plugins\tables\dataTables\images\psd\printer.psd" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.DepartmentPurchaseRequisitionHeaderModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.FabricCuttingChartModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.GeneralDepartmentPurchaseRequisitionHeaderModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.LoginModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderMainModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.OrderStyleColorSizeModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel.datasource" />
+    <None Include="Properties\DataSources\Raagam.TextileManagement.Model.SelectProductGridModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.StyleListModel.datasource" />
     <None Include="Properties\DataSources\Raagam.TextileManagement.Model.StyleModel.datasource" />
     <None Include="Service References\CommonService\Common.wsdl" />
@@ -1559,6 +1573,22 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\CommonService\Common2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InventoryService\Inventory.wsdl" />
+    <None Include="Service References\InventoryService\Inventory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InventoryService\Inventory1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InventoryService\Inventory2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InventoryService\Inventory3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InventoryService\Inventory4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MerchandiserService\Merchandiser.wsdl" />
@@ -1607,6 +1637,13 @@
     <None Include="Service References\MerchandiserService\configuration91.svcinfo" />
     <None Include="Service References\MerchandiserService\configuration.svcinfo" />
     <None Include="Service References\MerchandiserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\InventoryService\Inventory.disco" />
+    <None Include="Service References\InventoryService\configuration91.svcinfo" />
+    <None Include="Service References\InventoryService\configuration.svcinfo" />
+    <None Include="Service References\InventoryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -1674,11 +1711,16 @@
     <Content Include="Views\Merchandiser\StyleProcessSourcesColor.cshtml" />
     <Content Include="Views\Merchandiser\StyleFabric.cshtml" />
     <Content Include="Views\Merchandiser\StyleUploadImage.cshtml" />
+    <Content Include="Views\Production\DepartmentPurchaseRequisition.cshtml" />
+    <Content Include="Views\Production\SelectProduct.cshtml" />
+    <Content Include="Views\Production\GeneralDepartmentPurchaseRequisition.cshtml" />
+    <Content Include="Views\Production\SelectGeneralProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="plugins\forms\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="plugins\forms\tiny_mce\plugins\spellchecker\includes\" />
+    <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1707,6 +1749,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\CommonService\" />
+    <WCFMetadataStorage Include="Service References\InventoryService\" />
     <WCFMetadataStorage Include="Service References\MerchandiserService\" />
     <WCFMetadataStorage Include="Service References\ProductionService\" />
   </ItemGroup>

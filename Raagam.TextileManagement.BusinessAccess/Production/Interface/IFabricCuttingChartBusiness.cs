@@ -9,8 +9,10 @@ namespace Raagam.TextileManagement.BusinessAccess
 {
     public interface IFabricCuttingChartBusiness
     {
-        FabricCuttingChartModel GetOrderDetails(long OrderNumber);
-
-        EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+        #region IFabricCuttingChart Members
+            FabricCuttingChartModel GetOrderDetails(long OrderNumber);
+            EnumConstants.SaveStatus SaveFabricCuttingChart(FabricCuttingChartModel fabricCuttingChartModel);
+        #endregion
+ 
     }
 }
