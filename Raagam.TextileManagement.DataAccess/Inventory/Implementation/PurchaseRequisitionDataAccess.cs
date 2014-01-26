@@ -44,8 +44,8 @@ namespace Raagam.TextileManagement.DataAccess
                     foreach (DataRow orderDataRow in getPurchaseRequisitionDataSet.Tables[0].Rows)
                     {
                         SelectListItem dropDown = new SelectListItem();
-                        dropDown.Value = orderDataRow["order_id"].ToString();
-                        dropDown.Text = orderDataRow["order_id"].ToString();
+                        dropDown.Value = orderDataRow["deptpurreqhead_order_seqno"].ToString();
+                        dropDown.Text = orderDataRow["deptpurreqhead_order_seqno"].ToString();
                         dropDown.Selected = false;
                         purchaseRequisitionHeaderModel.OrderDropDownList.Add(dropDown);
                     }
@@ -120,7 +120,9 @@ namespace Raagam.TextileManagement.DataAccess
                         purchaseRequisitionTrailerModel.ProductGroupName = purReqDataRow["prodgrp_name"].ToString();
                         purchaseRequisitionTrailerModel.ProductName = purReqDataRow["prod_name"].ToString();
                         purchaseRequisitionTrailerModel.LotType = purReqDataRow["lottyp_name"].ToString();
-                        
+                        purchaseRequisitionTrailerModel.ApprovalStatus = (bool)purReqDataRow["purreqtrail_approvalstatus"];
+                        purchaseRequisitionTrailerModel.TransitBefore = Convert.ToDateTime(purReqDataRow["purreqtrail_transitbefore"]).ToString("dd/MM/yyyy");
+                        purchaseRequisitionTrailerModel.State = EnumConstants.ModelCurrentState.Added;
                         purchaseRequisitionHeaderModel.PurchaseRequisitionTrailerModelList.Add(purchaseRequisitionTrailerModel);
                     }
 
@@ -184,116 +186,185 @@ namespace Raagam.TextileManagement.DataAccess
             return purchaseRequisitionHeaderModel;
         }
 
+
+        public PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber)
+        {
+            PurchaseRequisitionHeaderModel purchaseRequisitionHeaderModel = new PurchaseRequisitionHeaderModel();
+
+            using (DbCommand getPurchaseRequisitionCommand = _dbHelper.GetStoredProcCommand("rx_sel_purchaserequisition_approval"))
+            {
+                _dbHelper.AddInParameter(getPurchaseRequisitionCommand, "@purreqhead_order_seqno",
+                                    DbType.Int64, orderNumber);
+
+                using (DataSet getPurchaseRequisitionDataSet = _dbHelper.ExecuteDataSet(getPurchaseRequisitionCommand))
+                {
+
+                    
+                    foreach (DataRow purchaseRequisitionTrailerDataRow in getPurchaseRequisitionDataSet.Tables[0].Rows)
+                    {
+                        PurchaseRequisitionTrailerModel purchaseRequisitionTrailerModel = new PurchaseRequisitionTrailerModel();
+                        purchaseRequisitionTrailerModel.SequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_seqno"];
+                        purchaseRequisitionTrailerModel.PurchaseRequisitionHeaderSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_headseqno"];
+                        purchaseRequisitionTrailerModel.ProductGroupSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_productgroup"];
+                        purchaseRequisitionTrailerModel.ProductSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_product"];
+                        purchaseRequisitionTrailerModel.Color = purchaseRequisitionTrailerDataRow["purreqtrail_color"].ToString();
+                        purchaseRequisitionTrailerModel.Size = purchaseRequisitionTrailerDataRow["purreqtrail_size"].ToString();
+                        purchaseRequisitionTrailerModel.SizeSpec = purchaseRequisitionTrailerDataRow["purreqtrail_sizespec"].ToString();
+                        purchaseRequisitionTrailerModel.Quantity = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_qty"];
+                        purchaseRequisitionTrailerModel.LotTypeSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_lottypseqno"];
+                        purchaseRequisitionTrailerModel.ApprovalStatus = (bool)purchaseRequisitionTrailerDataRow["purreqtrail_approvalstatus"];
+                        purchaseRequisitionTrailerModel.Status = (byte)purchaseRequisitionTrailerDataRow["purreqtrail_status"];
+                        purchaseRequisitionTrailerModel.ManagerApprovalStatus = (bool)purchaseRequisitionTrailerDataRow["purreqtrail_manager_approvalstatus"];
+                        purchaseRequisitionTrailerModel.TransitBefore = Convert.ToDateTime(purchaseRequisitionTrailerDataRow["purreqtrail_transitbefore"]).ToString("dd/MM/yyyy");
+                        purchaseRequisitionTrailerModel.ProductGroupName = purchaseRequisitionTrailerDataRow["prodgrp_name"].ToString();
+                        purchaseRequisitionTrailerModel.ProductName = purchaseRequisitionTrailerDataRow["prod_name"].ToString();
+                        purchaseRequisitionTrailerModel.LotType = purchaseRequisitionTrailerDataRow["lottyp_name"].ToString();
+                        purchaseRequisitionTrailerModel.LotQuantity = (decimal)purchaseRequisitionTrailerDataRow["lottyp_actualqty"];
+                        purchaseRequisitionTrailerModel.SupplierSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_supplier_seqno"];
+                        purchaseRequisitionTrailerModel.CostPrice = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_cost_price"];
+                        purchaseRequisitionTrailerModel.Tax = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_tax"];
+                        purchaseRequisitionTrailerModel.TaxAmount = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_taxamount"];
+                        purchaseRequisitionTrailerModel.TotalAmount = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_totalvalue"];
+                        purchaseRequisitionTrailerModel.AvailableStock  = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_availablestock"];
+                        purchaseRequisitionTrailerModel.Allocated = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_allocated"];
+                        purchaseRequisitionTrailerModel.RejectReason = purchaseRequisitionTrailerDataRow["purreqtrail_rejectreason"].ToString();
+                        purchaseRequisitionTrailerModel.DepartmentPurchaseRequisitionTrailerSequenceNumber = (long)purchaseRequisitionTrailerDataRow["purreqtrail_deptpurreqtrail_seqno"];
+                        purchaseRequisitionTrailerModel.ManagerRejectReason = purchaseRequisitionTrailerDataRow["purreqtrail_manager_rejectreason"].ToString();
+                        purchaseRequisitionTrailerModel.ManagerProcessedStatus = (bool)purchaseRequisitionTrailerDataRow["purreqtrail_manager_processedstatus"];
+                        purchaseRequisitionTrailerModel.PurchaseOrderStatus = (bool)purchaseRequisitionTrailerDataRow["purreqtrail_po_status"];
+                        purchaseRequisitionTrailerModel.CostPrice = (decimal)purchaseRequisitionTrailerDataRow["purreqtrail_cost_price"];
+                        purchaseRequisitionTrailerModel.Supplier = purchaseRequisitionTrailerDataRow["sup_name"].ToString();
+                        purchaseRequisitionTrailerModel.State = EnumConstants.ModelCurrentState.UnChanged;
+                        purchaseRequisitionHeaderModel.PurchaseRequisitionTrailerModelList.Add(purchaseRequisitionTrailerModel);
+
+                       
+
+                    }
+                }
+            }
+
+            return purchaseRequisitionHeaderModel;
+        }
+
+
         public PurchaseRequisitionHeaderModel SavePurchaseRequisition(PurchaseRequisitionHeaderModel purchaseRequisitionHeaderModel)
         {
 
-            //if (purchaseRequisitionHeaderModel.Mode == EnumConstants.ScreenMode.New)
-            //{
-            //    List<DepartmentPurchaseRequisitionTrailerModel> departmentPurchaseRequisitionTrailerModel = new List<DepartmentPurchaseRequisitionTrailerModel>();
-            //    departmentPurchaseRequisitionTrailerModel = departmentPurchaseRequisitionHeaderModel.DepartmentPurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
+            if (purchaseRequisitionHeaderModel.Mode == EnumConstants.ScreenMode.New)
+            {
+                List<PurchaseRequisitionTrailerModel> purchaseRequisitionTrailerModel = new List<PurchaseRequisitionTrailerModel>();
+                purchaseRequisitionTrailerModel = purchaseRequisitionHeaderModel.PurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
 
-            //    DataTable departmentPurchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(departmentPurchaseRequisitionTrailerModel);
+                DataTable purchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(purchaseRequisitionTrailerModel);
 
-            //    using (DbCommand saveDepartmentPurchaseRequisitionHeaderCommand = _dbHelper.GetStoredProcCommand("rx_ins_departmentpurchaserequisition_header"))
-            //    {
+                using (DbCommand savePurchaseRequisitionHeaderCommand = _dbHelper.GetStoredProcCommand("rx_ins_purchaserequisition_header"))
+                {
 
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_process_seqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.ProcessSequenceNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_order_seqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.OrderNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_remarks", DbType.String,  departmentPurchaseRequisitionHeaderModel.Remarks);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_createdby", DbType.String, departmentPurchaseRequisitionHeaderModel.CreatedBy);
-
-
-            //        IDataReader dbReader = _dbHelper.ExecuteReader(saveDepartmentPurchaseRequisitionHeaderCommand);
-            //        dbReader.Read();
-            //        departmentPurchaseRequisitionHeaderModel.DepartmentPurchaseRequisitionNumber = long.Parse(dbReader["deptpurreqhead_no"].ToString());
-            //        departmentPurchaseRequisitionHeaderModel.SequenceNumber = long.Parse(dbReader["deptpurreqhead_seqno"].ToString());
-
-            //    }
-
-            //    using (DbCommand saveDepartmentPurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_departmentpurchaserequisition_trailer"))
-            //    {
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_order_seqno", DbType.Int64, purchaseRequisitionHeaderModel.OrderNumber);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_remarks", DbType.String, purchaseRequisitionHeaderModel.Remarks);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_createdby", DbType.String, purchaseRequisitionHeaderModel.CreatedBy);
 
 
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_headseqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.SequenceNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_productgroup", DbType.Int64, "ProductGroupSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_product", DbType.Int64, "ProductSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_lottypseqno", DbType.Int64, "LotTypeSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_color", DbType.String, "Color", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_size", DbType.String, "Size", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_sizespec", DbType.String, "SizeSpec", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_transitbefore", DbType.DateTime, "TransitBefore", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_qty", DbType.Decimal, "Quantity", DataRowVersion.Current);
-            //        _dbHelper.Fill(saveDepartmentPurchaseRequisitionDetailCommand, departmentPurchaseRequisitionTrailerDataTable);
+                    IDataReader dbReader = _dbHelper.ExecuteReader(savePurchaseRequisitionHeaderCommand);
+                    dbReader.Read();
+                    purchaseRequisitionHeaderModel.PurchaseRequisitionNumber = long.Parse(dbReader["purreqhead_no"].ToString());
+                    purchaseRequisitionHeaderModel.SequenceNumber = long.Parse(dbReader["purreqhead_seqno"].ToString());
 
-            //    }
-            //}
-            //else
-            //{
-            //    List<DepartmentPurchaseRequisitionTrailerModel> addedDepartmentPurchaseRequisitionTrailerModel = new List<DepartmentPurchaseRequisitionTrailerModel>();
-            //    addedDepartmentPurchaseRequisitionTrailerModel = departmentPurchaseRequisitionHeaderModel.DepartmentPurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Added).ToList();
+                }
 
-            //    List<DepartmentPurchaseRequisitionTrailerModel> updatedDepartmentPurchaseRequisitionTrailerModel = new List<DepartmentPurchaseRequisitionTrailerModel>();
-            //    updatedDepartmentPurchaseRequisitionTrailerModel = departmentPurchaseRequisitionHeaderModel.DepartmentPurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Updated).ToList();
-
-            //    List<DepartmentPurchaseRequisitionTrailerModel> deletedDepartmentPurchaseRequisitionTrailerModel = new List<DepartmentPurchaseRequisitionTrailerModel>();
-            //    deletedDepartmentPurchaseRequisitionTrailerModel = departmentPurchaseRequisitionHeaderModel.DepartmentPurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Deleted).ToList();
-
-            //    DataTable addedDepartmentPurchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(addedDepartmentPurchaseRequisitionTrailerModel);
-            //    DataTable updatedDepartmentPurchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(updatedDepartmentPurchaseRequisitionTrailerModel);
-            //    DataTable deletedDepartmentPurchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(deletedDepartmentPurchaseRequisitionTrailerModel);
-
-            //    using (DbCommand saveDepartmentPurchaseRequisitionHeaderCommand = _dbHelper.GetStoredProcCommand("rx_upd_departmentpurchaserequisition_header"))
-            //    {
-
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_seqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.SequenceNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_remarks", DbType.String, departmentPurchaseRequisitionHeaderModel.Remarks);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionHeaderCommand, "@deptpurreqhead_updatedby", DbType.String, departmentPurchaseRequisitionHeaderModel.UpdatedBy);
-
-            //       _dbHelper.ExecuteNonQuery(saveDepartmentPurchaseRequisitionHeaderCommand);
-                   
-            //    }
-
-            //    using (DbCommand saveDepartmentPurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_departmentpurchaserequisition_trailer"))
-            //    {
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_headseqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.SequenceNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_productgroup", DbType.Int64, "ProductGroupSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_product", DbType.Int64, "ProductSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_lottypseqno", DbType.Int64, "LotTypeSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_color", DbType.String, "Color", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_size", DbType.String, "Size", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_sizespec", DbType.String, "SizeSpec", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_transitbefore", DbType.DateTime, "TransitBefore", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_qty", DbType.Decimal, "Quantity", DataRowVersion.Current);
-            //        _dbHelper.Fill(saveDepartmentPurchaseRequisitionDetailCommand, addedDepartmentPurchaseRequisitionTrailerDataTable);
-
-            //    }
+                using (DbCommand savePurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_ins_purchaserequisition_trailer"))
+                {
 
 
-            //    using (DbCommand saveDepartmentPurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_upd_departmentpurchaserequisition_trailer"))
-            //    {
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_seqno", DbType.Int64, "SequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_headseqno", DbType.Int64, departmentPurchaseRequisitionHeaderModel.SequenceNumber);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_productgroup", DbType.Int64, "ProductGroupSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_product", DbType.Int64, "ProductSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_lottypseqno", DbType.Int64, "LotTypeSequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_color", DbType.String, "Color", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_size", DbType.String, "Size", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_sizespec", DbType.String, "SizeSpec", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_transitbefore", DbType.DateTime, "TransitBefore", DataRowVersion.Current);
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_qty", DbType.Decimal, "Quantity", DataRowVersion.Current);
-            //        _dbHelper.Fill(saveDepartmentPurchaseRequisitionDetailCommand, updatedDepartmentPurchaseRequisitionTrailerDataTable);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_headseqno", DbType.Int64, purchaseRequisitionHeaderModel.SequenceNumber);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_productgroup", DbType.Int64, "ProductGroupSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_product", DbType.Int64, "ProductSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_lottypseqno", DbType.Int64, "LotTypeSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_transitbefore", DbType.DateTime, "TransitBefore", DataRowVersion.Current);
 
-            //    }
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_supplier_seqno", DbType.Int64, "SupplierSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_deptpurreqtrail_seqno", DbType.Int64, "DepartmentPurchaseRequisitionTrailerSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_approvalstatus", DbType.Boolean, "ApprovalStatus", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_rejectreason", DbType.String, "RejectReason", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_status", DbType.Boolean, "ActiveStatus", DataRowVersion.Current);
 
 
-            //    using (DbCommand saveDepartmentPurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_del_departmentpurchaserequisition_trailer"))
-            //    {
-            //        _dbHelper.AddInParameter(saveDepartmentPurchaseRequisitionDetailCommand, "@deptpurreqtrail_seqno", DbType.Int64, "SequenceNumber", DataRowVersion.Current);
-            //        _dbHelper.Fill(saveDepartmentPurchaseRequisitionDetailCommand, deletedDepartmentPurchaseRequisitionTrailerDataTable);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_color", DbType.String, "Color", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_size", DbType.String, "Size", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_sizespec", DbType.String, "SizeSpec", DataRowVersion.Current);
 
-            //    }
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_qty", DbType.Decimal, "Quantity", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_cost_price", DbType.Decimal, "CostPrice", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_tax", DbType.Decimal, "Tax", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_taxamount", DbType.Decimal, "TaxAmount", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_totalvalue", DbType.Decimal, "TotalAmount", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_availablestock", DbType.Decimal, "AvailableStock", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_allocated", DbType.Decimal, "Allocated", DataRowVersion.Current);
 
-            //}
+                    _dbHelper.Fill(savePurchaseRequisitionDetailCommand, purchaseRequisitionTrailerDataTable);
+
+                }
+            }
+            else
+            {
+                
+                List<PurchaseRequisitionTrailerModel> updatedPurchaseRequisitionTrailerModel = new List<PurchaseRequisitionTrailerModel>();
+                updatedPurchaseRequisitionTrailerModel = purchaseRequisitionHeaderModel.PurchaseRequisitionTrailerModelList.Where(x => x.State == EnumConstants.ModelCurrentState.Updated).ToList();
+
+                
+                
+                DataTable updatedPurchaseRequisitionTrailerDataTable = UtilityMethods.ToDataTable(updatedPurchaseRequisitionTrailerModel);
+ 
+
+                using (DbCommand savePurchaseRequisitionHeaderCommand = _dbHelper.GetStoredProcCommand("rx_upd_purchaserequisition_header"))
+                {
+
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_seqno", DbType.Int64, purchaseRequisitionHeaderModel.SequenceNumber);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_order_seqno", DbType.Int64, purchaseRequisitionHeaderModel.OrderNumber);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_remarks", DbType.String, purchaseRequisitionHeaderModel.Remarks);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionHeaderCommand, "@purreqhead_updatedby", DbType.String, purchaseRequisitionHeaderModel.UpdatedBy);
+
+                    _dbHelper.ExecuteNonQuery(savePurchaseRequisitionHeaderCommand);
+
+                }
+
+
+
+                using (DbCommand savePurchaseRequisitionDetailCommand = _dbHelper.GetStoredProcCommand("rx_upd_purchaserequisition_trailer"))
+                {
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_seqno", DbType.Int64, "SequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_headseqno", DbType.Int64, purchaseRequisitionHeaderModel.SequenceNumber);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_productgroup", DbType.Int64, "ProductGroupSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_product", DbType.Int64, "ProductSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_lottypseqno", DbType.Int64, "LotTypeSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_transitbefore", DbType.DateTime, "TransitBefore", DataRowVersion.Current);
+
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_supplier_seqno", DbType.Int64, "SupplierSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_deptpurreqtrail_seqno", DbType.Int64, "DepartmentPurchaseRequisitionTrailerSequenceNumber", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_approvalstatus", DbType.Boolean, "ApprovalStatus", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_rejectreason", DbType.String, "RejectReason", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_status", DbType.Boolean, "ActiveStatus", DataRowVersion.Current);
+
+
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_color", DbType.String, "Color", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_size", DbType.String, "Size", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_sizespec", DbType.String, "SizeSpec", DataRowVersion.Current);
+
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_qty", DbType.Decimal, "Quantity", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_cost_price", DbType.Decimal, "CostPrice", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_tax", DbType.Decimal, "Tax", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_taxamount", DbType.Decimal, "TaxAmount", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_totalvalue", DbType.Decimal, "TotalAmount", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_availablestock", DbType.Decimal, "AvailableStock", DataRowVersion.Current);
+                    _dbHelper.AddInParameter(savePurchaseRequisitionDetailCommand, "@purreqtrail_allocated", DbType.Decimal, "Allocated", DataRowVersion.Current);
+                    _dbHelper.Fill(savePurchaseRequisitionDetailCommand, updatedPurchaseRequisitionTrailerDataTable);
+
+                }
+
+
+               
+
+            }
 
 
             return purchaseRequisitionHeaderModel;

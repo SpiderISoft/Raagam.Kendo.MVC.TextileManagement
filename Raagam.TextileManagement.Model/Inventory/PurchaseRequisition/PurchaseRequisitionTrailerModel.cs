@@ -69,6 +69,7 @@ namespace Raagam.TextileManagement.Model
         public bool ApprovalStatus { get; set; }
 
         [DataMember]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string RejectReason { get; set; }
 
         [DataMember]
@@ -107,6 +108,9 @@ namespace Raagam.TextileManagement.Model
         public string LotType { get; set; }
 
         [DataMember]
+        public string Supplier { get; set; }
+
+        [DataMember]
         public byte Status { get; set; }
 
         [DataMember]
@@ -116,6 +120,7 @@ namespace Raagam.TextileManagement.Model
         public decimal ManagerApprovedQuantity { get; set; }
 
         [DataMember]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string ManagerRejectReason { get; set; }
 
         [DataMember]

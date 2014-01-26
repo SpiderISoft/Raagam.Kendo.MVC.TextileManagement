@@ -18,6 +18,8 @@ namespace Raagam.TextileManagement.WCF.Service
             PurchaseRequisitionHeaderModel SavePurchaseRequisition(PurchaseRequisitionHeaderModel purchaseRequisitionHeaderModel);
             [OperationContract]
             PurchaseRequisitionHeaderModel SelectPurchaseRequisition(long purchaseRequisitionNumber);
+            [OperationContract]
+            PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber);
         #endregion
  
     }

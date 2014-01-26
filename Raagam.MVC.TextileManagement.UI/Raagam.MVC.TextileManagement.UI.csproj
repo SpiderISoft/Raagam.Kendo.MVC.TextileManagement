@@ -169,6 +169,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Common\HomeController.cs" />
     <Compile Include="Controllers\Common\LoginController.cs" />
+    <Compile Include="Controllers\Inventory\PurchaseRequisitionController.cs" />
     <Compile Include="Controllers\Merchandiser\OrderController.cs" />
     <Compile Include="Controllers\Merchandiser\StyleController.cs" />
     <Compile Include="Controllers\Production\GeneralDepartmentPurchaseRequisitionController.cs" />
@@ -1715,12 +1716,12 @@
     <Content Include="Views\Production\SelectProduct.cshtml" />
     <Content Include="Views\Production\GeneralDepartmentPurchaseRequisition.cshtml" />
     <Content Include="Views\Production\SelectGeneralProduct.cshtml" />
+    <Content Include="Views\Inventory\PurchaseRequisition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="plugins\forms\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="plugins\forms\tiny_mce\plugins\spellchecker\includes\" />
-    <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1771,12 +1772,12 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56385</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/RaagamWeb</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/RaagamWeb</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://VAIO/RaagamWeb</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

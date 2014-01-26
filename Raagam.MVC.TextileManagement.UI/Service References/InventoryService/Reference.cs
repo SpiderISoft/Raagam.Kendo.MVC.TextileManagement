@@ -23,6 +23,9 @@ namespace Raagam.MVC.TextileManagement.UI.InventoryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IInventory/SelectPurchaseRequisition", ReplyAction="http://tempuri.org/IInventory/SelectPurchaseRequisitionResponse")]
         Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel SelectPurchaseRequisition(long purchaseRequisitionNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IInventory/SelectOrderForApproval", ReplyAction="http://tempuri.org/IInventory/SelectOrderForApprovalResponse")]
+        Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -62,6 +65,10 @@ namespace Raagam.MVC.TextileManagement.UI.InventoryService {
         
         public Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel SelectPurchaseRequisition(long purchaseRequisitionNumber) {
             return base.Channel.SelectPurchaseRequisition(purchaseRequisitionNumber);
+        }
+        
+        public Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber) {
+            return base.Channel.SelectOrderForApproval(orderNumber);
         }
     }
 }

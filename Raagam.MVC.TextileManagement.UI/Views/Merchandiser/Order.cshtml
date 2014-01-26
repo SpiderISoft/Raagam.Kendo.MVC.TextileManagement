@@ -266,7 +266,7 @@
                         $('#grdOrder').jqGrid('saveRow', $.lastSelectedRow, false);
                         $.lastSelectedRow = currentSelectedRow;
                     }
-                    $('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
+                    //$('#grdOrder').jqGrid('editRow', $.lastSelectedRow, true);
                 },
                 afterEditCell: function (rowid, cellname, value, iRow, iCol) {
                     var inputControl = jQuery('#' + (iRow) + '_' + cellname);
@@ -338,7 +338,7 @@
             $.each(columnNames, function (key, colName) {
                 if ((colName.editable == "true") && (makeGridEditable == true)) {
                     colName.editable = true;
-                    colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: " " }); } };
+                    colName.editoptions = { defaultValue: 0, size: 20, maxlength: 30, dataInit: function (elem) { $(elem).inputmask('99999999', { placeholder: "" }); } };
                 }
             });
 

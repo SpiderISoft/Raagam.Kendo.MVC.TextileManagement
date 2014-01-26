@@ -14,6 +14,7 @@ namespace Raagam.TextileManagement.BusinessAccess
            PurchaseRequisitionHeaderModel PurReqPopulateDropDown();
            PurchaseRequisitionHeaderModel SavePurchaseRequisition(PurchaseRequisitionHeaderModel purchaseRequisitionHeaderModel);
            PurchaseRequisitionHeaderModel SelectPurchaseRequisition(long purchaseRequisitionNumber);
+           PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber);
         #endregion
     }
 }

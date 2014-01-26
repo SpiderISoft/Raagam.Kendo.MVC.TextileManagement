@@ -111,6 +111,7 @@
       <xs:element minOccurs="0" name="SizeSpec" nillable="true" type="xs:string" />
       <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.CommonUtility" minOccurs="0" name="State" type="q5:EnumConstants.ModelCurrentState" />
       <xs:element minOccurs="0" name="Status" type="xs:unsignedByte" />
+      <xs:element minOccurs="0" name="Supplier" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SupplierSequenceNumber" type="xs:long" />
       <xs:element minOccurs="0" name="Tax" type="xs:decimal" />
       <xs:element minOccurs="0" name="TaxAmount" type="xs:decimal" />

@@ -18,6 +18,8 @@ namespace Raagam.TextileManagement.DataAccess
 
             PurchaseRequisitionHeaderModel SelectPurchaseRequisition(long purchaseRequisitionNumber);
 
+            PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber);
+
         #endregion
     }
 }

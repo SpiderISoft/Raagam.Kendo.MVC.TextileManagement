@@ -33,6 +33,13 @@ namespace Raagam.TextileManagement.WCF.Service
             return _purchaseRequisitionBusiness.SelectPurchaseRequisition(purchaseRequisitionNumber);
 
         }
+
+        public PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber)
+        {
+            _purchaseRequisitionBusiness = new PurchaseRequisitionBusiness();
+            return _purchaseRequisitionBusiness.SelectOrderForApproval(orderNumber);
+
+        }
         #endregion
     }
 }

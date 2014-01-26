@@ -205,7 +205,7 @@
                                 editable: true,
                                 editoptions: {
                                     dataInit: function (elem) {
-                                        $(elem).inputmask('99999999', { placeholder: " " });
+                                        $(elem).inputmask('99999999', { placeholder: "" });
                                     } 
                                 }
                             },
@@ -281,7 +281,7 @@
                     $(this).jqGrid('saveRow', $.lastSelectedRow, false);
                     $.lastSelectedRow = currentSelectedRow;
                 }
-                $(this).jqGrid('editRow', $.lastSelectedRow, true);
+               // $(this).jqGrid('editRow', $.lastSelectedRow, true);
             },
             cellsubmit: 'clientArray',
             cellEdit: true,

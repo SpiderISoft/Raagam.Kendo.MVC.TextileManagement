@@ -37,7 +37,7 @@
         function FabricCuttingChartMenu_Click() {
             debugger;
             $.ajax({
-                url: '@Url.Content("/FabricCuttingChart/FabricCuttingChart")',
+                url: '@Url.Content("~/FabricCuttingChart/FabricCuttingChart")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -54,7 +54,7 @@
         function DepartmentPurchaseRequisitionMenu_Click() {
             debugger;
             $.ajax({
-                url: '@Url.Content("/DepartmentPurchaseRequisition/DepartmentPurchaseRequisition")',
+                url: '@Url.Content("~/DepartmentPurchaseRequisition/DepartmentPurchaseRequisition")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -72,7 +72,25 @@
         function GeneralDepartmentPurchaseRequisitionMenu_Click() {
             debugger;
             $.ajax({
-                url: '@Url.Content("/GeneralDepartmentPurchaseRequisition/GeneralDepartmentPurchaseRequisition")',
+                url: '@Url.Content("~/GeneralDepartmentPurchaseRequisition/GeneralDepartmentPurchaseRequisition")',
+                type: 'POST',
+                success: function (result) {
+                    debugger;
+                    $('#bodyContent').empty();
+                    $('#bodyContent').html(result);
+                },
+                error: function (e) {
+                    debugger;
+                    alert(e.responseText);
+                }
+            });
+            return false;
+        }
+
+        function PurchaseRequisitionMenu_Click() {
+            debugger;
+            $.ajax({
+                url: '@Url.Content("~/PurchaseRequisition/PurchaseRequisition")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -89,7 +107,7 @@
         function OrderMenu_Click() {
             debugger;
             $.ajax({
-                url: '@Url.Content("/Order/Order")',
+                url: '@Url.Content("~/Order/Order")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -107,7 +125,7 @@
         function StyleMenu_Click() {
             debugger;
             $.ajax({
-                url: '@Url.Content("/Style/Style")',
+                url: '@Url.Content("~/Style/Style")',
                 type: 'POST',
                 success: function (result) {
                     debugger;
@@ -279,7 +297,7 @@
                          <li><a id="FabricCuttingChartMenu" href="#" onclick="FabricCuttingChartMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Fabric Cutting Chart</a></li>
                          <li><a id="DepartmentPurchaseRequisitionMenu" href="#" onclick="DepartmentPurchaseRequisitionMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Dept Pur Req</a></li>
                          <li><a id="GeneralDepartmentPurchaseRequisitionMenu" href="#" onclick="GeneralDepartmentPurchaseRequisitionMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Gen Pur Req</a></li>
-
+                         <li><a id="PurchaseRequisitionMenu" href="#" onclick="PurchaseRequisitionMenu_Click();"><span class="icon16 icomoon-icon-list"></span>Purchase Requisition</a></li>
        
                         <li><a href="#"><span class="icon16 icomoon-icon-equalizer-2"></span>UI Elements</a>
                             <ul class="sub">

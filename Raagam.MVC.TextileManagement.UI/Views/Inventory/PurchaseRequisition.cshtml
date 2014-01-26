@@ -1,0 +1,671 @@
+﻿@model Raagam.TextileManagement.Model.PurchaseRequisitionHeaderModel
+@{
+    ViewBag.Title = "PurchaseRequisition";
+    Layout = null; 
+}
+<script language="javascript" type="text/javascript">
+    $(document).ready(function (e) {
+        var lastSel;
+
+        $('#PurchaseRequisitionNumber').inputmask('999999', { placeholder: " " });
+        $('#PurchaseRequisitionDate').inputmask('dd/mm/yyyy', { clearIncomplete: true });
+
+
+        $('#PurchaseRequisitionNumber').keypress(function (e) {
+
+
+            if (e.keyCode == 13) {
+
+
+                var PurchaseRequisitionNumber = $('#PurchaseRequisitionNumber').val();
+
+                if ((PurchaseRequisitionNumber == null) || (PurchaseRequisitionNumber == 0) || PurchaseRequisitionNumber == '') {
+                    alert('Please Enter PurchaseRequisition Number');
+                    return false;
+                }
+
+
+                $.ajax({
+                    url: '@Url.Content("/PurchaseRequisition/SelectPurchaseRequisition")',
+                    type: 'POST',
+                    data:
+                        {
+                            PurchaseRequisitionNumber: PurchaseRequisitionNumber
+                        },
+                    success: function (result) {
+
+                        $('#Mode').val(result.data.Mode);
+
+                        if (result.data.SequenceNumber == 0) {
+                            $('#frmPurchaseRequisition')[0].reset();
+                            $('#Mode').val('New');
+                            alert('PurchaseRequisition Number Not Exists');
+                        }
+
+                        $('#PurchaseRequisitionDate').val(result.data.PurchaseRequisitionDate);
+                        $('#SequenceNumber').val(result.data.SequenceNumber);
+                        $('#OrderNumber').val(result.data.OrderNumber);
+                        $('#Remarks').val(result.data.Remarks);
+
+                        jQuery('#grdPurchaseRequisition').clearGridData();
+                        $.each(result.data.PurchaseRequisitionTrailerModelList, function (key, data) {
+
+                            jQuery("#grdPurchaseRequisition").addRowData(guid(), data);
+                        });
+
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                    }
+                });
+                return false;
+            }
+        });
+
+
+        $('#OrderNumber').change(function (e) {
+
+            var OrderNumber = $('#OrderNumber').val();
+
+            if ((OrderNumber == null) || (OrderNumber == 0) || OrderNumber == '') {
+                alert('Please Select Order Number');
+                return false;
+            }
+
+            $.ajax({
+                url: '@Url.Content("/PurchaseRequisition/SelectOrder")',
+                type: 'POST',
+                data:
+                        {
+                            OrderNumber: OrderNumber
+                        },
+                success: function (result) {
+
+                    $('#Mode').val(result.data.Mode);
+
+                    $('#PurchaseRequisitionDate').val(result.data.PurchaseRequisitionDate);
+                    $('#SequenceNumber').val(result.data.SequenceNumber);
+
+                    $('#Remarks').val(result.data.Remarks);
+
+                    jQuery('#grdPurchaseRequisition').clearGridData();
+                    $.each(result.data.PurchaseRequisitionTrailerModelList, function (key, data) {
+                        jQuery("#grdPurchaseRequisition").addRowData(guid(), data);
+                    });
+
+
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                }
+            });
+            return false;
+
+        });
+
+
+
+        var Suppliers = function () {
+            var rowid = $("#grdPurchaseRequisition").jqGrid('getGridParam', 'selrow');
+            var rowData = jQuery('#grdPurchaseRequisition').jqGrid('getRowData', rowid);
+            var ProductSequenceNumber = rowData["ProductSequenceNumber"];
+            var sSuppliers;
+            $.ajax({
+                url: '@Url.Content("/PurchaseRequisition/GetSuppliers")' + '?productSequenceNumber=' + ProductSequenceNumber,
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    if (result.success) {
+                        sSuppliers = result.data;
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+            return sSuppliers;
+        }
+
+        function GetSupplierInformation(SupplierSequenceNumber) {
+
+            var sSupplierInformation;
+            $.ajax({
+                url: '@Url.Content("/PurchaseRequisition/GetSupplierInformation")' + '?supplierSequenceNumber=' + SupplierSequenceNumber,
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    if (result.success) {
+                        sSupplierInformation = result.data;
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+            return sSupplierInformation;
+        }
+
+        var LotTypeQuantity = function (LotTypeSequenceNumber) {
+
+            var iLotTypeQuantity;
+            $.ajax({
+                url: '@Url.Content("/PurchaseRequisition/GetLotQuantity")' + '?LotTypeSequenceNumber=' + LotTypeSequenceNumber,
+                type: 'POST',
+                async: false,
+                success: function (result) {
+                    if (result.success) {
+                        iLotTypeQuantity = result.data;
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+            return iLotTypeQuantity;
+        }
+
+        $('#grdPurchaseRequisition').jqGrid({
+            url: '@(Url.Action("GetSelectedProduct", "PurchaseRequisition"))',
+            datatype: 'json',
+            mtype: 'GET',
+            height: 'auto',
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            sortname: 'ProductName',
+            sortorder: "asc",
+            caption: 'Selected Product',
+            viewrecords: true,
+            colNames: ['SequenceNumber', 'PurchaseRequisitionHeaderSequenceNumber', 'Order No', 'ProductGroupSequenceNumber', 'ProductSequenceNumber', 'Product Group', 'Product', 'Color', 'Size', 'SizeSpec', 'UOM', 'Lot Qty', 'Supplier SequenceNumber', 'Supplier', 'Cost Price', 'Tax', 'Tax Amount', 'Qty', 'Value', 'Stock', 'Allocated', 'ApprovedQuantity', 'ActiveStatus', 'ApprovalStatus', 'RejectReason', 'LotTypeSequenceNumber', 'Status', 'ManagerApprovalStatus', 'ManagerApprovedQuantity', 'ManagerRejectReason', 'DepartmentPurchaseRequisitionTrailerSequenceNumber', 'PurchaseOrderStatus', 'ReceivedQuantity', 'Transmit Before', 'State'],
+            colModel: [
+                            {
+                                name: 'SequenceNumber',
+                                index: 'SequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'PurchaseRequisitionHeaderSequenceNumber',
+                                index: 'PurchaseRequisitionHeaderSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'DepartmentPurchaseRequisitionHeaderOrderSequenceNumber',
+                                index: 'DepartmentPurchaseRequisitionHeaderOrderSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductGroupSequenceNumber',
+                                index: 'ProductGroupSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductSequenceNumber',
+                                index: 'ProductSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductGroupName',
+                                index: 'ProductGroupName',
+                                hidden: true
+                            },
+                            {
+                                name: 'ProductName',
+                                index: 'ProductName',
+                                width: 150
+                            },
+                            {
+                                name: 'Color',
+                                index: 'Color',
+                                width: 50,
+                                editable: true,
+                                editoptions: {
+                                    defaultValue: ''
+                                }
+                            },
+                            {
+                                name: 'Size',
+                                index: 'Size',
+                                width: 50,
+                                editable: true,
+                                editoptions: {
+                                    defaultValue: ''
+                                }
+                            },
+                            {
+                                name: 'SizeSpec',
+                                index: 'SizeSpec',
+                                width: 50,
+                                editable: true,
+                                editoptions: {
+                                    defaultValue: ''
+                                }
+                            },
+                            {
+                                name: 'LotType',
+                                index: 'LotType',
+                                width: 100
+                            },
+                             {
+                                 name: 'LotQuantity',
+                                 index: 'LotQuantity',
+                                 width: 50
+                             },
+
+                            {
+                                name: 'SupplierSequenceNumber',
+                                index: 'SupplierSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'Supplier',
+                                index: 'Supplier',
+                                width: 100,
+                                editable: true,
+                                edittype: 'select',
+
+                                editoptions: {
+                                    value: Suppliers,
+                                    dataEvents: [{
+                                        type: 'change', fn: function (e) {
+
+
+                                            var rowid = $("#grdPurchaseRequisition").jqGrid('getGridParam', 'selrow');
+                                            $("#grdPurchaseRequisition").jqGrid("setCell", rowid, "SupplierSequenceNumber", $(e.target).val());
+
+                                            var rowData = jQuery('#grdPurchaseRequisition').jqGrid('getRowData', rowid);
+
+                                            if ((rowData["State"] == "0") && ($('#Mode').val() == "1"))
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "State", "1");
+
+
+                                            if ($(e.target).val() == 0) {
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "CostPrice", 0);
+
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "Tax", 0);
+
+
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TaxAmount", 0);
+
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TotalAmount", 0);
+
+                                                return true;
+                                            }
+
+                                            data = GetSupplierInformation($(e.target).val());
+
+                                            var LotQuantity = $('#grdPurchaseRequisition').jqGrid('getCell', rowid, 'LotQuantity');
+
+                                            var CostPrice = LotQuantity * data.CostPrice;
+
+                                            $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "CostPrice", CostPrice);
+
+                                            $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "Tax", data.ProductTax);
+
+                                            var Allocated = $('#grdPurchaseRequisition').jqGrid('getCell', rowid, 'Allocated');
+
+                                            var Quantity = $('#grdPurchaseRequisition').jqGrid('getCell', rowid, 'Quantity');
+
+                                            Quantity = Quantity - Allocated;
+
+                                            var TaxAmount = (CostPrice * Quantity) * (data.ProductTax / 100);
+
+                                            var TotalAmount = (CostPrice * Quantity) + TaxAmount;
+
+                                            $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TaxAmount", TaxAmount);
+
+                                            $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TotalAmount", TotalAmount);
+
+                                        }
+                                    }]
+                                }
+                            },
+                            {
+                                name: 'CostPrice',
+                                index: 'CostPrice',
+                                width: 50
+                            },
+                            {
+                                name: 'Tax',
+                                index: 'Tax',
+                                width: 50
+                            },
+                            {
+                                name: 'TaxAmount',
+                                index: 'TaxAmount',
+                                width: 50
+                            },
+                            {
+                                name: 'Quantity',
+                                index: 'Quantity',
+                                width: 50,
+                                editable: true,
+                                editoptions: {
+                                    dataInit: function (elem) {
+                                        $(elem).inputmask('99999999', { placeholder: "" });
+                                    }
+                                }
+                            },
+                            {
+                                name: 'TotalAmount',
+                                index: 'TotalAmount',
+                                width: 50
+                            },
+                            {
+                                name: 'AvailableStock',
+                                index: 'AvailableStock',
+                                width: 50
+                            },
+                            {
+                                name: 'Allocated',
+                                index: 'Allocated',
+                                width: 50,
+                                editable: true,
+                                editoptions: {
+                                    dataInit: function (elem) {
+                                        $(elem).inputmask('99999999', { placeholder: "" });
+                                    }
+                                }
+                            },
+                            {
+                                name: 'ApprovedQuantity',
+                                index: 'ApprovedQuantity',
+                                hidden: true
+                            },
+                            {
+                                name: 'ActiveStatus',
+                                index: 'ActiveStatus',
+                                hidden: true
+                            },
+                            {
+                                name: 'ApprovalStatus',
+                                index: 'ApprovalStatus',
+                                width: 50,
+                                editable: true,
+                                formatter: 'checkbox',
+                                edittype: 'checkbox', editoptions: {
+
+                                    value: 'true:false',
+                                    defaultValue: 'false'
+                                }, formatoptions: { disabled: false }
+                            },
+                            {
+                                name: 'RejectReason',
+                                index: 'RejectReason',
+                                width: 100,
+                                editable: true
+                            },
+                            {
+                                name: 'LotTypeSequenceNumber',
+                                index: 'LotTypeSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'Status',
+                                index: 'Status',
+                                width: 50,
+                                editable: true,
+                                formatter: 'checkbox',
+                                formatoptions: {
+                                    disabled: true
+                                },
+                                edittype: 'checkbox', editoptions: {
+                                    dataEvents: [{
+                                        type: 'click', fn: function (e) {
+                                            debugger;
+                                            var rowid = $("#grdPurchaseRequisition").jqGrid('getGridParam', 'selrow');
+                                            var rowData = jQuery('#grdPurchaseRequisition').jqGrid('getRowData', rowid);
+
+                                            if (rowData["Status"] == 'false') {
+                                                $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "ApprovalStatus", 'false');
+                                            }
+
+                                        }
+                                    }],
+                                    value: 'true:false', defaultValue: 'false'
+                                }
+                            },
+                            {
+                                name: 'ManagerApprovalStatus',
+                                index: 'ManagerApprovalStatus',
+                                hidden: true
+                            },
+                            {
+                                name: 'ManagerApprovedQuantity',
+                                index: 'ManagerApprovedQuantity',
+                                hidden: true
+                            },
+                            {
+                                name: 'ManagerRejectReason',
+                                index: 'ManagerRejectReason',
+                                hidden: true
+                            },
+                            {
+                                name: 'DepartmentPurchaseRequisitionTrailerSequenceNumber',
+                                index: 'DepartmentPurchaseRequisitionTrailerSequenceNumber',
+                                hidden: true
+                            },
+                            {
+                                name: 'PurchaseOrderStatus',
+                                index: 'PurchaseOrderStatus',
+                                hidden: true
+                            },
+                            {
+                                name: 'ReceivedQuantity',
+                                index: 'ReceivedQuantity',
+                                hidden: true
+                            },
+                            {
+                                name: 'TransitBefore',
+                                index: 'TransitBefore',
+                                width: 100,
+                                editable: true,
+                                editoptions: {
+                                    dataInit: function (elem) {
+                                        $(elem).inputmask('dd/mm/yyyy', { clearIncomplete: true });
+                                        $(elem).datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, minDate: 0,
+                                            changeYear: true
+                                        });
+                                    }
+                                }
+                            },
+                            {
+                                name: 'State',
+                                index: 'State',
+                                hidden: true
+                            }
+                       ],
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                userdata: "userdata"
+            },
+
+
+            onSelectCell: function (currentSelectedRow) {
+                debugger;
+                if (currentSelectedRow && currentSelectedRow != $.lastSelectedRow) {
+                    $(this).jqGrid('saveRow', $.lastSelectedRow, false);
+                    $.lastSelectedRow = currentSelectedRow;
+                }
+                //$(this).jqGrid('editRow', $.lastSelectedRow, true);
+            },
+            cellsubmit: 'clientArray',
+            cellEdit: true,
+            editurl: 'clientArray',
+            afterSaveCell: function (rowid, cellname, value) {
+                debugger;
+                var rowData = jQuery('#grdPurchaseRequisition').jqGrid('getRowData', rowid);
+
+                if ((rowData["State"] == "0") && ($('#Mode').val() =="1"))
+                    $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "State", "1");
+
+                debugger;
+
+
+                if (cellname == "Allocated") {
+                    if (rowData["Allocated"] > rowData["AvailableStock"]) {
+                        alert("Can't allocated greater than stock qty");
+                        $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "Allocated", rowData["AvailableStock"]);
+                    }
+
+                    var Allocated = rowData["Allocated"];
+
+                    var Quantity = rowData["Quantity"];
+
+                    Quantity = Quantity - Allocated;
+
+                    var TaxAmount = (CostPrice * Quantity) * (data.ProductTax / 100);
+
+                    var TotalAmount = (CostPrice * Quantity) + TaxAmount;
+
+                    $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TaxAmount", TaxAmount);
+
+                    $('#grdPurchaseRequisition').jqGrid("setCell", rowid, "TotalAmount", TotalAmount);
+
+                }
+            }
+        });
+
+        function formPurchaseRequisitionTrailerModel() {
+
+            var PurchaseRequisitionTrailerDetail = new Array();
+            var cRows = jQuery("#grdPurchaseRequisition").jqGrid("getGridParam", "reccount");
+
+
+            var ids = jQuery("#grdPurchaseRequisition").jqGrid('getDataIDs');
+
+            for (var iRow = 0; iRow < ids.length; iRow++) {
+
+                debugger;
+                var rowId = ids[iRow];
+                var rowData = jQuery('#grdPurchaseRequisition').jqGrid('getRowData', rowId);
+
+                if ((rowData["ApprovalStatus"] == 'true') && ((rowData["SupplierSequenceNumber"] == 0) || (rowData["SupplierSequenceNumber"] == ''))) {
+                    alert('Some of the Rows Supplier is not Selected Properly');
+                    return false;
+                }
+
+                PurchaseRequisitionTrailerDetail.push(rowData);
+
+            }
+
+            return PurchaseRequisitionTrailerDetail;
+
+        }
+
+
+        $('#SaveButton').click(function (event) {
+            debugger;
+
+            var purchaseRequisitionfnData = formPurchaseRequisitionTrailerModel();
+
+            if (purchaseRequisitionfnData == false) {
+                return purchaseRequisitionfnData;
+            }
+
+            var purchaseRequisitionData = JSON.stringify({ 'purchaseRequisitionHeaderModel': $('#frmPurchaseRequisition').jsonify(), 'purchaseRequisitionTrailerModel': purchaseRequisitionfnData });
+
+            $.ajax({
+                url: '@Url.Content("/PurchaseRequisition/SavePurchaseRequisition")',
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: purchaseRequisitionData,
+                success: function (result) {
+                    if (result.success) {
+                        $('#PurchaseRequisitionNumber').val(result.data.PurchaseRequisitionNumber);
+                        $('#PurchaseRequisitionNumber').val(result.data.PurchaseRequisitionNumber);
+                        alert("Purchase Requisition Number " + result.data.PurchaseRequisitionNumber + " Saved Successfully");
+                    }
+                    else {
+                        alert(result.data);
+                    }
+                },
+                error: function (e) {
+
+                    alert(e.responseText);
+                }
+            });
+
+        });
+
+    });
+</script>
+@using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "frmPurchaseRequisition", role = "form", @class = "form-horizontal" }))
+{    
+    @Html.HiddenFor( m => m.SequenceNumber)
+    @Html.HiddenFor( m => m.Mode)
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <span> Purchase Requisition</span>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-lg-offset-8">
+                            <input type="button" value="Save" id="SaveButton" class="btn marginR10" />
+                            <button class="btn btn-danger" id="CancelButton">
+                                Cancel</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PurchaseRequisitionNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.PurchaseRequisitionNumber, new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PurchaseRequisitionDate, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextBoxFor(m => m.PurchaseRequisitionDate, new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+ 
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.OrderNumber, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.DropDownListFor(m => m.OrderNumber, Model.OrderDropDownList,"Select Order", new { @class = "form-control", style = "height:35px;width:200px;" })
+                        </div>
+                    </div>
+                     
+                    <div class="form-group">
+                        <div class="col-lg-1">
+                            <table id="grdPurchaseRequisition">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Remarks, new { @class = "col-lg-3 control-label", @for = "normalInput" })
+                        <div class="col-lg-9">
+                            @Html.TextAreaFor(m => m.Remarks, 5, 350, new { @class = "form-control", @Value = "" })
+                        </div>
+                    </div>
+                    <!-- End .form-group  -->
+                </div>
+            </div>
+            <!-- End .panel -->
+        </div>
+        <!-- End .span6 -->
+    </div>
+    <!-- End .row -->
+    <!-- End .form-group  -->
+
+}

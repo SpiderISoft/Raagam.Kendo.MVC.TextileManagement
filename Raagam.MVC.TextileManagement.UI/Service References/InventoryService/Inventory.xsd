@@ -41,4 +41,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SelectOrderForApproval">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="orderNumber" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectOrderForApprovalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Raagam.TextileManagement.Model" minOccurs="0" name="SelectOrderForApprovalResult" nillable="true" type="q5:PurchaseRequisitionHeaderModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -27,6 +27,12 @@
   <wsdl:message name="IInventory_SelectPurchaseRequisition_OutputMessage">
     <wsdl:part name="parameters" element="tns:SelectPurchaseRequisitionResponse" />
   </wsdl:message>
+  <wsdl:message name="IInventory_SelectOrderForApproval_InputMessage">
+    <wsdl:part name="parameters" element="tns:SelectOrderForApproval" />
+  </wsdl:message>
+  <wsdl:message name="IInventory_SelectOrderForApproval_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SelectOrderForApprovalResponse" />
+  </wsdl:message>
   <wsdl:portType name="IInventory">
     <wsdl:operation name="PurReqPopulateDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IInventory/PurReqPopulateDropDown" message="tns:IInventory_PurReqPopulateDropDown_InputMessage" />
@@ -39,6 +45,10 @@
     <wsdl:operation name="SelectPurchaseRequisition">
       <wsdl:input wsaw:Action="http://tempuri.org/IInventory/SelectPurchaseRequisition" message="tns:IInventory_SelectPurchaseRequisition_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IInventory/SelectPurchaseRequisitionResponse" message="tns:IInventory_SelectPurchaseRequisition_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectOrderForApproval">
+      <wsdl:input wsaw:Action="http://tempuri.org/IInventory/SelectOrderForApproval" message="tns:IInventory_SelectOrderForApproval_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IInventory/SelectOrderForApprovalResponse" message="tns:IInventory_SelectOrderForApproval_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IInventory" type="tns:IInventory">
@@ -63,6 +73,15 @@
     </wsdl:operation>
     <wsdl:operation name="SelectPurchaseRequisition">
       <soap:operation soapAction="http://tempuri.org/IInventory/SelectPurchaseRequisition" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectOrderForApproval">
+      <soap:operation soapAction="http://tempuri.org/IInventory/SelectOrderForApproval" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

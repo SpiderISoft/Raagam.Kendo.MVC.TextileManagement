@@ -34,6 +34,11 @@ namespace Raagam.TextileManagement.BusinessAccess
         {
             return _purchaseRequisitionDataAccess.SelectPurchaseRequisition(purchaseRequisitionNumber);
         }
+
+        public PurchaseRequisitionHeaderModel SelectOrderForApproval(long orderNumber)
+        {
+            return _purchaseRequisitionDataAccess.SelectOrderForApproval(orderNumber);
+        }
         #endregion
     }
 }
